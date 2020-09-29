@@ -2,7 +2,7 @@
 
 ```bash
 # clone the project
-git clone https://github.com/leilei0227/hubei-vue-admin.git
+git clone https://github.com/leilei0227/hebei-vue-admin.git
 
 # enter the project directory
 cd hubei-vue-admin
