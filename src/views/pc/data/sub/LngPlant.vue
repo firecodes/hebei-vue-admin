@@ -4,29 +4,16 @@
     <el-row>
       <!-- 搜索区域 -->
       <el-col :span="16">
-        <el-form :inline="true" :model="queryInfo">
+        <el-form :inline="true" :model="listQuery">
           <el-form-item label="日期">
-            <el-date-picker
-              v-model="queryInfo.daterange"
-              type="daterange"
-              align="right"
-              unlink-panels
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              :picker-options="pickerOptions"
-              :clearable="false"
-              @change="handleQuery"
-            />
+            <el-date-picker v-model="listQuery.daterange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" :clearable="false" @change="handleFilter" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery" />
+            <el-button type="primary" icon="el-icon-search" @click="handleFilter" />
           </el-form-item>
         </el-form>
       </el-col>
-      <el-col :span="8" class="text-right" style="line-height: 32px;">
-        <el-button type="primary" icon="el-icon-download" class="mr-1">下载</el-button>单位：元/立方米
-      </el-col>
+      <el-col :span="8" class="text-right" style="line-height: 32px"> <el-button type="primary" icon="el-icon-download" class="mr-1">下载</el-button>单位：元/立方米 </el-col>
     </el-row>
     <!-- <v-chart :options="lineOption"/> -->
     <!-- 表格数据 -->
@@ -42,35 +29,26 @@
       <el-table-column prop="num8" label="怡蕙达" align="center" />
     </el-table>
     <!-- 分页 -->
-    <el-pagination
-      class="text-center mt-1"
-      background
-      layout="prev, pager, next, sizes, total"
-      :total="total"
-      :current-page="queryInfo.pageNum"
-      :page-sizes="[5, 10, 20, 50]"
-      :page-size="queryInfo.pageSize"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-    />
+    <pagination :total="totalCount" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
   </div>
 </template>
 <script>
 import fetchJsonp from 'fetch-jsonp'
-
 import { daterange1month, parseDate, getDefaultValue } from '@/utils'
+import Pagination from '@/components/Pagination'
 import { pickerOptions } from '@/utils/options'
 
 export default {
+  components: { Pagination },
   data() {
     return {
       pickerOptions,
-      queryInfo: {
+      listQuery: {
         pageNum: 1,
         pageSize: 10,
         daterange: daterange1month()
       },
-      total: 0,
+      totalCount: 0, // 总条数
       // dataset: {
       //   source: []
       // },
@@ -79,12 +57,12 @@ export default {
     }
   },
   created() {
-    this.getData()
+    this.getList()
   },
   methods: {
-    async getData() {
-      const start = this.queryInfo.daterange[0]
-      const end = this.queryInfo.daterange[1]
+    async getList() {
+      const start = this.listQuery.daterange[0]
+      const end = this.listQuery.daterange[1]
 
       fetchJsonp(`http://152.136.232.230:8081/api/screen/price/LngPlantByDate?start=${parseDate(start)}&end=${parseDate(end)}`)
         .then(response => {
@@ -125,22 +103,22 @@ export default {
           console.log('parsing failed', ex)
         })
     },
-    handleQuery() {
-      this.queryInfo.pageNum = 1
-      this.getData()
+    handleFilter() {
+      this.listQuery.pageNum = 1
+      this.getList()
     },
     turnPage() {
-      const startIndex = (this.queryInfo.pageNum - 1) * this.queryInfo.pageSize
-      const endIndex = this.queryInfo.pageNum * this.queryInfo.pageSize
+      const startIndex = (this.listQuery.pageNum - 1) * this.listQuery.pageSize
+      const endIndex = this.listQuery.pageNum * this.listQuery.pageSize
       this.tableData = this.tableDataWhole.slice(startIndex, endIndex)
     },
     handleCurrentChange(page) {
-      this.queryInfo.pageNum = page
+      this.listQuery.pageNum = page
       this.turnPage()
     },
     handleSizeChange(size) {
-      this.queryInfo.pageNum = 1
-      this.queryInfo.pageSize = size
+      this.listQuery.pageNum = 1
+      this.listQuery.pageSize = size
       this.turnPage()
     }
   }

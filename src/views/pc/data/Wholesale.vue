@@ -3,36 +3,21 @@
     <!-- 顶部搜索区域 -->
     <div class="filter-container mb-1">
       <div>
-        <el-date-picker
-          v-model="listQuery.daterange"
-          type="daterange"
-          align="right"
-          unlink-panels
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          :picker-options="pickerOptions"
-          :clearable="false"
-          class="mr-1"
-          @change="handleFilter"
-        />
-        <el-cascader
-          v-model="cascaderValue"
-          :options="cascaderOptions"
-          filterable
-          style="width:250px"
-          @change="handleChange"
-        >
+        <el-date-picker v-model="daterange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" :clearable="false" class="mr-1" @change="handleFilter" />
+        <el-cascader v-model="cascaderValue" :options="cascaderOptions" filterable style="width: 250px" @change="handleChange">
           <template slot-scope="{ node, data }">
             <span>{{ data.label }}</span>
             <span v-if="!node.isLeaf">({{ data.children.length }})</span>
           </template>
         </el-cascader>
       </div>
-      <div style="line-height: 32px;">单位：万方</div>
+      <div style="line-height: 32px">
+        <el-button type="primary" icon="el-icon-download" class="mr-1">导出 Excel</el-button>
+        单位：万方
+      </div>
     </div>
     <!-- 表格数据-->
-    <el-table v-show="listQuery.customerType=='pipeline'" :data="tableData" stripe>
+    <el-table v-show="listQuery.customerType == 'pipeline'" :data="tableData" stripe>
       <el-table-column prop="date" label="日期" align="center" width="90px" fixed />
       <el-table-column label="合同量" align="center">
         <el-table-column prop="num" label="日均合同" align="center" />
@@ -60,10 +45,10 @@
         <el-table-column prop="num" label="去年同期累计" align="center" width="95px" />
         <el-table-column prop="num" label="同比" align="center" />
         <el-table-column prop="num" label="年增幅" align="center" />
-        <el-table-column prop="num" label="2019年销量" align="center" width="95px" />
+        <el-table-column prop="num" label="去年销量" align="center" width="95px" />
       </el-table-column>
     </el-table>
-    <el-table v-show="listQuery.customerType=='lng'" :data="tableData" stripe>
+    <el-table v-show="listQuery.customerType == 'lng'" :data="tableData" stripe>
       <el-table-column prop="date" label="日期" align="center" width="90px" fixed />
 
       <el-table-column label="日销量" align="center">
@@ -89,20 +74,16 @@
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <pagination
-      :total="totalCount"
-      :page.sync="listQuery.pageNum"
-      :limit.sync="listQuery.limit"
-      @pagination="getList"
-    />
+    <pagination :total="totalCount" :page.sync="listQuery.pageNum" :limit.sync="listQuery.limit" @pagination="getList" />
   </div>
 </template>
 <script>
 import { pickerOptions, areaOption } from '@/utils/options'
-import { daterange1month, array2Object, parseTime } from '@/utils'
+import { daterange1month, array2Object, parseDate, deleteNullParam } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { fetchList as getPipelineCustomers } from '@/api/customer/pipeline'
 import { fetchList as getLngCustomers } from '@/api/customer/lng'
+import { getWholeSalesDataByCustomer } from '@/api/data/index'
 
 export default {
   name: 'WholeSale',
@@ -113,12 +94,14 @@ export default {
       cascaderOptions: [],
       cascaderValue: [],
       pickerOptions,
+      daterange: daterange1month(),
       listQuery: {
         pageNum: 1,
-        limit: 10,
-        daterange: daterange1month(),
+        pageSize: 10,
+        start: '',
+        end: '',
         customerType: 'pipeline',
-        customer: ''
+        customerId: ''
       },
       totalCount: 0, // 总条数
       tableData: [
@@ -135,28 +118,32 @@ export default {
       ]
     }
   },
+  watch: {},
   created() {
     this.getPipelineCustomers()
   },
   methods: {
     // 获取列表
-    getList() {
+    async getList() {
       this.listLoading = true
-      const { pageNum, limit: pageSize, customer, customerType } = this.listQuery
-      const param = {
-        pageNum,
-        pageSize,
-        start: parseTime(this.listQuery.daterange[0], '{y}-{m}-{d}'),
-        end: parseTime(this.listQuery.daterange[1], '{y}-{m}-{d}'),
-        customer,
-        customerType
+      // const { pageNum, limit: pageSize, customerId, customerType } = this.listQuery
+      // const param = {
+      //   pageNum,
+      //   pageSize,
+      //   start: parseDate(this.listQuery.daterange[0]),
+      //   end: parseDate(this.listQuery.daterange[1]),
+      //   customerId,
+      //   customerType
+      // }
+      // console.log(param)
+      this.listQuery.start = parseDate(this.daterange[0])
+      this.listQuery.end = parseDate(this.daterange[1])
+      const res = await getWholeSalesDataByCustomer(this.listQuery)
+      if (res.status === 0) {
+        // this.tableData = response.data
+        //   this.totalCount = response.totalCount
+        //   this.listLoading = false
       }
-      console.log(param)
-      // fetchList(deleteNullParam(this.listQuery)).then(response => {
-      //   this.tableData = response.data
-      //   this.totalCount = response.totalCount
-      //   this.listLoading = false
-      // })
     },
 
     // 得到管道气客户
@@ -211,7 +198,7 @@ export default {
         temp[key].forEach(item => {
           if (!this.cascaderValue.length) {
             this.cascaderValue = [key, item.id]
-            this.listQuery.customer = item.id
+            this.listQuery.customerId = item.id
             this.listQuery.customerType = 'pipeline'
           }
           obj.children.push({
@@ -226,7 +213,7 @@ export default {
       this.getLngCustomers()
     },
     handleChange(evt) {
-      this.listQuery.customer = this.cascaderValue[1]
+      this.listQuery.customerId = this.cascaderValue[1]
       if (this.cascaderValue[0] === 'LNG') {
         this.listQuery.customerType = 'lng'
       } else {

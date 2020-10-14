@@ -4,29 +4,16 @@
     <el-row>
       <!-- 搜索区域 -->
       <el-col :span="16">
-        <el-form :inline="true" :model="queryInfo">
+        <el-form :inline="true" :model="listQuery">
           <el-form-item label="日期">
-            <el-date-picker
-              v-model="queryInfo.daterange"
-              type="daterange"
-              align="right"
-              unlink-panels
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              :picker-options="pickerOptions"
-              :clearable="false"
-              @change="handleQuery"
-            />
+            <el-date-picker v-model="listQuery.daterange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" :clearable="false" @change="handleQuery" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" @click="handleQuery" />
           </el-form-item>
         </el-form>
       </el-col>
-      <el-col :span="8" class="text-right" style="line-height: 32px;">
-        <el-button type="primary" icon="el-icon-download" class="mr-1">下载</el-button>单位：元/立方米
-      </el-col>
+      <el-col :span="8" class="text-right" style="line-height: 32px"> <el-button type="primary" icon="el-icon-download" class="mr-1">下载</el-button>单位：元/立方米 </el-col>
     </el-row>
     <!-- <v-chart :options="lineOption"/> -->
     <!-- 表格数据 -->
@@ -37,30 +24,20 @@
       <el-table-column prop="num3" label="河北" align="center" />
     </el-table>
     <!-- 分页 -->
-    <el-pagination
-      class="text-center mt-1"
-      background
-      layout="prev, pager, next, sizes, total"
-      :total="total"
-      :current-page="queryInfo.pageNum"
-      :page-sizes="[5, 10, 20, 50]"
-      :page-size="queryInfo.pageSize"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-    />
+    <el-pagination class="text-center mt-1" background layout="prev, pager, next, sizes, total" :total="total" :current-page="listQuery.pageNum" :page-sizes="[5, 10, 20, 50]" :page-size="listQuery.pageSize" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
   </div>
 </template>
 <script>
 import fetchJsonp from 'fetch-jsonp'
-
 import { daterange1month, parseDate, getDefaultValue } from '@/utils'
+import Pagination from '@/components/Pagination'
 import { pickerOptions } from '@/utils/options'
-
 export default {
+  components: { Pagination },
   data() {
     return {
       pickerOptions,
-      queryInfo: {
+      listQuery: {
         pageNum: 1,
         pageSize: 10,
         daterange: daterange1month()
@@ -78,9 +55,8 @@ export default {
   },
   methods: {
     async getData() {
-      const start = this.queryInfo.daterange[0]
-      const end = this.queryInfo.daterange[1]
-
+      const start = this.listQuery.daterange[0]
+      const end = this.listQuery.daterange[1]
       fetchJsonp(`http://152.136.232.230:8081/api/screen/price/gatePrice?start=${parseDate(start)}&end=${parseDate(end)}`)
         .then(response => {
           return response.json()
@@ -93,7 +69,6 @@ export default {
           const defaultNum1 = getDefaultValue(json.data['北京'])
           const defaultNum2 = getDefaultValue(json.data['河北'])
           const defaultNum3 = getDefaultValue(json.data['天津'])
-
           for (let index = end.getTime(); index >= start.getTime(); ) {
             const date = parseDate(new Date(index))
             data.push({
@@ -104,7 +79,6 @@ export default {
             })
             index -= 3600 * 1000 * 24
           }
-
           this.tableDataWhole = data
           this.total = this.tableDataWhole.length
           this.turnPage()
@@ -114,21 +88,21 @@ export default {
         })
     },
     handleQuery() {
-      this.queryInfo.pageNum = 1
+      this.listQuery.pageNum = 1
       this.getData()
     },
     turnPage() {
-      const startIndex = (this.queryInfo.pageNum - 1) * this.queryInfo.pageSize
-      const endIndex = this.queryInfo.pageNum * this.queryInfo.pageSize
+      const startIndex = (this.listQuery.pageNum - 1) * this.listQuery.pageSize
+      const endIndex = this.listQuery.pageNum * this.listQuery.pageSize
       this.tableData = this.tableDataWhole.slice(startIndex, endIndex)
     },
     handleCurrentChange(page) {
-      this.queryInfo.pageNum = page
+      this.listQuery.pageNum = page
       this.turnPage()
     },
     handleSizeChange(size) {
-      this.queryInfo.pageNum = 1
-      this.queryInfo.pageSize = size
+      this.listQuery.pageNum = 1
+      this.listQuery.pageSize = size
       this.turnPage()
     }
   }

@@ -3,88 +3,70 @@
     <!-- 顶部搜索区域 -->
     <div class="filter-container mb-1">
       <div>
-        <el-date-picker
-          v-model="listQuery.daterange"
-          type="daterange"
-          align="right"
-          unlink-panels
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          :picker-options="pickerOptions"
-          :clearable="false"
-          class="mr-1"
-          @change="handleFilter"
-        />
-        <el-select v-model="listQuery.customer" @change="handleFilter">
-          <el-option
-            v-for="item in customerOption"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+        <el-date-picker v-model="daterange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" :clearable="false" class="mr-1" @change="handleFilter" />
+        <el-select v-model="listQuery.customerId" @change="handleFilter" filterable>
+          <el-option v-for="item in customerOption" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </div>
-      <div style="line-height: 32px;">单位：万方</div>
+      <div style="line-height: 32px">
+        <el-button type="primary" icon="el-icon-download" class="mr-1">导出 Excel</el-button>
+        单位：万方
+      </div>
     </div>
     <!-- 表格数据-->
-    <el-table :data="tableData" :span-method="objectSpanMethod" height="660px">
-      <el-table-column prop="date" label="日期" align="center" width="85px" fixed />
+    <el-table :data="tableData" :span-method="objectSpanMethod">
+      <el-table-column prop="dataTime" label="日期" align="center" width="85px" fixed />
       <el-table-column prop="source" label="气源" align="center" width="95px" fixed />
       <el-table-column label="计划量" align="center">
-        <el-table-column prop="num" label="年度计划" align="center" width="95px" />
-        <el-table-column prop="num" label="月度计划" align="center" width="95px" />
+        <el-table-column prop="yearPlan" label="年度计划" align="center" />
+        <el-table-column prop="monthPlan" label="月度计划" align="center" />
       </el-table-column>
       <el-table-column label="购气量" align="center">
-        <el-table-column prop="num" label="日累" align="center" width="95px" />
-        <el-table-column prop="num" label="月累" align="center" width="95px" />
-        <el-table-column prop="num" label="年累" align="center" width="95px" />
+        <el-table-column prop="dayAccumulationForPurchase" label="日累" align="center" />
+        <el-table-column prop="monthAccumulationForPurchase" label="月累" align="center" />
+        <el-table-column prop="yearAccumulationForPurchase" label="年累" align="center" />
       </el-table-column>
       <el-table-column label="总销气量" align="center">
-        <el-table-column prop="num" label="居民" align="center" width="95px" />
-        <el-table-column prop="num" label="工业" align="center" width="95px" />
-        <el-table-column prop="num" label="公服" align="center" width="95px" />
-        <el-table-column prop="num" label="分销" align="center" width="95px" />
-        <el-table-column prop="num" label="CNG车用" align="center" width="95px" />
-        <el-table-column prop="num" label="CNG非车用" align="center" width="95px" />
-        <el-table-column prop="num" label="管输" align="center" width="95px" />
-        <el-table-column prop="num" label="LNG" align="center" width="95px" />
-        <el-table-column prop="num" label="日累" align="center" width="95px" />
-        <el-table-column prop="num" label="月累" align="center" width="95px" />
-        <el-table-column prop="num" label="月完成率%" align="center" width="95px" />
-        <el-table-column prop="num" label="年累" align="center" width="95px" />
-        <el-table-column prop="num" label="年完成率%" align="center" width="95px" />
+        <el-table-column prop="residentValue" label="居民" align="center" />
+        <el-table-column prop="industryValue" label="工业" align="center" />
+        <el-table-column prop="publicServiceValue" label="公服" align="center" />
+        <el-table-column prop="distributionValue" label="分销" align="center" />
+        <el-table-column prop="cngForCarValue" label="CNG车用" align="center" />
+        <el-table-column prop="cngForOtherValue" label="CNG非车用" align="center" width="95px" />
+        <el-table-column prop="pogValue" label="管输" align="center" />
+        <el-table-column prop="lngValue" label="LNG" align="center" />
+        <el-table-column prop="dayAccumulation" label="日累" align="center" />
+        <el-table-column prop="monthAccumulation" label="月累" align="center" />
+        <el-table-column prop="monthCompletePercent" label="月完成率%" align="center" />
+        <el-table-column prop="yearAccumulation" label="年累" align="center" />
+        <el-table-column prop="yearCompletePercent" label="年完成率%" align="center" />
       </el-table-column>
       <el-table-column label="自用气" align="center">
-        <el-table-column prop="num" label="生产" align="center" width="95px" />
-        <el-table-column prop="num" label="生活" align="center" width="95px" />
-        <el-table-column prop="num" label="日累" align="center" width="95px" />
-        <el-table-column prop="num" label="月累" align="center" width="95px" />
-        <el-table-column prop="num" label="年累" align="center" width="95px" />
+        <el-table-column prop="produceForSelf" label="生产" align="center" />
+        <el-table-column prop="liveForSelf" label="生活" align="center" />
+        <el-table-column prop="dayAccumulationForSelf" label="日累" align="center" />
+        <el-table-column prop="monthAccumulationForSelf" label="月累" align="center" />
+        <el-table-column prop="yearAccumulationForSelf" label="年累" align="center" />
       </el-table-column>
       <el-table-column label="年购销差" align="center">
-        <el-table-column prop="num" label="差量" align="center" width="95px" />
-        <el-table-column prop="num" label="差率%" align="center" width="95px" />
+        <el-table-column prop="diffForPurchase" label="差量" align="center" />
+        <el-table-column prop="diffRateForPurchase" label="差率%" align="center" />
       </el-table-column>
-      <el-table-column prop="num" label="期初库存" align="center" width="95px" />
-      <el-table-column prop="num" label="当日库存" align="center" width="95px" />
+      <el-table-column prop="initStorage" label="期初库存" align="center" />
+      <el-table-column prop="currentStorage" label="当日库存" align="center" />
     </el-table>
 
     <!-- 分页 -->
-    <pagination
-      :total="totalCount"
-      :page.sync="listQuery.pageNum"
-      :limit.sync="listQuery.limit"
-      @pagination="getList"
-    />
+    <pagination :total="totalCount" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
   </div>
 </template>
 <script>
 import { pickerOptions, areaOption } from '@/utils/options'
-import { daterange1month, array2Object, parseTime } from '@/utils'
+import { daterange1month, array2Object, parseDate } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { fetchList as getPipelineCustomers } from '@/api/customer/pipeline'
 import { fetchList } from '@/api/customer/retail'
+import { getResaleDataByCustomer } from '@/api/data/index'
 
 export default {
   name: 'WholeSale',
@@ -96,116 +78,17 @@ export default {
       cascaderValue: [],
       pickerOptions,
       customerOption: [],
+      daterange: daterange1month(),
       listQuery: {
         pageNum: 1,
-        limit: 10,
-        daterange: daterange1month(),
-        customer: ''
+        pageSize: 3,
+        start: '',
+        end: '',
+        customerId: ''
       },
       totalCount: 0, // 总条数
-      tableData: [
-        { date: '2020-05-03', source: '管道气', num: '112152.7069' },
-        {
-          date: '2020-05-04',
-          source: 'LNG（内购）',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-03',
-          source: 'LNG（外购）',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-04',
-          source: 'LNG小计',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-03',
-          source: '管输气',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-04',
-          source: 'CNG',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-03',
-          source: '小计',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-03',
-          source: '管道气',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-04',
-          source: 'LNG（内购）',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-03',
-          source: 'LNG（外购）',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-04',
-          source: 'LNG小计',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-03',
-          source: '管输气',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-04',
-          source: 'CNG',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-03',
-          source: '小计',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-03',
-          source: '管道气',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-04',
-          source: 'LNG（内购）',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-03',
-          source: 'LNG（外购）',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-04',
-          source: 'LNG小计',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-03',
-          source: '管输气',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-04',
-          source: 'CNG',
-          num: '12152.7069'
-        },
-        {
-          date: '2020-05-03',
-          source: '小计',
-          num: '12152.7069'
-        }
-      ]
+      tableData: [],
+      listLoading: true // 加载动画
     }
   },
   created() {
@@ -213,22 +96,30 @@ export default {
   },
   methods: {
     // 获取列表
-    getList() {
+    async getList() {
       this.listLoading = true
-      const { pageNum, limit: pageSize, customer } = this.listQuery
-      const param = {
-        pageNum,
-        pageSize,
-        start: parseTime(this.listQuery.daterange[0], '{y}-{m}-{d}'),
-        end: parseTime(this.listQuery.daterange[1], '{y}-{m}-{d}'),
-        customer
+
+      this.listQuery.start = parseDate(this.daterange[0])
+      this.listQuery.end = parseDate(this.daterange[1])
+      const res = await getResaleDataByCustomer(this.listQuery)
+      if (res.status === 0) {
+        const days = Object.keys(res.data).sort((a, b) => a - b)
+        this.tableData = []
+        days.forEach(day => {
+          res.data[day].forEach(item => {
+            for (const key in item) {
+              if (!isNaN(item[key])) {
+                console.log(item[key])
+                item[key] = parseInt(item[key] * 10000) / 10000
+              }
+            }
+            this.tableData.push(item)
+          })
+        })
+
+        this.totalCount = days.length
+        this.listLoading = false
       }
-      console.log(param)
-      // fetchList(deleteNullParam(this.listQuery)).then(response => {
-      //   this.tableData = response.data
-      //   this.totalCount = response.totalCount
-      //   this.listLoading = false
-      // })
     },
 
     // 得到l零售客户列表
@@ -237,7 +128,7 @@ export default {
       const res = await fetchList({ pageNum: 1, pageSize: 1000 })
       if (res.status !== 0) return this.$message.error('获取数据失败')
       res.data.forEach(customer => {
-        if (!this.listQuery.customer) this.listQuery.customer = customer.id
+        if (!this.listQuery.customerId) this.listQuery.customerId = customer.id
         this.customerOption.push({ value: customer.id, label: customer.name })
       })
 
@@ -245,8 +136,12 @@ export default {
     },
 
     handleQuery() {},
-    handleCurrentChange() {},
-    handleSizeChange() {},
+    handleCurrentChange(page) {
+      this.listQuery.pageNum = page
+    },
+    handleSizeChange(size) {
+      this.listQuery.pageSize = size
+    },
     // 搜索
     handleFilter() {
       console.log('handleFilter', arguments)
