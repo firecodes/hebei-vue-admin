@@ -5,10 +5,10 @@
       <div class="map">
         <div class="mapOp">
           <div class="mapOp-btn">
-            <span class="skipBtn" @click="router.go(-1)">返回河北省视图</span>
+            <span class="skipBtn" @click="$router.go(-1)">返回河北省视图</span>
           </div>
           <!-- 显示地图 -->
-          <hebei-map :chart-data="mapData" :tooltip-fn="mapTooltip" :hover-fn="handleHover" height="820px" />
+          <hebei-map :chart-data="mapData" :tooltip-fn="mapTooltip" :hover-fn="handleHover" height="900px" />
         </div>
       </div>
 
@@ -87,7 +87,7 @@ import HebeiMap from '@/components/Charts/HebeiMap'
 
 import { daterange1month, parseDate, getSalesChartSource } from '@/utils'
 import { areaOption } from '@/utils/options'
-import { getPlanCompletePercentCustomer, getSaleStatsCustomer, getSalesCustomerItems, getPurchaseStatsCustomer, getPlanAndRealGasCompareCustomer, getPurchaseGasPercentCustomer } from '@/api/screen/retail'
+import { getPlanCompletePercentCustomer, getSaleStatsCustomer, getSalesCustomerItems, getPurchaseStatsCustomer, getPlanAndRealGasCompareCustomer, getPurchaseGasPercentCustomer, getCustomers, getCustomerDetail } from '@/api/screen/retail'
 
 export default {
   name: 'RetailDetail',
@@ -122,8 +122,6 @@ export default {
       portionType: 'sale',
       salesPortion: [],
       buyPortion: [],
-      // 地区销售排名
-      areaSorted: [],
       daterange1month: daterange1month(),
       // 销售统计
       salesStat: [],
@@ -132,26 +130,27 @@ export default {
       // 三级单位-计划量与实际购气量对比
       planAndRealGasCompare: [],
       areaOption,
-      mapData: []
+      mapData: [],
+      retailCustomers: []
     }
   },
   computed: {},
   watch: {
-    areaSorted: {
+    retailCustomers: {
       handler: function (val) {
         const arr = []
 
         val.forEach(item => {
-          const obj = this.areaOption.find(temp => temp.label === item.name)
-
-          const symbolSize = Math.round(item.quantity) / 50
+          const symbolSize = item.quantity / 8
           arr.push({
             name: item.name,
-            value: [obj.lng, obj.lat, symbolSize > 10 ? symbolSize : 10],
-            code: item.code,
-            quantity: Math.round(item.quantity),
-            huanBi: item.tongBi || 0,
-            tongBi: item.huanBi || 0,
+            code: item.id,
+            value: [item.lon, item.lat, symbolSize > 10 ? symbolSize : 10],
+            day: Math.round(item.quantity || 0),
+            month: Math.round(item.month || 0),
+            monthComplete: Math.round(item.monthComplete || 0),
+            year: Math.round(item.year || 0),
+            yearComplete: Math.round(item.yearComplete || 0),
             dataDate: item.dataDate || ''
           })
         })
@@ -162,6 +161,8 @@ export default {
   },
   created() {},
   mounted() {
+    // 得到零售客户列表
+    this.getRetailCustomers()
     // 计划完成率
     this.getPlanCompletePercent()
 
@@ -240,23 +241,35 @@ export default {
       }
     },
 
+    // 得到零售客户列表
+    async getRetailCustomers() {
+      const res = await getCustomers()
+      if (res.status === 0) {
+        this.retailCustomers = res.data
+      }
+    },
+
     // 地图tooltip
     mapTooltip(params) {
-      return `${params.name}<br/>
-            日销量：<span class="num">${params.data.quantity}</span>(万方)；<br/>
-            环比：<span class="num">${params.data.huanBi}</span>(万方)；<br/>
-            同比：<span class="num">${params.data.tongBi}</span>(万方)；`
+      return `${params.name}(${params.data.dataDate})<br/>日销量：<span class="num">${params.data.day}</span>(万方)；<br/>
+              月销量：<span class="num">${params.data.month}</span>(万方)；
+              月完成率：<span class="num">${params.data.monthComplete}</span>(%)；<br/>
+              年销量：<span class="num">${params.data.year}</span>(万方)；
+              年完成率：<span class="num">${params.data.yearComplete}</span>(%)；`
     },
     // 地图hover
     async handleHover(params) {
       if (params.componentType === 'series') {
-        const code = params.data.code
-        const item = this.areaSorted.find(item => item.code === code)
+        const name = params.data.name
+        const item = this.retailCustomers.find(item => item.name === name)
 
-        const res = await getSalesCustomerItems({ code: code })
+        const res = await getCustomerDetail(name)
         if (res.status === 0) {
-          this.$set(item, 'tongBi', Math.round(res.data.daySales.tongBi))
-          this.$set(item, 'huanBi', Math.round(res.data.daySales.huanBi))
+          this.$set(item, 'quantity', res.data.daySales.quantity)
+          this.$set(item, 'month', Math.round(res.data.monthSales.quantity))
+          this.$set(item, 'monthComplete', Math.round(res.data.monthSales.completePercent))
+          this.$set(item, 'year', res.data.yearSales.quantity)
+          this.$set(item, 'yearComplete', res.data.yearSales.completePercent)
           this.$set(item, 'dataDate', res.data.dataDate)
         }
       }

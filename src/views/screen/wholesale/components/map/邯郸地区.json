@@ -1,0 +1,27 @@
+{
+	"type": "FeatureCollection",
+	"UTF8Encoding": true,
+	"features": [{
+			"type": "Feature",
+			"id": "1304",
+			"properties": {
+				"name": "邯郸市",
+				"cp": [
+					114.4775,
+					36.535
+				],
+				"childNum": 18
+			},
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					"@@bVKlVnInm@@akVnK@al@nmlLVUXaVKôLKlbIVWXKVL²aJnU@lV@VVĢbÆx²I°°@aÞbÞ@lkkaVUlWnI@@V`ÞIVXKmnk@yInUĊKÇkUUamUUk@aU@Uk@WUwVkVJVkkw°a@mK@UX@VVLVW@wwVa@¯Xm@@lUIWaU@UWkXWmU@UwmUkKmn@lkV²VaULUVmJUUUwLma@UmkIUmLmVmx@bLUamKÅL@VmbkU¯KÝamzkJUb±VkbL@lU@WIkJzkKmKnUalWkkKW@@nkbk@WW¯XUVUJ@XlJ@X@XlWLkU`VUnaWaUV@UVIaUxUUmVK@I@W@ÇU@@U@b@nmKXmx@UxkVWUX@`VLlL@`zXÝb@b@VUVkIUJVz°KVlnLlKnLxlLVVUVlXUJ@nnI@mVUlbn@@m@bVnV"
+				],
+				"encodeOffsets": [[
+						116528,
+						37885
+					]
+				]
+			}
+		}]
+}

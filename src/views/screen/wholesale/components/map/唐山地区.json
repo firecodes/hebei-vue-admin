@@ -1,0 +1,29 @@
+{
+	"type": "FeatureCollection",
+	"UTF8Encoding": true,
+	"features": [
+		{
+			"type": "Feature",
+			"id": "1302",
+			"properties": {
+				"name": "唐山市",
+				"cp": [
+					118.4766,
+					39.6826
+				],
+				"childNum": 11
+			},
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					"@@@VVl@²lJUVVbČVVb@@InV@VnXxJXbxUL@bLl@VlI@WnkKV@VXnJ@IJla°IWLVVnkmaUçWVkôaÜ¯@nV°wnJlaV@VUnUUaW¯wXWWwna@£UaWKU¯¯@aVUkKUamUUn»anIVwUWlk@LlWVakU@K_lbÞU°@y°n@KÈkWWţ¥ĉōkġWUw¯£¯Çwţw@kK@k¥ÝwÅbÇ¤ÛťVlW°@ĸx@VVVULVLkl@V@X`Ub@Xm@UWbk@ÆVbnLWV@lnXUbl@X¯lmUVkKWLkK@_UK@U@UmmUxmVXLWVULkU@`W@ULUK@XlJXzV@@xml@VU@UX@Kk@WbUK@Xn`XmJnmkxUVbUVlVVxUbV@nKlLkVKÞbVKXI°KVmVUIUKULVxVJVLkV@V@UbU@WUU@UbUK@b@nV@VkLmb@b"
+				],
+				"encodeOffsets": [[
+						120398,
+						41159
+					]
+				]
+			}
+		}
+	]
+}

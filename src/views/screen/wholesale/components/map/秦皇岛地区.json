@@ -1,0 +1,29 @@
+{
+	"type": "FeatureCollection",
+	"UTF8Encoding": true,
+	"features": [
+		{
+			"type": "Feature",
+			"id": "1303",
+			"properties": {
+				"name": "秦皇岛市",
+				"cp": [
+					119.2126,
+					40.0232
+				],
+				"childNum": 5
+			},
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					"@@lnV@Xbkx@lU@@LUVlVLVbnlaLXVVnlIVUJV@UnĊ¦lab@nJ°UmV@wn@VUJVI°bnWlXnWVLVK²bakklI@aUaVUwVUUalaVwnUVak¥X@WkLVÓmmUK@_lW@n_UK@alÅ@ğÅƑŃÝm@ÑţÇlL@¯mz¯@ÝVak`@LlVUbkXK@klVXUxJmbm¼VnVVblLUV@b°V°XLVb@¤mbXxWX°xXVbmVUVU@kbmI¯xmU@Û°óbUl"
+				],
+				"encodeOffsets": [[
+						121411,
+						41254
+					]
+				]
+			}
+		}
+	]
+}

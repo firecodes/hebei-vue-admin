@@ -1,0 +1,27 @@
+{
+	"type": "FeatureCollection",
+	"UTF8Encoding": true,
+	"features": [{
+			"type": "Feature",
+			"id": "1306",
+			"properties": {
+				"name": "保定市",
+				"cp": [
+					115.0488,
+					39.0948
+				],
+				"childNum": 23
+			},
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					"@@VbXW@@UlV@xVLXKWU²LVVWLalVnwV@@bn@bVVllUnb@lxÈ@laV@aXV@bXxJnV@VVb@nnl@nJ@bll@aU_VWUwVUkUmUkb±mVwU@VIUW@UWk@VU@ynLm@IV@bnKLVaVmnIlaXwV@@WVL°@@xnX@V`V@VbUVVLVKnwnL@ll@@_V@VVnaÆ@KVXÆ@n@wKmUWm@km@kÜKXU@ÑW±nIUwVKla@I°wU±kkmm¯m_JnawW@IVaUama@wUmU@mVw@aXk@mWa@£km@a_kVmUnWW@¯bkUmk@VÇm@@kUUKUU@UVUamVUaWIkb@xU@@amUkKVkam@@kVUkUWmKmUkLUb@xmJU@UImVÛVmnUwJU@VX@UWm@Ub°¦UmxklmX@`ULU@@UW@@xkn¯@makVUmxUb°lUbUbnUJUUVaLkbUUJUU@mUUUJka@xUIWJUnJ@Vz@kb@`@bln@lb@X@@@XlbnbVb@VJlInlbVw@UKl@lbnan@VbJôLnUzlV@lÈLVbVK@LVxVWXX`WxXzbV`UXV¤nx@bVlVnVlUL"
+				],
+				"encodeOffsets": [[
+						117304,
+						40512
+					]
+				]
+			}
+		}]
+}

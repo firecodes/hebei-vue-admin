@@ -1,0 +1,29 @@
+{
+	"type": "FeatureCollection",
+	"UTF8Encoding": true,
+	"features": [
+		{
+			"type": "Feature",
+			"id": "1311",
+			"properties": {
+				"name": "衡水市",
+				"cp": [
+					115.8838,
+					37.7161
+				],
+				"childNum": 11
+			},
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					"@@KVlV@X°xb@VnnmbVXblb@VkL@lV@Vbn@@l@XX@bWVXlmXnlVV@@VUbK¯LUl@nmbV¤n@lLXnlVUV@ln@lbUlLnV@bV@@wlaXJVbnUVbVU@VVLVVn@VVX@@UKXUU@wUK@UwVnk@UUWlkV@aUVUÆ`X_w@mlU@anUmK@UXal¥UmÈLVbVxVLabVW@nXUVnV°UŤV@U¯Um@U@@UUaWVUmUUU@k£VwW@wW@XKIUa@wU@@al@UK@_mKXKbUU@aVKm@Xm±@kbÇakLğVaUw@a@mkUJk@ykw@£WX@lknk@WVkbUVnUVL@mVkI@JUbI@JXbXllkLUmLmbV`kLx¯LkVUV@VôXkVVLVV@xVUbW@KxlL¯kV`UnV¦°@"
+				],
+				"encodeOffsets": [[
+						118024,
+						38549
+					]
+				]
+			}
+		}
+	]
+}

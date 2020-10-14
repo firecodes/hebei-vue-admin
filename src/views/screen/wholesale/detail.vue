@@ -5,19 +5,19 @@
       <div class="map">
         <div class="mapOp">
           <div class="mapOp-btn">
-            <span class="skipBtn" @click="router.go(-1)">返回河北省视图</span>
+            <span class="skipBtn" @click="$router.go(-1)">返回河北省视图</span>
           </div>
           <!-- 显示地图 -->
-          <hebei-map :chart-data="mapData" :tooltip-fn="mapTooltip" :hover-fn="handleHover" :click-fn="handleClick" height="820px" />
+          <hebei-city-map :chart-data="mapData" :city="area" :tooltip-fn="mapTooltip" :hover-fn="handleHover" height="900px" />
         </div>
       </div>
 
       <!-- 四个角的三角形 -->
       <div class="angel">
-        <img class="img1" src="~@/assets/img/screen/angle.png" alt>
-        <img class="img2" src="~@/assets/img/screen/angle.png" alt>
-        <img class="img3" src="~@/assets/img/screen/angle.png" alt>
-        <img class="img4" src="~@/assets/img/screen/angle.png" alt>
+        <img class="img1" src="~@/assets/img/screen/angle.png" alt />
+        <img class="img2" src="~@/assets/img/screen/angle.png" alt />
+        <img class="img3" src="~@/assets/img/screen/angle.png" alt />
+        <img class="img4" src="~@/assets/img/screen/angle.png" alt />
       </div>
     </div>
     <div class="container-right">
@@ -30,10 +30,10 @@
           <ul class="weather w-100">
             <li v-for="(item, index) in weatherData" :key="item.date" :class="index === 0 ? 'active' : ''">
               <div>
-                <strong v-text="item.ymd" /><br>
-                <span v-text="item.week" /><br>
-                <span v-text="item.type" /><br>
-                <span v-text="item.fx" /><br>
+                <strong v-text="item.ymd" /><br />
+                <span v-text="item.week" /><br />
+                <span v-text="item.type" /><br />
+                <span v-text="item.fx" /><br />
               </div>
             </li>
           </ul>
@@ -91,13 +91,14 @@
 import SalesChart from '@/components/Charts/SalesChart'
 import PieChart from '@/components/Charts/PieChart'
 import BasicChart from '@/components/Charts/BasicChart'
-import HebeiMap from '@/components/Charts/HebeiMap'
+import HebeiCityMap from './components/HebeiCityMap'
 import weatherChart from './components/weatherChart'
 
 import { daterange1month, parseDate, getSalesChartSource } from '@/utils'
 import { areaOption } from '@/utils/options'
-import { getSalesAreaSorted, getSalesAreaCustomerSorted, getSalesArea, getSalesStat, getSalesCustomerItems } from '@/api/screen/wholesales'
+import { getSalesAreaSorted, getSalesAreaCustomerSorted, getSalesArea, getSalesStat, getSalesCustomerItems, getSalesCustomer } from '@/api/screen/wholesales'
 import { getWeather } from '@/api/screen/weather'
+import { fetchList as getPipelineCustomer } from '@/api/customer/pipeline'
 
 export default {
   name: 'WholesaleDetail',
@@ -106,7 +107,7 @@ export default {
     PieChart,
     BasicChart,
     weatherChart,
-    HebeiMap
+    HebeiCityMap
   },
   props: {},
   data() {
@@ -138,7 +139,8 @@ export default {
       // 销售统计
       salesStat: [],
       areaOption,
-      mapData: []
+      mapData: [],
+      pipelineCustomer: []
     }
   },
   computed: {
@@ -185,28 +187,26 @@ export default {
     }
   },
   watch: {
-    areaSorted: {
-      handler: function(val) {
-        const arr = []
-
-        val.forEach(item => {
-          const obj = this.areaOption.find(temp => temp.label === item.name)
-
-          const symbolSize = Math.round(item.quantity) / 50
-          arr.push({
-            name: item.name,
-            value: [obj.lng, obj.lat, symbolSize > 10 ? symbolSize : 10],
-            code: item.code,
-            quantity: Math.round(item.quantity),
-            huanBi: item.tongBi || 0,
-            tongBi: item.huanBi || 0,
-            dataDate: item.dataDate || ''
-          })
-        })
-        this.mapData = arr
-      },
-      deep: true
-    }
+    // areaSorted: {
+    //   handler: function (val) {
+    //     const arr = []
+    //     val.forEach(item => {
+    //       const obj = this.areaOption.find(temp => temp.label === item.name)
+    //       const symbolSize = Math.round(item.quantity) / 50
+    //       arr.push({
+    //         name: item.name,
+    //         value: [obj.lng, obj.lat, symbolSize > 10 ? symbolSize : 10],
+    //         code: item.code,
+    //         quantity: Math.round(item.quantity),
+    //         huanBi: item.tongBi || 0,
+    //         tongBi: item.huanBi || 0,
+    //         dataDate: item.dataDate || ''
+    //       })
+    //     })
+    //     this.mapData = arr
+    //   },
+    //   deep: true
+    // }
   },
   created() {},
   mounted() {
@@ -215,11 +215,33 @@ export default {
     // 地区销售排名
     this.getSalesAreaSorted()
     // 客户销售排名
-    this.getSalesAreaCustomerSorted()
+
     // 销售统计
     this.getSalesArea()
     // 日均合同/计划日均/今日量
     this.getSalesCustomerItems()
+
+    // 得到地图数据
+    Promise.all([this.getSalesAreaCustomerSorted(), this.getPipelineCustomer()]).then(() => {
+      const obj = {}
+      this.pipelineCustomer.forEach(customer => {
+        obj[customer.name] = customer
+      })
+
+      this.customerSorted.forEach(customer => {
+        const symbolSize = Math.round(customer.quantity) / 10
+        const item = obj[customer.name]
+        this.mapData.push({
+          code: item.id,
+          name: customer.name,
+          value: [item.lon, item.lat, symbolSize > 10 ? symbolSize : 10],
+          quantity: Math.round(customer.quantity),
+          tongBi: 0,
+          huanBi: 0,
+          dataDate: ''
+        })
+      })
+    })
   },
   methods: {
     // 天气数据
@@ -228,6 +250,16 @@ export default {
       const res = await getWeather(this.areaCode[this.area])
       if (res.status === 200) {
         this.weatherData = res.data.forecast.slice(0, 5)
+      }
+    },
+    // 根据地区得到管道气各户
+    async getPipelineCustomer() {
+      const res = await getPipelineCustomer({
+        pageSize: 1000,
+        code: this.code
+      })
+      if (res.status === 0) {
+        this.pipelineCustomer = res.data
       }
     },
     // 客户销售排名
@@ -267,7 +299,7 @@ export default {
 
     // 地图tooltip
     mapTooltip(params) {
-      return `${params.name}<br/>
+      return `${params.name}(${params.data.dataDate})<br/>
             日销量：<span class="num">${params.data.quantity}</span>(万方)；<br/>
             环比：<span class="num">${params.data.huanBi}</span>(万方)；<br/>
             同比：<span class="num">${params.data.tongBi}</span>(万方)；`
@@ -276,20 +308,14 @@ export default {
     async handleHover(params) {
       if (params.componentType === 'series') {
         const code = params.data.code
-        const item = this.areaSorted.find(item => item.code === code)
+        const customer = this.mapData.find(item => item.code === code)
 
-        const res = await getSalesCustomerItems({ code: code })
+        const res = await getSalesCustomer(code)
         if (res.status === 0) {
-          this.$set(item, 'tongBi', Math.round(res.data.daySales.tongBi))
-          this.$set(item, 'huanBi', Math.round(res.data.daySales.huanBi))
-          this.$set(item, 'dataDate', res.data.dataDate)
+          customer.tongBi = Math.round(res.data.daySales.tongBi)
+          customer.huanBi = Math.round(res.data.daySales.huanBi)
+          customer.dataDate = res.data.dataDate || ''
         }
-      }
-    },
-    handleClick(params) {
-      if (params.componentType === 'series') {
-        this.$router.push({ path: `/screen/wholesale/detail/${params.name}/${params.data.code}` })
-        //  location.href = '../../html/bigscreen/wholesale_detail.html?area=' + params.name + '&code=' + params.data.index
       }
     }
   }

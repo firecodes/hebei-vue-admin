@@ -1,0 +1,27 @@
+{
+	"type": "FeatureCollection",
+	"UTF8Encoding": true,
+	"features": [{
+			"type": "Feature",
+			"id": "1301",
+			"properties": {
+				"name": "石家庄市",
+				"cp": [
+					114.4995,
+					38.1006
+				],
+				"childNum": 19
+			},
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					"@@la@y@UImVXIVJw@lbIVVnV@VVIVVlaKbVUVVImVaaVk¯VanwVlUnb°@lm@wX@@VV@VK@_nWlknwV¯¥Van@VX@W@UVIVxnmÜUnUVJV@nI@wValKnV@kmU£na@mVk°KLVa@UU@UmknWWkXU@aWW@@km@UaU@@klK@UkaWaUnamm@Ua¯wWU@UkL@Un@xVlUXVJUbLmU@aUWUkmKkLUUm@mWXammkkWUm@@U¯JUUmkU¯@mKĉxÝwÝ¥LUómwkUUUWVkKmkKmLXlxVLVxXJ@nVJnz@VWL@`nX@x@kVUUmJmIXxJVnUV@UVV@LU`UXVVlXL@l@b@VmX@bxn°UbkKWLXlW@@bKmKULmakLUlmb@Xb@xmXU`Vb@`lLx@nWVXL@°WlXnlbKVKXVb@X@l_lJ@V@XnI"
+				],
+				"encodeOffsets": [[
+						116562,
+						39691
+					]
+				]
+			}
+		}]
+}

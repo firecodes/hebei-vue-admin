@@ -6,15 +6,15 @@
       <panel-group :cards="cards" />
       <div class="map">
         <!-- 显示地图 -->
-        <hebei-map :chart-data="mapData" :tooltip-fn="mapTooltip" :symbol-size="1" height="820px" />
+        <hebei-map :chart-data="mapData" :tooltip-fn="mapTooltip" :symbol-size="1" height="840px" />
       </div>
 
       <!-- 四个角的三角形 -->
       <div class="angel">
-        <img class="img1" src="~@/assets/img/screen/angle.png" alt>
-        <img class="img2" src="~@/assets/img/screen/angle.png" alt>
-        <img class="img3" src="~@/assets/img/screen/angle.png" alt>
-        <img class="img4" src="~@/assets/img/screen/angle.png" alt>
+        <img class="img1" src="~@/assets/img/screen/angle.png" alt />
+        <img class="img2" src="~@/assets/img/screen/angle.png" alt />
+        <img class="img3" src="~@/assets/img/screen/angle.png" alt />
+        <img class="img4" src="~@/assets/img/screen/angle.png" alt />
       </div>
     </div>
     <div class="container-right">
@@ -234,8 +234,7 @@ export default {
       return arr
     }
   },
-  watch: {
-  },
+  watch: {},
   created() {},
   mounted() {
     // 得到卡片数据

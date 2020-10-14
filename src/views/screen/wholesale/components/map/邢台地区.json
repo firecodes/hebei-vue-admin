@@ -1,0 +1,29 @@
+{
+	"type": "FeatureCollection",
+	"UTF8Encoding": true,
+	"features": [
+		{
+			"type": "Feature",
+			"id": "1305",
+			"properties": {
+				"name": "邢台市",
+				"cp": [
+					114.8071,
+					37.2821
+				],
+				"childNum": 18
+			},
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					"@@nKlLnlLXUVVlVnxôVKÞ¦ÞxĊwnL°@lVnVV°I@Vn@VlXnlnbWnXn@VVlKnLVlVX@bnVKVaUIVWkU@wVm@¯@U¥VmU_°lKkw@LXVaU@wUUUKlUóW@UVUUl°KwlKU_naKVnlKkkWWa@IJVa@IlJnU@KVUUmVlaXUl@lm@kXWÝÑnk±k@wğ@@U@mKĉLmVJ@zmlnWLUÝJU_@@mJkXUVlbklÝ@Ýab¯@¯±JÅwġaUU@kU@mVI±bUKLWUXJkaLóKULWbUVkKmnk@@bmLUl@b@mnmJkUULabnmn@lVV@¦n@l@bznx@`Vz@bxnV@xllbnKVx"
+				],
+				"encodeOffsets": [[
+						116764,
+						38346
+					]
+				]
+			}
+		}
+	]
+}

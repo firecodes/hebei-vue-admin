@@ -1,0 +1,37 @@
+{
+	"type": "FeatureCollection",
+	"UTF8Encoding": true,
+	"features": [
+		{
+			"type": "Feature",
+			"id": "1310",
+			"properties": {
+				"name": "廊坊市",
+				"cp": [
+					116.521,
+					39.0509
+				],
+				"childNum": 9
+			},
+			"geometry": {
+				"type": "MultiPolygon",
+				"coordinates": [[
+						"@@laU@UnL@VWbklWxnIVVV@XJlbUlXVbn@@KmV@@X°WVInJmn²@lmVbnL@amKV_kwlmX@@LVamaXaaVU@UnJVanLlUkaW@UaVakK@IlKUU@an@ln@alKUkIVa@a@klaUKUV@UkUV¯KVV@kUmU@@a¯ImJUU@VV@UL@U@@WXUWa@Ukwm@X@@w@al@@aVIUmVUUUVWUknK@I@l¥kU±aUUVyUw@@I@UUWm@@Uk@@nUJU@WU¯@kbWlULnÇk¼@llLl@xUnóLlkXUxV@lWbI`°nnnllV²¯x@JkbLUVxmJX²@ÒWVÛL@lln@XnnVL"
+					],[
+						"@@@kX@Valaa@KWI@UXW@WanaUIW@UaUKķk_W@UVUKU@b@UamxVXnJUbWVXLVbn@W°kb@U@Wó¼mIU¼k`V@bVbl@lX@lUôVlUIV`lXVn@lUlVn@l@UVaIUWl£UmVWU@@UUKlUUUnVL@KUnLVWUa@U"
+					]
+				],
+				"encodeOffsets": [[[
+							119037,
+							40467
+						]
+					],[[
+							119970,
+							40776
+						]
+					]
+				]
+			}
+		}
+	]
+}

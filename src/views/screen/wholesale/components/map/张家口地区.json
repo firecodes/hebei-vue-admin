@@ -1,0 +1,27 @@
+{
+	"type": "FeatureCollection",
+	"UTF8Encoding": true,
+	"features": [{
+			"type": "Feature",
+			"id": "1307",
+			"properties": {
+				"name": "张家口市",
+				"cp": [
+					115.1477,
+					40.8527
+				],
+				"childNum": 15
+			},
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					"@@kġÛal¥@wn@nml¹UWlaVknUVKla@U@_ma@¥WwnaUwnmw@KXaVUVaUnmWUk°lnUVUXWVwIWVóKUI@WXxUU@mma@kUKWLkw@yk@aVkUUċaUU@Wk@Unm@UVmLm±IUkJkW@aI@m@UVUla@VXVXmVwnkWKKU_k@m¥mX_JmnU@km@U@KmUVU@U@Umk@@LmW@Û£Wka@wk@aI@mmk@mUa@UmUIwW@aWUbU@kbÇ@kw@makVUkU@am@aU@mxkUbKUXU±KXVWLUK@wkU@V@WXUa@WbUxJI@¦VèVVX@±ê¯KUI`¯UULVx@V@UKIVkLmVkKm@nUJÝbkIUJVXVVxVbUVJUn°bVmlU°XnK@Ul@lVÈVUXx@W@VXVKÞbn@VnbVm`UxkW@UVkLKm¼@lUnUJVnVXV@Vm@@LVklIkl@VWlULWKUL@mJ@blbUVUlmzUJUxm@UUbċÜk@Ub@VLVV¦ôbVmUKUkU@m@VlVn¼WbUJ¯@@°nIllÈl@nXWlLkJ@bkxlxkxlXUlklJXL@bWn`@nÆXxlL@xl@XbLKlVlIXblVUbUJW@lX@VL@VVXJwn@WnL°KbVbl@VI@K@U@nmVmV@XUWI@aXm@VUUkWmn@lmUUk@mUmK@UnwVĉ@mU_V@XJôVVULVUn@llUnJl_n@ml@XlLlw²LVJUL@VmbVblVXmVnl@Ť¦nn@Ü@bl@@XV`Unb@VlLVb²JXn¥ÆÑ@¥Þ@"
+				],
+				"encodeOffsets": [[
+						118868,
+						42784
+					]
+				]
+			}
+		}]
+}

@@ -1,0 +1,29 @@
+{
+	"type": "FeatureCollection",
+	"UTF8Encoding": true,
+	"features": [
+		{
+			"type": "Feature",
+			"id": "1309",
+			"properties": {
+				"name": "沧州市",
+				"cp": [
+					116.8286,
+					38.2104
+				],
+				"childNum": 15
+			},
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					"@@@ln@UÈl@Vnl°aX@mXnVlU`@bln@¤Xb@nWl@bUx@nnVV@xnbVbUb@JXxbmXa@kUVwlWkKôVm@wkkK@kl»ÈmVKXkla°@XVV@VI@ml@@Vn@VX@V@J@VxUzVV²blVk¦@Ġ@@»@VK@VÈLlK@XnJ@alIUlaVVb@n@aU@WUIV@mUn@mKXml@lL@LnWb@XV@@aVVbV@VVIVWÈbIÈ»ƒǟlWaVUÅUUm@kVUWVkaUwmaóUJUU¯ÑU¥mk¯UaKÅnÇyóXmWÛX¯aċbÛaJWÝU¯»aóóUm@IVVl@bLUJWLX@@xXUxl¤V@VnVUVXVbV@@@VVn°V@ţU¯VUmUWV@mUXabUKUwUaÇKnVk¦Wb@VnLmV@bkV@nxW`Å_UVV@bUklVX@VmlUx@VVL@xVWVL@VW@UUm@"
+				],
+				"encodeOffsets": [[
+						118485,
+						39280
+					]
+				]
+			}
+		}
+	]
+}

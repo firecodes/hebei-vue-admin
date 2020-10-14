@@ -5,7 +5,7 @@
       <!-- 3个card -->
       <div class="map">
         <!-- 显示地图 -->
-        <hebei-map :chart-data="mapData" :tooltip-fn="mapTooltip" :hover-fn="handleHover" height="880px" />
+        <hebei-map :chart-data="mapData" :tooltip-fn="mapTooltip" :hover-fn="handleHover" height="840px" />
       </div>
 
       <!-- 四个角的三角形 -->
