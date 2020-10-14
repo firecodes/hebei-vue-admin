@@ -1,5 +1,5 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" />
+  <div :style="{ height: height, width: width }" />
 </template>
 
 <script>
@@ -10,25 +10,17 @@ import resize from '@/mixins/resize'
 export default {
   mixins: [resize],
   props: {
-    className: {
-      type: String,
-      default: 'chart'
-    },
     width: {
       type: String,
       default: '100%'
     },
     height: {
       type: String,
-      default: '350px'
-    },
-    autoResize: {
-      type: Boolean,
-      default: true
+      default: '260px'
     },
     chartData: {
       type: Array,
-      required: true
+      default: () => []
     },
     color: {
       type: Array,
@@ -36,7 +28,19 @@ export default {
     },
     mainColor: {
       type: String,
-      default: '#333'
+      default: '#fff'
+    },
+    unit: {
+      type: String,
+      default: '万方'
+    },
+    type: {
+      type: String,
+      default: 'line'
+    },
+    rotate: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -70,22 +74,31 @@ export default {
       this.setOptions(this.chartData)
     },
     setOptions(source) {
-      console.log(source)
+      const showLegend = !!(source.length && source[0].length > 2)
       const option = {
         textStyle: { color: this.mainColor },
-        legend: { data: source[0], textStyle: { color: this.mainColor } },
+        legend: { show: showLegend, textStyle: { color: this.mainColor } },
         tooltip: { trigger: 'axis' },
         color: this.color,
         dataset: { source },
         grid: { left: 20, right: 10, bottom: 20, top: 30, containLabel: true },
-        xAxis: { type: 'category', axisTick: { alignWithLabel: true }, axisLine: { lineStyle: { color: this.mainColor } } },
-        yAxis: { name: '单位：元/立方米', splitLine: { show: false }, scale: true, axisLine: { lineStyle: { color: this.mainColor } } },
+        xAxis: {
+          type: 'category',
+          axisTick: { alignWithLabel: true },
+          axisLine: {
+            lineStyle: { color: this.mainColor }
+          },
+          axisLabel: { rotate: this.rotate }
+        },
+        yAxis: { name: this.unit, splitLine: { show: false }, axisLine: { lineStyle: { color: this.mainColor } } },
         series: []
       }
-      for (let i = 0; i < source[0].length - 1; i++) {
-        option.series.push({ type: 'line' })
+      if (source.length) {
+        for (let i = 0; i < source[0].length - 1; i++) {
+          option.series.push({ type: this.type, smooth: true })
+        }
       }
-      this.chart.setOption(option)
+      this.chart.setOption(option, true)
     }
   }
 }

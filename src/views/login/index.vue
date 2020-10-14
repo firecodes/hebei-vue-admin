@@ -1,13 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
-      auto-complete="on"
-      label-position="left"
-    >
+    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
       <div class="title-container">
         <h3 class="title">河北分公司销售管理系统</h3>
       </div>
@@ -16,44 +9,20 @@
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input
-          ref="mobile"
-          v-model="loginForm.mobile"
-          placeholder="请输入登录账号"
-          name="mobile"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
+        <el-input ref="mobile" v-model="loginForm.mobile" placeholder="请输入登录账号" name="mobile" type="text" tabindex="1" auto-complete="on" />
       </el-form-item>
       <!-- 密码 -->
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="请输入密码"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
+        <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="请输入密码" name="password" tabindex="2" auto-complete="on" @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
       <!-- 登录按钮 -->
-      <el-button
-        :loading="loading"
-        type="primary"
-        size="large"
-        style="width:100%"
-        @click.native.prevent="handleLogin"
-      >登 录</el-button>
+      <el-button :loading="loading" type="primary" size="large" style="width: 100%" @click.native.prevent="handleLogin">登 录</el-button>
     </el-form>
   </div>
 </template>
@@ -93,7 +62,7 @@ export default {
           this.$store
             .dispatch('user/login', this.loginForm)
             .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
+              this.$router.push({ path: this.redirect || '/pc/home' })
               this.loading = false
             })
             .catch(() => {

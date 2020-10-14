@@ -2,8 +2,8 @@
   <div class="container screen">
     <div class="chart-wrapper map-wrapper">
       <!-- 显示管线 -->
-      <div class="guanxiantu">
-        <div class="guanxiantu-btn">
+      <div class="mapOp">
+        <div class="mapOp-btn">
           <span class="skipBtn" @click="dialogVisible = true">主要分布情况</span>
           <span class="skipBtn" @click="reset">最初大小</span>
         </div>
@@ -259,10 +259,10 @@ table thead tr {
   .map-wrapper {
     text-align: center;
     position: relative;
-    .guanxiantu {
+    .mapOp {
       // padding: 0 15px;
       // position: relative;
-      .guanxiantu-btn {
+      .mapOp-btn {
         padding-right: 15px;
       }
 
@@ -270,7 +270,7 @@ table thead tr {
         position: absolute;
         text-align: center;
         font-size: 40px;
-        line-height: 60px;
+        line-height: 66px;
         text-shadow: 0 0 5px #ffffff;
         margin: 0;
         font-weight: 400;

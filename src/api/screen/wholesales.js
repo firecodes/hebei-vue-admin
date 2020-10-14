@@ -17,10 +17,11 @@ export function getSalesCustomerItems(code) {
 }
 
 // 地区销售数据
-export function getSalesArea(code) {
+export function getSalesArea(code, query) {
   return request({
     url: `/api/screen/wholesales/sales/area/${code}`,
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }
 
@@ -81,4 +82,3 @@ export function getSalesStat(query) {
     params: query
   })
 }
-

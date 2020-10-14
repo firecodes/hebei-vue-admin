@@ -20,7 +20,7 @@ export default {
     },
     height: {
       type: String,
-      default: '300px'
+      default: '260px'
     },
     chartData: {
       type: Array,
@@ -30,7 +30,7 @@ export default {
       type: String,
       default: '销售量'
     },
-    showlabel: {
+    showLabel: {
       type: Boolean,
       default: false
     },
@@ -41,7 +41,8 @@ export default {
     title: {
       type: String,
       default: ''
-    }
+    },
+    showLegend: { type: Boolean, default: false }
   },
   data() {
     return {
@@ -78,14 +79,22 @@ export default {
           left: 'center'
         },
         tooltip: { trigger: 'item', formatter: '{a} <br/>{b}: {c}万方 ({d}%)' },
-        legend: { left: 'center', top: 'bottom', show: false },
+        legend: {
+          right: 10,
+          top: 'center',
+          show: this.showLegend,
+          orient: 'vertical',
+          textStyle: {
+            color: '#fff'
+          }
+        },
         series: [
           {
             name: this.seriesName,
             type: 'pie',
             radius: ['40%', '60%'],
             avoidLabelOverlap: true,
-            label: { show: this.showlabel, position: this.labelPosition },
+            label: { show: this.showLabel, position: this.labelPosition },
             emphasis: { label: { show: true, fontSize: '14' } },
             data: this.chartData
           }

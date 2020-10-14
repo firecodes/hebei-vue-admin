@@ -1,43 +1,21 @@
 <template>
   <div class="navbar">
     <div class="navbar-left">
-      <div
-        class="nav-item"
-        :class="{ active: path==='/screen/home'}"
-        @click="$router.push('/screen/home')"
-      >
-        <i class="el-icon-s-home" /> 首页
-      </div>
+      <div class="nav-item" :class="{ active: path === '/screen/home' }" @click="$router.push('/screen/home')"><i class="el-icon-s-home" /> 首页</div>
     </div>
     <div class="navbar-mid">
       <div class="navbar-mid-wrap">
-        <div
-          class="nav-item"
-          :class="{ active: path==='/screen/wholesale' || path==='/screen/wholesale/detail'}"
-          @click="$router.push('/screen/wholesale')"
-        >
+        <div class="nav-item" :class="{ active: path.startsWith('/screen/wholesale') }" @click="$router.push('/screen/wholesale')">
           <span>批发业务</span>
         </div>
-        <div
-          class="nav-item"
-          :class="{ active: path==='/screen/retail' || path==='/screen/retail/detail'}"
-          @click="$router.push('/screen/retail')"
-        >
+        <div class="nav-item" :class="{ active: path.startsWith('/screen/retail') }" @click="$router.push('/screen/retail')">
           <span>零售业务</span>
         </div>
         <h1>河北分公司销售管理系统</h1>
-        <div
-          class="nav-item"
-          :class="{ active: path==='/screen/customer'}"
-          @click="$router.push('/screen/customer')"
-        >
+        <div class="nav-item" :class="{ active: path === '/screen/customer' }" @click="$router.push('/screen/customer')">
           <span>客户情况</span>
         </div>
-        <div
-          class="nav-item"
-          :class="{ active: path==='/screen/price'}"
-          @click="$router.push('/screen/price')"
-        >
+        <div class="nav-item" :class="{ active: path === '/screen/price' }" @click="$router.push('/screen/price')">
           <span>价格分析</span>
         </div>
       </div>

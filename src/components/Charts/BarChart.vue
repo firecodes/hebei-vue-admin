@@ -32,11 +32,19 @@ export default {
     },
     color: {
       type: Array,
-      default: () => ['#4fa1fd', '#fed85c']
+      default: () => ['#2ec7c9', '#b6a2de', '#5ab1ef']
     },
     mainColor: {
       type: String,
       default: '#fff'
+    },
+    rotate: {
+      type: Number,
+      default: 0
+    },
+    unit: {
+      type: String,
+      default: '万方'
     }
   },
   data() {
@@ -70,24 +78,29 @@ export default {
       this.setOptions(this.chartData)
     },
     setOptions(source) {
-      this.chart.setOption({
-        legend: { data: ['日销量', '同比'], textStyle: { color: this.mainColor } },
-        tooltip: { trigger: 'axis' },
+      console.log(source)
+      const option = {
         textStyle: { color: this.mainColor },
+        legend: { data: source[0], textStyle: { color: this.mainColor } },
+        tooltip: { trigger: 'axis' },
         color: this.color,
         dataset: { source },
-
-        grid: { left: 10, right: 10, bottom: 20, top: 30, containLabel: true },
-        xAxis: { type: 'category', axisTick: { alignWithLabel: true }, axisLine: { lineStyle: { color: this.mainColor } } },
-        yAxis: [
-          { name: '万方', splitLine: { show: false }, scale: true, axisLine: { lineStyle: { color: this.mainColor } } },
-          { name: '万方', splitLine: { show: false }, scale: true, axisLine: { lineStyle: { color: this.mainColor } } }
-        ],
-        series: [
-          { type: 'bar', barMaxWidth: '20' },
-          { type: 'line', yAxisIndex: 1 }
-        ]
-      })
+        grid: { left: 20, right: 10, bottom: 20, top: 30, containLabel: true },
+        xAxis: {
+          type: 'category',
+          axisTick: { alignWithLabel: true },
+          axisLine: {
+            lineStyle: { color: this.mainColor }
+          },
+          axisLabel: { rotate: this.rotate }
+        },
+        yAxis: { name: '单位：' + this.unit, splitLine: { show: false }, scale: true, axisLine: { lineStyle: { color: this.mainColor } } },
+        series: []
+      }
+      for (let i = 0; i < source[0].length - 1; i++) {
+        option.series.push({ type: 'bar', smooth: true })
+      }
+      this.chart.setOption(option)
     }
   }
 }

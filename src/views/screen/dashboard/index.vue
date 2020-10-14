@@ -8,8 +8,8 @@
         <!-- 显示地图 -->
         <china-map v-show="!showGuangxian" :cards="cards" :height="'800px'" :cb="handleMapClick" />
         <!-- 显示管线 -->
-        <div v-show="showGuangxian" class="guanxiantu">
-          <div class="guanxiantu-btn">
+        <div v-show="showGuangxian" class="mapOp">
+          <div class="mapOp-btn">
             <span class="skipBtn" @click="showGuangxian = false">返回首页</span>
             <span class="skipBtn" @click="handleEnlarge">放大</span>
           </div>
@@ -37,7 +37,7 @@
             <span :class="{ active: salesType === 'resales' }" @click="salesType = 'resales'">零售业务</span>
           </div>
         </div>
-        <sales-chart :chart-data="salesType === 'wholesales' ? wholesalesStat : resalesStat" :height="'260px'" :main-color="'#fff'" :color="['#d9b03c', '#29c2bf']" />
+        <sales-chart :chart-data="salesType === 'wholesales' ? wholesalesStat : resalesStat" :height="'260px'" :color="['#d9b03c', '#29c2bf']" />
       </div>
       <!-- 销售占比 -->
       <div class="chart-wrapper mb-1">
@@ -55,7 +55,7 @@
             <span :class="{ active: priceType === 'retail' }" @click="priceType = 'retail'">零售</span>
           </div>
         </div>
-        <price-chart :chart-data="priceType === 'gate' ? gatePrice : retailprice" :height="'267px'" :main-color="'#fff'" :color="['#29c3be', '#5d62b5', '#fdc931']" />
+        <basic-chart :chart-data="priceType === 'gate' ? gatePrice : retailprice" :height="'267px'" :color="['#29c3be', '#5d62b5', '#fdc931']" unit="元/立方米" />
       </div>
     </div>
   </div>
@@ -63,7 +63,7 @@
 
 <script>
 import PanelGroup from './components/PanelGroup'
-import PriceChart from '@/components/Charts/PriceChart'
+import BasicChart from '@/components/Charts/BasicChart'
 import SalesChart from '@/components/Charts/SalesChart'
 import ProportionChart from '@/components/Charts/ProportionChart'
 import ChinaMap from './components/ChinaMap'
@@ -78,7 +78,7 @@ export default {
     PanelGroup,
     SalesChart,
     ProportionChart,
-    PriceChart,
+    BasicChart,
     ChinaMap
   },
   props: {},

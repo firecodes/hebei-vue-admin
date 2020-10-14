@@ -241,8 +241,8 @@ $screenBorderColor: #0f9eed;
       }
     }
 
-    .guanxiantu {
-      .guanxiantu-btn {
+    .mapOp {
+      .mapOp-btn {
         text-align: right;
         .skipBtn {
           padding: 10px;
@@ -292,7 +292,7 @@ $screenBorderColor: #0f9eed;
       .op {
         span {
           cursor: pointer;
-          // padding: 0 6px;
+          padding: 0 4px;
           &.active {
             color: #02d8e6;
           }

@@ -3,12 +3,10 @@
     <el-col :span="8" class="card-panel-col">
       <div class="card-panel item1">
         <div class="card-panel-description">
-          <div>
-            <span class="card-panel-num" v-text="cards.wholeSaleToday" />万方
-          </div>
+          <div><span class="card-panel-num" v-text="cards.wholeSale" />万方</div>
           <div class="card-panel-text">
             批发业务量(
-            <span v-text="cards.wholeSaleTodayDate" />)
+            <span v-text="cards.wholeSaleDate" />)
           </div>
         </div>
       </div>
@@ -16,12 +14,10 @@
     <el-col :span="8" class="card-panel-col">
       <div class="card-panel item2">
         <div class="card-panel-description">
-          <div>
-            <span class="card-panel-num" v-text="cards.retailToday" />万方
-          </div>
+          <div><span class="card-panel-num" v-text="cards.retail" />万方</div>
           <div class="card-panel-text">
             零售业务量(
-            <span v-text="cards.retailTodayDate" />))
+            <span v-text="cards.retailDate" />))
           </div>
         </div>
       </div>
@@ -29,9 +25,7 @@
     <el-col :span="8" class="card-panel-col">
       <div class="card-panel item3">
         <div class="card-panel-description">
-          <div>
-            <span class="card-panel-num">0</span>℃
-          </div>
+          <div><span class="card-panel-num">0</span>℃</div>
           <div class="card-panel-text">平均气温</div>
         </div>
       </div>

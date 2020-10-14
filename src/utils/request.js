@@ -4,6 +4,7 @@ import store from '@/store'
 import { getToken } from '@/utils/auth'
 
 // create an axios instance
+axios.defaults.withCredentials = true
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
@@ -47,7 +48,7 @@ service.interceptors.response.use(
     const res = response.data
 
     // if the custom status is not 20000, it is judged as an error.
-    if (res.status !== 0) {
+    if (res.status !== 0 && res.status !== 200) {
       Message({
         message: res.msg || '获取数据失败',
         type: 'error',

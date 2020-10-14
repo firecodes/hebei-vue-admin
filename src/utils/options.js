@@ -1,17 +1,18 @@
 // 区域编码
 export const areaOption = [
-  { value: 1, label: '石家庄地区' },
-  { value: 2, label: '邯郸地区' },
-  { value: 3, label: '邢台地区' },
-  { value: 4, label: '雄安地区' },
-  { value: 5, label: '衡水地区' },
-  { value: 6, label: '保定地区' },
-  { value: 7, label: '廊坊地区' },
-  { value: 8, label: '沧州地区' },
-  { value: 9, label: '张家口地区' },
-  { value: 10, label: '秦皇岛地区' },
-  { value: 11, label: '唐山地区' }
+  { value: 1, label: '石家庄地区', lng: 114.48, lat: 38.03 },
+  { value: 2, label: '邯郸地区', lng: 114.47, lat: 36.62 },
+  { value: 3, label: '邢台地区', lng: 114.48, lat: 37.05 },
+  { value: 4, label: '雄安地区', lng: 116.113523, lat: 38.99955 },
+  { value: 5, label: '衡水地区', lng: 115.72, lat: 37.72 },
+  { value: 6, label: '保定地区', lng: 115.48, lat: 38.85 },
+  { value: 7, label: '廊坊地区', lng: 116.7, lat: 39.53 },
+  { value: 8, label: '沧州地区', lng: 116.83, lat: 38.33 },
+  { value: 9, label: '张家口地区', lng: 114.87, lat: 40.82 },
+  { value: 10, label: '秦皇岛地区', lng: 119.57, lat: 39.95 },
+  { value: 11, label: '唐山地区', lng: 118.02, lat: 39.63 }
 ]
+
 // 直供工业用户编码
 export const isDirectSupplyOption = [
   { value: 1, label: '是', type: 'success' },

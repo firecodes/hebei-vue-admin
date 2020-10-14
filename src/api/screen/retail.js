@@ -1,21 +1,29 @@
 import request from '@/utils/request'
 
 // 销售数据卡片
-export function cards() {
+export function getCards() {
   return request({
     url: '/api/screen/resales/cards',
     method: 'get'
   })
 }
+// 所有零售客户级销量
+export function getCustomers() {
+  return request({
+    url: '/api/screen/resales/customers',
+    method: 'get'
+  })
+}
+
 // 计划完成率
-export function planCompletePercent() {
+export function getPlanCompletePercent() {
   return request({
     url: '/api/screen/resales/plan/completePercent',
     method: 'get'
   })
 }
 // 三级单位-计划完成率
-export function planCompletePercentCustomer(customerId) {
+export function getPlanCompletePercentCustomer(customerId) {
   return request({
     url: `/api/screen/resales/plan/completePercent/${customerId}`,
     method: 'get'
@@ -23,7 +31,7 @@ export function planCompletePercentCustomer(customerId) {
 }
 
 // 计划量与实际购气量对比
-export function planAndRealGasCompare(code) {
+export function getPlanAndRealGasCompare() {
   return request({
     url: '/api/screen/resales/planAndRealGasCompare',
     method: 'get'
@@ -31,23 +39,24 @@ export function planAndRealGasCompare(code) {
 }
 
 // 三级单位-计划量与实际购气量对比
-export function planAndRealGasCompareCustomer(customerId) {
+export function getPlanAndRealGasCompareCustomer(customerId, query) {
   return request({
     url: `/api/screen/resales/planAndRealGasCompare/${customerId}`,
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }
 
-// 购销气类型占比
-export function purchaseGasPercent(customerId) {
+// 购气类型占比
+export function getPurchaseGasPercent(customerId) {
   return request({
-    url: `/api/screen/resales/purchaseGasPercent`,
+    url: '/api/screen/resales/purchaseGasPercent',
     method: 'get'
   })
 }
 
 // 三级单位-购销气类型占比
-export function purchaseGasPercentCustomer(customerId) {
+export function getPurchaseGasPercentCustomer(customerId) {
   return request({
     url: `/api/screen/resales/purchaseGasPercent/${customerId}`,
     method: 'get'
@@ -55,45 +64,44 @@ export function purchaseGasPercentCustomer(customerId) {
 }
 
 // 总购气量统计
-export function purchaseStats(query) {
+export function getPurchaseStats(query) {
   return request({
-    url: `/api/screen/resales/purchaseStats`,
+    url: '/api/screen/resales/purchaseStats',
     method: 'get',
     params: query
   })
 }
 
 // 三级单位-总购气量统计
-export function purchaseStatsCustomer(query) {
+export function getPurchaseStatsCustomer(customerId, query) {
   return request({
-    url: `/api/screen/resales/purchaseStats/${query.customerId}`,
+    url: `/api/screen/resales/purchaseStats/${customerId}`,
     method: 'get',
     params: query
   })
 }
 
 // 客户零售明细
-export function customerDetail(name) {
+export function getCustomerDetail(name) {
   return request({
-    url: `/api/screen/resales/customerDetail/${name}`,
+    url: `/api/screen/resales/sales/customerDetail/${name}`,
     method: 'get'
   })
 }
 // 总销气量统计
-export function saleStats(query) {
+export function getSalesStat(query) {
   return request({
-    url: `/api/screen/resales/saleStats`,
+    url: '/api/screen/resales/saleStats',
     method: 'get',
     params: query
   })
 }
 
 // 三级单位 - 总销气量统计
-export function saleStatsCustomer(query) {
+export function getSaleStatsCustomer(customerId, query) {
   return request({
-    url: `/api/screen/resales/saleStats/${query.customerId}`,
+    url: `/api/screen/resales/saleStats/${customerId}`,
     method: 'get',
     params: query
   })
 }
-

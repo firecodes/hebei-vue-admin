@@ -6,25 +6,25 @@
 
         <div class="chart-wrapper">
           <h4>批发业务销售统计</h4>
-          <sales-chart :chart-data="wholesalesStat" />
+          <sales-chart :chart-data="wholesalesStat" height="350px" main-color="#333" />
         </div>
         <div class="chart-wrapper">
           <h4>零售业务销售统计</h4>
-          <sales-chart :chart-data="resalesStat" :color="['#5d62b5', '#29c3be']" />
+          <sales-chart :chart-data="resalesStat" :color="['#5d62b5', '#29c3be']" height="350px" main-color="#333" />
         </div>
       </el-col>
       <el-col :span="8">
         <div class="chart-wrapper">
           <h4>销售占比</h4>
-          <proportion-chart :chart-data="cards" :height="'260px'" />
+          <proportion-chart :chart-data="cards" />
         </div>
         <div class="chart-wrapper">
           <h4>管道天然气门站价格</h4>
-          <price-chart :chart-data="gatePrice" :height="'260px'" />
+          <basic-chart :chart-data="gatePrice" unit="元/立方米" main-color="#333" />
         </div>
         <div class="chart-wrapper">
           <h4>管道天然气零售价格</h4>
-          <price-chart :chart-data="retailprice" :height="'260px'" />
+          <basic-chart :chart-data="retailprice" unit="元/立方米" main-color="#333" />
         </div>
       </el-col>
     </el-row>
@@ -33,7 +33,7 @@
 
 <script>
 import PanelGroup from './components/PanelGroup'
-import PriceChart from '@/components/Charts/PriceChart'
+import BasicChart from '@/components/Charts/BasicChart'
 import SalesChart from '@/components/Charts/SalesChart'
 import ProportionChart from '@/components/Charts/ProportionChart'
 
@@ -47,7 +47,7 @@ export default {
     PanelGroup,
     SalesChart,
     ProportionChart,
-    PriceChart
+    BasicChart
   },
   data() {
     return {

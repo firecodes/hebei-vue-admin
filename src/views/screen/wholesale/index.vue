@@ -6,15 +6,15 @@
       <panel-group :cards="cards" />
       <div class="map">
         <!-- 显示地图 -->
-        <hebei-map :chart-data="mapData" :height="'820px'" />
+        <hebei-map :chart-data="mapData" :tooltip-fn="mapTooltip" :hover-fn="handleHover" :click-fn="handleClick" height="820px" />
       </div>
 
       <!-- 四个角的三角形 -->
       <div class="angel">
-        <img class="img1" src="~@/assets/img/screen/angle.png" alt />
-        <img class="img2" src="~@/assets/img/screen/angle.png" alt />
-        <img class="img3" src="~@/assets/img/screen/angle.png" alt />
-        <img class="img4" src="~@/assets/img/screen/angle.png" alt />
+        <img class="img1" src="~@/assets/img/screen/angle.png" alt>
+        <img class="img2" src="~@/assets/img/screen/angle.png" alt>
+        <img class="img3" src="~@/assets/img/screen/angle.png" alt>
+        <img class="img4" src="~@/assets/img/screen/angle.png" alt>
       </div>
     </div>
     <div class="container-right">
@@ -45,7 +45,7 @@
             <p>日均计划超欠：<span class="num" v-text="planCompletePercent[2].diffQuantity" /></p>
           </div>
         </div>
-        <!-- <sales-chart :chart-data="changshuStat" :height="'260px'" :main-color="'#fff'" :color="['#d9b03c', '#29c2bf']" /> -->
+        <!-- <sales-chart :chart-data="changshuStat" :color="['#d9b03c', '#29c2bf']" /> -->
       </div>
       <!-- 地区销售排名 -->
       <div class="chart-wrapper mb-1 w-49">
@@ -54,16 +54,16 @@
           <div class="op">单位：万方</div>
         </div>
         <table>
-          <tr v-for="(item, i) in areaSorted" :key="i">
-            <template v-if="i < 6">
+          <template v-for="(item, i) in areaSorted">
+            <tr v-if="i < 6" :key="i">
               <td class="index" v-text="i + 1" />
               <td class="name" v-text="item.name" />
               <td v-cloak class="num">{{ Math.round(item.quantity) }}</td>
               <td v-if="i < 5" class="index" v-text="i + 1 + 6" />
               <td v-if="i < 5" class="name" v-text="areaSorted[i + 6].name" />
               <td v-cloak v-if="i < 5" class="num">{{ Math.round(areaSorted[i + 6].quantity) }}</td>
-            </template>
-          </tr>
+            </tr>
+          </template>
         </table>
       </div>
       <!-- 管道气销售 -->
@@ -75,7 +75,7 @@
             <span :class="{ active: guandaoqiType === 'zichan' }" @click="guandaoqiType = 'zichan'">自产气</span>
           </div>
         </div>
-        <sales-chart :chart-data="guandaoqiType === 'changshu' ? changshuStat : zichanStat" :height="'260px'" :main-color="'#fff'" :color="['#d9b03c', '#29c2bf']" />
+        <sales-chart :chart-data="guandaoqiType === 'changshu' ? changshuStat : zichanStat" :color="['#d9b03c', '#29c2bf']" />
       </div>
       <!-- 销售占比 -->
       <div class="chart-wrapper mb-1 w-49">
@@ -83,8 +83,8 @@
           <h4>销售占比</h4>
         </div>
         <div class="chart-container">
-          <pie-chart :chart-data="wholesalePortion" :height="'260px'" :width="'50%'" title="批发业务销售占比" :showlabel="true" label-position="inside" />
-          <pie-chart :chart-data="areaSortedPortion" :height="'260px'" :width="'50%'" title="地区销售占比" label-position="center" />
+          <pie-chart :chart-data="wholesalePortion" width="50%" title="批发业务销售占比" :show-label="true" label-position="inside" />
+          <pie-chart :chart-data="areaSortedPortion" width="50%" title="地区销售占比" label-position="center" />
         </div>
       </div>
       <!-- 销售统计 -->
@@ -96,9 +96,10 @@
             <span :class="{ active: salesType === 'lng' }" @click="salesType = 'lng'">冀东LNG</span>
           </div>
         </div>
-        <sales-chart :chart-data="salesType === 'guandaoqi' ? guandaoStat : lngStat" :height="'260px'" :main-color="'#fff'" :color="['#d9b03c', '#29c2bf']" />
+        <sales-chart :chart-data="salesType === 'guandaoqi' ? guandaoStat : lngStat" :height="'291px'" :color="['#d9b03c', '#29c2bf']" />
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -107,12 +108,11 @@ import PanelGroup from './components/PanelGroup'
 import SalesChart from '@/components/Charts/SalesChart'
 import PieChart from '@/components/Charts/PieChart'
 import PlanChart from '@/components/Charts/PlanChart'
-import HebeiMap from './components/HebeiMap'
+import HebeiMap from '@/components/Charts/HebeiMap'
 
 import { daterange1month, parseDate, getSalesChartSource } from '@/utils'
-import { getWholesalesStat, getResalesStat } from '@/api/screen'
-import { getCards, getPlanCompletePercent, getSalesAreaSorted, getSalesPipelineGas, getSalesStat } from '@/api/screen/wholesales'
-import { planCompletePercent } from '@/api/screen/retail'
+import { areaOption } from '@/utils/options'
+import { getCards, getPlanCompletePercent, getSalesAreaSorted, getSalesPipelineGas, getSalesStat, getSalesAreaDetail } from '@/api/screen/wholesales'
 
 export default {
   name: 'Wholesale',
@@ -174,19 +174,8 @@ export default {
           completePercent: 0
         }
       ],
-      areaLocation: {
-        石家庄地区: { lng: 114.48, lat: 38.03 },
-        邯郸地区: { lng: 114.47, lat: 36.62 },
-        邢台地区: { lng: 114.48, lat: 37.05 },
-        雄安地区: { lng: 116.113523, lat: 38.99955 },
-        衡水地区: { lng: 115.72, lat: 37.72 },
-        保定地区: { lng: 115.48, lat: 38.85 },
-        廊坊地区: { lng: 116.7, lat: 39.53 },
-        沧州地区: { lng: 116.83, lat: 38.33 },
-        张家口地区: { lng: 114.87, lat: 40.82 },
-        秦皇岛地区: { lng: 119.57, lat: 39.95 },
-        唐山地区: { lng: 118.02, lat: 39.63 }
-      }
+      areaOption,
+      mapData: []
     }
   },
   computed: {
@@ -202,16 +191,32 @@ export default {
         arr.push({ name: item.name, value: item.quantity })
       })
       return arr
-    },
-    mapData() {
-      const arr = []
-      this.areaSorted.forEach(item => {
-        arr.push({ name: item.name, value: [this.areaLocation[item.name].lng, this.areaLocation[item.name].lat, item.quantity] })
-      })
-      return arr
     }
   },
-  watch: {},
+  watch: {
+    areaSorted: {
+      handler: function (val) {
+        const arr = []
+
+        val.forEach(item => {
+          const obj = this.areaOption.find(temp => temp.label === item.name)
+
+          const symbolSize = Math.round(item.quantity) / 50
+          arr.push({
+            name: item.name,
+            value: [obj.lng, obj.lat, symbolSize > 10 ? symbolSize : 10],
+            code: item.code,
+            quantity: Math.round(item.quantity),
+            huanBi: item.tongBi || 0,
+            tongBi: item.huanBi || 0,
+            dataDate: item.dataDate || ''
+          })
+        })
+        this.mapData = arr
+      },
+      deep: true
+    }
+  },
   created() {},
   mounted() {
     // 得到卡片数据
@@ -294,7 +299,7 @@ export default {
     // 计划完成率
     async getPlanCompletePercent() {
       const res = await getPlanCompletePercent()
-      if (res.status == 0) {
+      if (res.status === 0) {
         this.planCompletePercent = res.data
         this.planCompletePercent.forEach(item => {
           for (const key in item) {
@@ -303,6 +308,35 @@ export default {
             }
           }
         })
+      }
+    },
+    // 地图tooltip
+    mapTooltip(params) {
+      return `${params.name}(${params.data.dataDate})<br/>
+            日销量：<span class="num">${params.data.quantity}</span>(万方)；<br/>
+            环比：<span class="num">${params.data.huanBi}</span>(万方)；<br/>
+            同比：<span class="num">${params.data.tongBi}</span>(万方)；`
+    },
+    // 地图hover
+    async handleHover(params) {
+      if (params.componentType === 'series') {
+        const code = params.data.code
+        const item = this.areaSorted.find(item => item.code === code)
+        console.log(item)
+
+        const res = await getSalesAreaDetail({ code: code })
+        if (res.status === 0) {
+          this.$set(item, 'tongBi', Math.round(res.data.daySales.tongBi))
+          this.$set(item, 'huanBi', Math.round(res.data.daySales.huanBi))
+          this.$set(item, 'dataDate', res.data.dataDate)
+        }
+      }
+    },
+    // 地图点击
+    handleClick(params) {
+      if (params.componentType === 'series') {
+        this.$router.push({ path: `/screen/wholesale/${params.name}/${params.data.code}` })
+        //  location.href = '../../html/bigscreen/wholesale_detail.html?area=' + params.name + '&code=' + params.data.index
       }
     }
   }

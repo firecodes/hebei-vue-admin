@@ -1,9 +1,11 @@
 <template>
   <div class="app-wrapper">
-    <navbar />
-    <!-- <transition name="fade-transform" mode="out-in"> -->
-    <router-view :key="key" />
-    <!-- </transition> -->
+    <div class="app-wrapper-con">
+      <navbar />
+      <!-- <transition name="fade-transform" mode="out-in"> -->
+      <router-view :key="key" />
+      <!-- </transition> -->
+    </div>
   </div>
 </template>
 
@@ -35,5 +37,9 @@ export default {
   background-image: linear-gradient(#05549b, #001f4d);
   color: #fff;
   padding: 15px;
+}
+
+.app-wrapper-con {
+  background: url(~@/assets/img/screen/bg.png) no-repeat;
 }
 </style>

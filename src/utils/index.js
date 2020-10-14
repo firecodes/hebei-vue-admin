@@ -213,6 +213,14 @@ export const daterange1month = () => {
   return [start, end]
 }
 
+// 半年范围
+export const daterange6month = () => {
+  const end = new Date()
+  const start = new Date()
+  start.setTime(start.getTime() - 3600 * 1000 * 24 * 180)
+  return [start, end]
+}
+
 // 这是为了解决数据空值的问题
 export const getDefaultValue = obj => {
   let value = 0
@@ -230,24 +238,65 @@ export const getDefaultValue = obj => {
 
 // 销售统计
 // 图表的日期不一定是连续的，但是图表上显示数据最好是连续的
-export const getSalesChartSource = (arr, dateRange) => {
+export const getSalesChartSource = (arr, dateRange, title = ['时间', '日销量', '同比'], single = false) => {
   const [start, end] = dateRange
   const dataObj = {}
   arr.forEach((item) => {
     dataObj[item.name] = item
   })
-  const source = [['时间', '日销量', '同比']]
+
+  const source = [title]
 
   for (let i = start.getTime(); i <= end.getTime();) {
     const date = parseDate(new Date(i))
-    const quantity = (dataObj[date] && dataObj[date].quantity) || '0'
-    const tongBi = (dataObj[date] && dataObj[date].tongBi) || '0'
+    const quantity = (dataObj[date] && dataObj[date].quantity) || '-'
+    const tongBi = (dataObj[date] && dataObj[date].tongBi) || '-'
 
-    source.push([
-      date.split('-').slice(1).join('-'),
-      Math.round(quantity),
-      Math.round(tongBi)
-    ])
+    const temp = [date.split('-').slice(1).join('-'), Math.round(quantity)]
+
+    if (!single) {
+      temp.push(Math.round(tongBi))
+    }
+
+    source.push(temp)
+
+    i += 3600 * 1000 * 24
+  }
+
+  return source
+}
+
+// 得到价格的数据源
+export const getPriceSource = (arr, dateRange, key) => {
+  const [start, end] = dateRange
+  const dataObj = {}
+  const titleArr = []
+  arr.forEach(item => {
+    if (!titleArr.includes(item[key])) titleArr.push(item[key])
+    const k = item.offerDay + '-' + item[key]
+    dataObj[k] = item.priceSingle
+  })
+
+  titleArr.sort()
+
+  const source = [['日期', ...titleArr]]
+
+  for (let i = start.getTime(); i <= end.getTime();) {
+    const date = parseDate(new Date(i))
+    const temp = [date.split('-').slice(1).join('-')]
+
+    titleArr.forEach(item => {
+      const k = date + '-' + item
+      temp.push(dataObj[k] || '-')
+    })
+
+    // for (const key in titleObj) {
+    //   const k = date + '-' + key
+    //   temp.push(dataObj[k] || '-')
+    // }
+
+    source.push(temp)
+
     i += 3600 * 1000 * 24
   }
 

@@ -33,16 +33,21 @@ Vue.use(Router)
 export const constantRoutes = [
 
   {
-    path: '/login',
+    path: '/',
     component: () => import('@/views/login/index'),
-    hidden: true
+    redirect: '/login',
+    children: [{
+      path: '/login',
+      component: () => import('@/views/login/index'),
+      hidden: true
+    }]
   },
   {
-    path: '/',
+    path: '/pc',
     component: Layout,
     redirect: '/pc/home',
     children: [{
-      path: 'pc/home',
+      path: '/pc/home',
       name: 'Dashboard',
       component: () => import('@/views/pc/dashboard/index'),
       meta: { title: '首页', icon: 'el-icon-data-line' }
@@ -64,14 +69,13 @@ export const constantRoutes = [
     redirect: '/screen/home',
     hidden: true,
     children: [
-      { path: '/screen/home', component: () => import('@/views/screen/dashboard/index') },
-      // { path: '/screen/guanxian', component: () => import('@/views/screen/guanxian/index') },
-      { path: '/screen/wholesale', component: () => import('@/views/screen/wholesale/index') },
-      { path: '/screen/wholesale/detail', component: () => import('@/views/screen/wholesale/detail') },
-      { path: '/screen/retail', component: () => import('@/views/screen/retail/index') },
-      { path: '/screen/retail/detail', component: () => import('@/views/screen/retail/detail') },
-      { path: '/screen/customer', component: () => import('@/views/screen/customer/index') },
-      { path: '/screen/price', component: () => import('@/views/screen/price/index') }
+      { path: '/screen/home', component: () => import(/* webpackChunkName: 'screen-dashboard' */'@/views/screen/dashboard/index') },
+      { path: '/screen/wholesale', component: () => import(/* webpackChunkName: 'screen-wholesale' */'@/views/screen/wholesale/index') },
+      { path: '/screen/wholesale/:name/:code', component: () => import(/* webpackChunkName: 'screen-wholesale' */'@/views/screen/wholesale/detail') },
+      { path: '/screen/retail', component: () => import(/* webpackChunkName: 'screen-retail' */'@/views/screen/retail/index') },
+      { path: '/screen/retail/:name/:code', component: () => import(/* webpackChunkName: 'screen-retail' */'@/views/screen/retail/detail') },
+      { path: '/screen/customer', component: () => import(/* webpackChunkName: 'screen-customer' */'@/views/screen/customer/index') },
+      { path: '/screen/price', component: () => import(/* webpackChunkName: 'screen-price' */'@/views/screen/price/index') }
 
     ]
 

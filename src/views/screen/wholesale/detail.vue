@@ -1,22 +1,343 @@
 <template>
-  <div class="container">wholesale detail</div>
+  <div class="container screen">
+    <!-- 左边 -->
+    <div class="container-left chart-wrapper map-wrapper">
+      <div class="map">
+        <div class="mapOp">
+          <div class="mapOp-btn">
+            <span class="skipBtn" @click="router.go(-1)">返回河北省视图</span>
+          </div>
+          <!-- 显示地图 -->
+          <hebei-map :chart-data="mapData" :tooltip-fn="mapTooltip" :hover-fn="handleHover" :click-fn="handleClick" height="820px" />
+        </div>
+      </div>
+
+      <!-- 四个角的三角形 -->
+      <div class="angel">
+        <img class="img1" src="~@/assets/img/screen/angle.png" alt>
+        <img class="img2" src="~@/assets/img/screen/angle.png" alt>
+        <img class="img3" src="~@/assets/img/screen/angle.png" alt>
+        <img class="img4" src="~@/assets/img/screen/angle.png" alt>
+      </div>
+    </div>
+    <div class="container-right">
+      <!-- 地区基本情况 -->
+      <div class="chart-wrapper mb-1 w-49">
+        <div class="chart-wrapper-title">
+          <h4>地区基本情况(<span v-text="area" />)</h4>
+        </div>
+        <div class="chart-container">
+          <ul class="weather w-100">
+            <li v-for="(item, index) in weatherData" :key="item.date" :class="index === 0 ? 'active' : ''">
+              <div>
+                <strong v-text="item.ymd" /><br>
+                <span v-text="item.week" /><br>
+                <span v-text="item.type" /><br>
+                <span v-text="item.fx" /><br>
+              </div>
+            </li>
+          </ul>
+          <weather-chart :chart-data="weatherChartData" />
+        </div>
+      </div>
+      <!-- 客户销售TOP10 -->
+      <div class="chart-wrapper mb-1 w-49">
+        <div class="chart-wrapper-title">
+          <h4>客户销售TOP10(<span v-text="area" />)</h4>
+          <div class="op">单位：万方</div>
+        </div>
+        <table>
+          <template v-for="(item, i) in customerSorted">
+            <tr v-if="i < 5" :key="i">
+              <td class="index" v-text="i + 1" />
+              <td class="name" v-text="item.name" />
+              <td v-cloak class="num">{{ Math.round(item.quantity) }}</td>
+              <td v-if="i < 5" class="index" v-text="i + 1 + 5" />
+              <td v-if="i < 5" class="name" v-text="customerSorted[i + 5].name" />
+              <td v-cloak v-if="i < 5" class="num">{{ Math.round(customerSorted[i + 5].quantity) }}</td>
+            </tr>
+          </template>
+        </table>
+      </div>
+      <!-- 销售统计 -->
+      <div class="chart-wrapper mb-1 w-49">
+        <div class="chart-wrapper-title">
+          <h4>销售统计(<span v-text="area" />)</h4>
+        </div>
+        <sales-chart :chart-data="salesStat" :color="['#d9b03c', '#29c2bf']" />
+      </div>
+      <!-- 销售占比 -->
+      <div class="chart-wrapper mb-1 w-49">
+        <div class="chart-wrapper-title">
+          <h4>销售占比(<span v-text="area" />)</h4>
+        </div>
+        <div class="chart-container">
+          <pie-chart :chart-data="areaSortedPortion" width="50%" title="地区销售占比" :show-label="true" label-position="inside" />
+          <pie-chart :chart-data="customerSortedPortion" width="50%" title="客户销售占比" label-position="center" series-name="客户销售量" />
+        </div>
+      </div>
+      <!-- 日均合同/计划日均/今日量 -->
+      <div class="chart-wrapper w-100">
+        <div class="chart-wrapper-title">
+          <h4>日均合同/计划日均/今日量(<span v-text="area" />)</h4>
+        </div>
+        <basic-chart :chart-data="salesCustomerItemsData" type="bar" :height="'307px'" :color="['#28c3bb', '#fec632', '#5d62b3']" :rotate="25" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import SalesChart from '@/components/Charts/SalesChart'
+import PieChart from '@/components/Charts/PieChart'
+import BasicChart from '@/components/Charts/BasicChart'
+import HebeiMap from '@/components/Charts/HebeiMap'
+import weatherChart from './components/weatherChart'
+
+import { daterange1month, parseDate, getSalesChartSource } from '@/utils'
+import { areaOption } from '@/utils/options'
+import { getSalesAreaSorted, getSalesAreaCustomerSorted, getSalesArea, getSalesStat, getSalesCustomerItems } from '@/api/screen/wholesales'
+import { getWeather } from '@/api/screen/weather'
+
 export default {
   name: 'WholesaleDetail',
-  components: {},
+  components: {
+    SalesChart,
+    PieChart,
+    BasicChart,
+    weatherChart,
+    HebeiMap
+  },
   props: {},
   data() {
-    return {}
+    return {
+      area: this.$route.params.name, // 地区名字
+      code: this.$route.params.code, // 地区编号
+      weatherData: [],
+      // 天气数据的地区编号
+      areaCode: {
+        石家庄地区: 101090101,
+        邯郸地区: 101091001,
+        邢台地区: 101090901,
+        雄安地区: 101090201,
+        衡水地区: 101090801,
+        保定地区: 101090201,
+        廊坊地区: 101090601,
+        沧州地区: 101090701,
+        张家口地区: 101090301,
+        秦皇岛地区: 101091101,
+        唐山地区: 101090501
+      },
+      // 地区销售排名
+      areaSorted: [],
+      // 客户销售排名
+      customerSorted: [],
+      daterange1month: daterange1month(),
+      // 日均合同/计划日均/今日量
+      salesCustomerItems: [],
+      // 销售统计
+      salesStat: [],
+      areaOption,
+      mapData: []
+    }
   },
-  computed: {},
-  watch: {},
+  computed: {
+    // 地区销售占比
+    areaSortedPortion() {
+      let sum = 0
+      let quantity = 0
+      this.areaSorted.forEach(item => {
+        if (item.name === this.area) {
+          quantity = item.quantity
+        } else {
+          sum += parseFloat(item.quantity)
+        }
+      })
+      console.log(quantity, sum)
+      return [
+        { name: this.area, value: quantity },
+        { name: '其他地区', value: sum }
+      ]
+    },
+    // 客户销售占比
+    customerSortedPortion() {
+      const arr = []
+      this.customerSorted.forEach(item => {
+        arr.push({ name: item.name, value: item.quantity })
+      })
+      return arr
+    },
+    weatherChartData() {
+      const arr = [['日期', '高温', '低温']]
+      const reg = /(\d)+/
+      this.weatherData.forEach((item, index) => {
+        arr.push(['day' + index, reg.exec(item.high)[0], reg.exec(item.low)[0]])
+      })
+      return arr
+    },
+    // 日均合同/计划日均/今日量
+    salesCustomerItemsData() {
+      const arr = [['公司', '日均合同', '计划日均', '今日量']]
+      this.salesCustomerItems.forEach((item, index) => {
+        arr.push([item.customer, item.contractMeanValue, item.planMeanValue, item.dailyValue])
+      })
+      return arr
+    }
+  },
+  watch: {
+    areaSorted: {
+      handler: function(val) {
+        const arr = []
+
+        val.forEach(item => {
+          const obj = this.areaOption.find(temp => temp.label === item.name)
+
+          const symbolSize = Math.round(item.quantity) / 50
+          arr.push({
+            name: item.name,
+            value: [obj.lng, obj.lat, symbolSize > 10 ? symbolSize : 10],
+            code: item.code,
+            quantity: Math.round(item.quantity),
+            huanBi: item.tongBi || 0,
+            tongBi: item.huanBi || 0,
+            dataDate: item.dataDate || ''
+          })
+        })
+        this.mapData = arr
+      },
+      deep: true
+    }
+  },
   created() {},
-  mounted() {},
-  methods: {}
+  mounted() {
+    // 天气数据
+    this.getWeather()
+    // 地区销售排名
+    this.getSalesAreaSorted()
+    // 客户销售排名
+    this.getSalesAreaCustomerSorted()
+    // 销售统计
+    this.getSalesArea()
+    // 日均合同/计划日均/今日量
+    this.getSalesCustomerItems()
+  },
+  methods: {
+    // 天气数据
+    async getWeather() {
+      console.log(this.area, this.areaCode[this.area], this.areaCode)
+      const res = await getWeather(this.areaCode[this.area])
+      if (res.status === 200) {
+        this.weatherData = res.data.forecast.slice(0, 5)
+      }
+    },
+    // 客户销售排名
+    async getSalesAreaCustomerSorted() {
+      const res = await getSalesAreaCustomerSorted(this.code)
+      if (res.status === 0) {
+        this.customerSorted = res.data
+      }
+    },
+    // 地区销售排名
+    async getSalesAreaSorted() {
+      const res = await getSalesAreaSorted()
+      if (res.status === 0) {
+        this.areaSorted = res.data
+      }
+    },
+
+    // 销售统计
+    async getSalesArea() {
+      const res = await getSalesArea(this.code, {
+        start: parseDate(this.daterange1month[0]),
+        end: parseDate(this.daterange1month[1]),
+        timeType: 1
+      })
+      if (res.status === 0) {
+        this.salesStat = getSalesChartSource(res.data, this.daterange1month)
+      }
+    },
+
+    // 日均合同/计划日均/今日量
+    async getSalesCustomerItems() {
+      const res = await getSalesCustomerItems(this.code)
+      if (res.status === 0) {
+        this.salesCustomerItems = res.data
+      }
+    },
+
+    // 地图tooltip
+    mapTooltip(params) {
+      return `${params.name}<br/>
+            日销量：<span class="num">${params.data.quantity}</span>(万方)；<br/>
+            环比：<span class="num">${params.data.huanBi}</span>(万方)；<br/>
+            同比：<span class="num">${params.data.tongBi}</span>(万方)；`
+    },
+    // 地图hover
+    async handleHover(params) {
+      if (params.componentType === 'series') {
+        const code = params.data.code
+        const item = this.areaSorted.find(item => item.code === code)
+
+        const res = await getSalesCustomerItems({ code: code })
+        if (res.status === 0) {
+          this.$set(item, 'tongBi', Math.round(res.data.daySales.tongBi))
+          this.$set(item, 'huanBi', Math.round(res.data.daySales.huanBi))
+          this.$set(item, 'dataDate', res.data.dataDate)
+        }
+      }
+    },
+    handleClick(params) {
+      if (params.componentType === 'series') {
+        this.$router.push({ path: `/screen/wholesale/detail/${params.name}/${params.data.code}` })
+        //  location.href = '../../html/bigscreen/wholesale_detail.html?area=' + params.name + '&code=' + params.data.index
+      }
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+.container-left {
+  position: relative;
+  width: 780px;
+  padding: 22px 44px;
+  .map {
+    height: 800px;
+  }
+}
+
+.container-right {
+  width: 1095px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  p {
+    text-align: center;
+  }
+
+  .weather {
+    padding: 10px;
+    height: 100px;
+    list-style: none;
+    line-height: 20px;
+    margin: 0;
+    li {
+      width: 104px;
+      float: left;
+      text-align: center;
+      &.active {
+        color: #07e5ff;
+      }
+    }
+  }
+}
 </style>
