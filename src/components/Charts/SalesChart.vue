@@ -78,7 +78,7 @@ export default {
         dataset: { source },
 
         grid: { left: 10, right: 10, bottom: 20, top: 30, containLabel: true },
-        xAxis: { type: 'category', axisTick: { alignWithLabel: true }, axisLine: { lineStyle: { color: this.mainColor } } },
+        xAxis: { type: 'category', axisTick: { show: false }, axisLine: { show: false } },
         yAxis: [
           { name: '万方', splitLine: { show: false }, scale: true, axisLine: { lineStyle: { color: this.mainColor } } },
           { name: '万方', splitLine: { show: false }, scale: true, axisLine: { lineStyle: { color: this.mainColor } } }

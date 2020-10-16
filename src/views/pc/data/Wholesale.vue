@@ -75,7 +75,7 @@
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <pagination :total="totalCount" :page.sync="listQuery.pageNum" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination :total="totalCount" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
   </div>
 </template>
 <script>
@@ -105,18 +105,7 @@ export default {
         customerId: ''
       },
       totalCount: 0, // 总条数
-      tableData: [
-        { date: '2020-05-03', num: '773' },
-        { date: '2020-05-04', num: '773' },
-        { date: '2020-05-05', num: '773' },
-        { date: '2020-05-06', num: '773' },
-        { date: '2020-05-07', num: '773' },
-        { date: '2020-05-08', num: '773' },
-        { date: '2020-05-09', num: '773' },
-        { date: '2020-05-10', num: '773' },
-        { date: '2020-05-11', num: '773' },
-        { date: '2020-05-12', num: '773' }
-      ],
+      tableData: [],
       listLoading: true // 加载动画
     }
   },

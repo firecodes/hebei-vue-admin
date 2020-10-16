@@ -2,42 +2,42 @@
   <div class="app-container">
     <el-tabs v-model="activeName">
       <el-tab-pane label="管道天然气门站价格" name="1">
-        <NaturalValveStation />
+        <gate-price />
       </el-tab-pane>
       <el-tab-pane label="管道天然气零售价格" name="2" lazy>
-        <NaturalRetailPrice />
+        <retail-price />
       </el-tab-pane>
       <el-tab-pane label="LNG 接收站销售价格" name="3" lazy>
-        <LngReceive />
+        <lng-receive />
       </el-tab-pane>
       <el-tab-pane label="LNG 工厂销售价格" name="4" lazy>
-        <LngPlant />
+        <lng-plant />
       </el-tab-pane>
       <el-tab-pane label="LNG 加气站零售价格" name="5" lazy>
-        <LngRetailPrice />
+        <lng-retail />
       </el-tab-pane>
       <el-tab-pane label="CNG 车用价格" name="6" lazy>
-        <CngCar />
+        <cng-price />
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
-import NaturalValveStation from './sub/NaturalValveStation'
-import NaturalRetailPrice from './sub/NaturalRetailPrice'
+import GatePrice from './sub/GatePrice'
+import RetailPrice from './sub/RetailPrice'
 import LngReceive from './sub/LngReceive'
 import LngPlant from './sub/LngPlant'
-import LngRetailPrice from './sub/LngRetailPrice'
-import CngCar from './sub/CngCar'
+import LngRetail from './sub/LngRetail'
+import CngPrice from './sub/CngPrice'
 
 export default {
   components: {
-    NaturalValveStation,
-    NaturalRetailPrice,
+    GatePrice,
+    RetailPrice,
     LngReceive,
     LngPlant,
-    LngRetailPrice,
-    CngCar
+    LngRetail,
+    CngPrice
   },
   data() {
     return {

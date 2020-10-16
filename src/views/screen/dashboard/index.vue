@@ -44,7 +44,7 @@
         <div class="chart-wrapper-title">
           <h4>销售占比</h4>
         </div>
-        <proportion-chart :chart-data="cards" />
+        <proportion-chart :chart-data="cards" :rich="true" />
       </div>
       <!-- 管道天然气门站价格 -->
       <div class="chart-wrapper">

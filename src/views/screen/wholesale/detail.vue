@@ -47,15 +47,18 @@
           <h4>客户销售TOP10(<span v-text="area" />)</h4>
           <div class="op">单位：万方</div>
         </div>
+
         <table>
           <template v-for="(item, i) in customerSorted">
             <tr v-if="i < 5" :key="i">
               <td class="index" v-text="i + 1" />
               <td class="name" v-text="item.name" />
               <td v-cloak class="num">{{ Math.round(item.quantity) }}</td>
-              <td v-if="i < 5" class="index" v-text="i + 1 + 5" />
-              <td v-if="i < 5" class="name" v-text="customerSorted[i + 5].name" />
-              <td v-cloak v-if="i < 5" class="num">{{ Math.round(customerSorted[i + 5].quantity) }}</td>
+              <template v-if="i < 5 && customerSorted[i + 5]">
+                <td class="index" v-text="i + 1 + 5" />
+                <td class="name" v-text="customerSorted[i + 5].name" />
+                <td v-cloak class="num">{{ Math.round(customerSorted[i + 5].quantity) }}</td>
+              </template>
             </tr>
           </template>
         </table>

@@ -14,19 +14,19 @@
     <!-- 表格数据 -->
     <el-table :data="tableData" v-loading="listLoading" border stripe>
       <el-table-column prop="date" label="日期" align="center" />
-      <el-table-column prop="zshts" label="中石化唐山" align="center" />
-      <el-table-column prop="zhytj" label="中海油天津" align="center" />
-      <el-table-column prop="zshtj" label="中石化天津" align="center" />
+      <el-table-column prop="beijing" label="北京" align="center" />
+      <el-table-column prop="tianjin" label="天津" align="center" />
+      <el-table-column prop="hebei" label="河北" align="center" />
     </el-table>
     <!-- 分页 -->
     <pagination :total="totalCount" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
   </div>
 </template>
 <script>
+import { daterange1month, parseDate, getDefaultValue } from '@/utils'
+import { getGatePrice } from '@/api/data'
 import Pagination from '@/components/Pagination'
 import { pickerOptions } from '@/utils/options'
-import { daterange1month, parseDate, getDefaultValue } from '@/utils'
-import { getLngReceive } from '@/api/data'
 export default {
   components: { Pagination },
   data() {
@@ -40,6 +40,7 @@ export default {
         end: ''
       },
       resData: {},
+      // tableData: [],
       totalCount: 0, // 总条数
       listLoading: true // 加载动画
     }
@@ -54,7 +55,7 @@ export default {
       const res = []
       days.forEach(day => {
         const arr = this.resData[day]
-        res.push({ date: day, zshts: arr[0].priceSingle, zhytj: arr[1].priceSingle, zshtj: arr[2].priceSingle })
+        res.push({ date: day, beijing: arr[0].priceSingle, tianjin: arr[1].priceSingle, hebei: arr[2].priceSingle })
       })
 
       return res
@@ -66,7 +67,7 @@ export default {
       this.listLoading = true
       this.listQuery.start = parseDate(this.daterange[0])
       this.listQuery.end = parseDate(this.daterange[1])
-      const res = await getLngReceive(this.listQuery)
+      const res = await getGatePrice(this.listQuery)
       if (res.status === 0) {
         this.resData = res.data
         this.totalCount = res.totalCount
@@ -82,5 +83,3 @@ export default {
   }
 }
 </script>
-
-
