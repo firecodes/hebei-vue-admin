@@ -86,27 +86,6 @@ export default {
             type: 'pie',
             radius: ['50%', '70%'],
             // startAngle: 180,
-            label: {
-              // formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
-              formatter: '{b|{b}：}{c}  {per|{d}%}  ',
-              backgroundColor: '#eee',
-              borderColor: '#aaa',
-              borderWidth: 1,
-              borderRadius: 4,
-              rich: {
-                b: {
-                  fontSize: 14,
-                  lineHeight: 33,
-                  padding: [4, 8]
-                },
-                per: {
-                  color: '#eee',
-                  backgroundColor: '#334455',
-                  padding: [2, 4],
-                  borderRadius: 2
-                }
-              }
-            },
             data: [
               { value: this.chartData.guandaoqi, name: '管道气' },
               { value: this.chartData.lng, name: '冀东LNG' },
@@ -115,7 +94,40 @@ export default {
           }
         ]
       }
-
+      if (this.rich) {
+        option.series[1].label = {
+          // formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+          formatter: '{b|{b}：}{c}  {per|{d}%}  ',
+          backgroundColor: '#eee',
+          borderColor: '#aaa',
+          borderWidth: 1,
+          borderRadius: 4,
+          rich: {
+            a: {
+              color: '#999',
+              lineHeight: 22,
+              align: 'center'
+            },
+            hr: {
+              borderColor: '#aaa',
+              width: '100%',
+              borderWidth: 0.5,
+              height: 0
+            },
+            b: {
+              fontSize: 14,
+              lineHeight: 33,
+              padding: [4, 8]
+            },
+            per: {
+              color: '#eee',
+              backgroundColor: '#334455',
+              padding: [2, 4],
+              borderRadius: 2
+            }
+          }
+        }
+      }
       this.chart.setOption(option)
     }
   }

@@ -8,7 +8,7 @@
             <span class="skipBtn" @click="$router.go(-1)">返回河北省视图</span>
           </div>
           <!-- 显示地图 -->
-          <hebei-map :chart-data="mapData" :tooltip-fn="mapTooltip" :hover-fn="handleHover" height="900px" />
+          <hebei-map :chart-data="mapData" :center="center" :tooltip-fn="mapTooltip" :hover-fn="handleHover" :click-fn="handleClick" height="900px" />
         </div>
       </div>
 
@@ -131,6 +131,7 @@ export default {
       planAndRealGasCompare: [],
       areaOption,
       mapData: [],
+      center: [], // 地图中心点
       retailCustomers: []
     }
   },
@@ -153,6 +154,10 @@ export default {
             yearComplete: Math.round(item.yearComplete || 0),
             dataDate: item.dataDate || ''
           })
+
+          if (this.company === item.name) {
+            this.center = [item.lon, item.lat]
+          }
         })
         this.mapData = arr
       },
@@ -273,6 +278,12 @@ export default {
           this.$set(item, 'dataDate', res.data.dataDate)
         }
       }
+    },
+    // 地图点击
+    handleClick(params) {
+      if (params.componentType === 'series') {
+        this.$router.push({ path: `/screen/retail/${params.name}/${params.data.code}` })
+      }
     }
   }
 }
@@ -305,5 +316,11 @@ export default {
   p {
     text-align: center;
   }
+}
+
+.container.screen .map-wrapper .mapOp .mapOp-btn .skipBtn {
+  position: relative;
+  top: -20px;
+  right: -30px;
 }
 </style>

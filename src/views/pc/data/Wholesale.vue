@@ -17,60 +17,61 @@
       </div>
     </div>
     <!-- 表格数据-->
-    <el-table v-show="listQuery.customerType == 'pipeline'" :data="tableData" stripe>
-      <el-table-column prop="date" label="日期" align="center" width="90px" fixed />
+
+    <el-table v-show="listQuery.customerType == 'pipeline'" :data="tableData" v-loading="listLoading" stripe>
+      <el-table-column prop="dataTime" label="日期" align="center" width="90px" fixed />
       <el-table-column label="合同量" align="center">
-        <el-table-column prop="num" label="日均合同" align="center" />
-        <el-table-column prop="num" label="日均合同超欠" align="center" width="95px" />
-        <el-table-column prop="num" label="月合同完成率" align="center" width="95px" />
+        <el-table-column prop="contractMean" label="日均合同" align="center" />
+        <el-table-column prop="contractDiff" label="日均合同超欠" align="center" width="95px" />
+        <el-table-column prop="contractCompleteRate" label="月合同完成率" align="center" width="95px" />
       </el-table-column>
       <el-table-column label="计划量" align="center">
-        <el-table-column prop="num" label="计划日均" align="center" />
-        <el-table-column prop="num" label="日均计划超欠" align="center" width="95px" />
-        <el-table-column prop="num" label="计划完成率" align="center" width="85px" />
+        <el-table-column prop="planMean" label="计划日均" align="center" />
+        <el-table-column prop="planDiff" label="日均计划超欠" align="center" width="95px" />
+        <el-table-column prop="planCompleteRate" label="计划完成率" align="center" width="85px" />
       </el-table-column>
       <el-table-column label="日销量" align="center">
-        <el-table-column prop="num" label="今日量" align="center" />
-        <el-table-column prop="num" label="环比" align="center" />
-        <el-table-column prop="num" label="同比" align="center" />
+        <el-table-column prop="dayValue" label="今日量" align="center" />
+        <el-table-column prop="dayHuanbi" label="环比" align="center" />
+        <el-table-column prop="dayTongbi" label="同比" align="center" />
       </el-table-column>
       <el-table-column label="月销量" align="center">
-        <el-table-column prop="num" label="月累计" align="center" />
-        <el-table-column prop="num" label="去年同期累计" align="center" width="95px" />
-        <el-table-column prop="num" label="同比" align="center" />
-        <el-table-column prop="num" label="月增幅" align="center" />
+        <el-table-column prop="monthAccumulate" label="月累计" align="center" />
+        <el-table-column prop="lastYearMonthAccumulate" label="去年同期累计" align="center" width="95px" />
+        <el-table-column prop="monthTongbi" label="同比" align="center" />
+        <el-table-column prop="monthIncreaseRate" label="月增幅" align="center" />
       </el-table-column>
       <el-table-column label="年销量" align="center">
-        <el-table-column prop="num" label="年累计" align="center" />
-        <el-table-column prop="num" label="去年同期累计" align="center" width="95px" />
-        <el-table-column prop="num" label="同比" align="center" />
-        <el-table-column prop="num" label="年增幅" align="center" />
-        <el-table-column prop="num" label="去年销量" align="center" width="95px" />
+        <el-table-column prop="yearAccumulate" label="年累计" align="center" />
+        <el-table-column prop="lastYearAccumulate" label="去年同期累计" align="center" width="95px" />
+        <el-table-column prop="yearTongbi" label="同比" align="center" />
+        <el-table-column prop="yearIncreaseRate" label="年增幅" align="center" />
+        <el-table-column prop="lastYearTotal" label="去年销量" align="center" width="95px" />
       </el-table-column>
     </el-table>
-    <el-table v-show="listQuery.customerType == 'lng'" :data="tableData" stripe>
-      <el-table-column prop="date" label="日期" align="center" width="90px" fixed />
 
+    <el-table v-show="listQuery.customerType == 'lng'" :data="tableData" v-loading="listLoading" stripe>
+      <el-table-column prop="dataTime" label="日期" align="center" width="90px" fixed />
       <el-table-column label="日销量" align="center">
-        <el-table-column prop="num" label="今日量" align="center" />
-        <el-table-column prop="num" label="环比" align="center" />
-        <el-table-column prop="num" label="去年同日量" align="center" />
-        <el-table-column prop="num" label="同比" align="center" />
+        <el-table-column prop="dayValue" label="今日量" align="center" />
+        <el-table-column prop="dayHuanbi" label="环比" align="center" />
+        <el-table-column prop="lastDayValue" label="去年同日量" align="center" />
+        <el-table-column prop="dayTongbi" label="同比" align="center" />
       </el-table-column>
       <el-table-column label="月销量" align="center">
-        <el-table-column prop="num" label="月累计" align="center" />
-        <el-table-column prop="num" label="去年同期累计" align="center" width="100px" />
-        <el-table-column prop="num" label="同比" align="center" />
-        <el-table-column prop="num" label="月增幅" align="center" />
+        <el-table-column prop="monthAccumulate" label="月累计" align="center" />
+        <el-table-column prop="lastYearMonthAccumulate" label="去年同期累计" align="center" width="100px" />
+        <el-table-column prop="monthTongbi" label="同比" align="center" />
+        <el-table-column prop="monthIncreaseRate" label="月增幅" align="center" />
       </el-table-column>
       <el-table-column label="年销量" align="center">
-        <el-table-column prop="num" label="年累计" align="center" />
-        <el-table-column prop="num" label="日均" align="center" />
-        <el-table-column prop="num" label="去年同期累计" align="center" width="100px" />
-        <el-table-column prop="num" label="日均" align="center" />
-        <el-table-column prop="num" label="同比" align="center" />
-        <el-table-column prop="num" label="日均同比" align="center" />
-        <el-table-column prop="num" label="同比增幅" align="center" />
+        <el-table-column prop="yearAccumulate" label="年累计" align="center" />
+        <el-table-column prop="yearAccumulate" label="日均" align="center" />
+        <el-table-column prop="lastYearAccumulate" label="去年同期累计" align="center" width="100px" />
+        <el-table-column prop="yearAccumulate" label="去年同期日均" align="center" width="100px" />
+        <el-table-column prop="yearTongbi" label="同比" align="center" />
+        <el-table-column prop="yearAccumulate" label="日均同比" align="center" />
+        <el-table-column prop="yearAccumulate" label="同比增幅" align="center" />
       </el-table-column>
     </el-table>
     <!-- 分页 -->
@@ -115,7 +116,8 @@ export default {
         { date: '2020-05-10', num: '773' },
         { date: '2020-05-11', num: '773' },
         { date: '2020-05-12', num: '773' }
-      ]
+      ],
+      listLoading: true // 加载动画
     }
   },
   watch: {},
@@ -140,9 +142,9 @@ export default {
       this.listQuery.end = parseDate(this.daterange[1])
       const res = await getWholeSalesDataByCustomer(this.listQuery)
       if (res.status === 0) {
-        // this.tableData = response.data
-        //   this.totalCount = response.totalCount
-        //   this.listLoading = false
+        this.tableData = res.data
+        this.totalCount = res.totalCount
+        this.listLoading = false
       }
     },
 

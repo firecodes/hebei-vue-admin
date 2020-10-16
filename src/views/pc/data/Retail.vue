@@ -14,7 +14,7 @@
       </div>
     </div>
     <!-- 表格数据-->
-    <el-table :data="tableData" :span-method="objectSpanMethod">
+    <el-table :data="tableData" v-loading="listLoading" :span-method="objectSpanMethod">
       <el-table-column prop="dataTime" label="日期" align="center" width="85px" fixed />
       <el-table-column prop="source" label="气源" align="center" width="95px" fixed />
       <el-table-column label="计划量" align="center">
@@ -117,7 +117,7 @@ export default {
           })
         })
 
-        this.totalCount = days.length
+        this.totalCount = res.totalCount
         this.listLoading = false
       }
     },

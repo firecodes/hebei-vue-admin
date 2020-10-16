@@ -21,7 +21,8 @@
     </el-row>
     <!-- <v-chart :options="lineOption"/> -->
     <!-- 表格数据 -->
-    <el-table :data="tableData" border stripe>
+    <el-table :data="tableData" <el-table :data="tableData" border stripe>
+      border stripe>
       <el-table-column prop="date" label="日期" align="center" />
       <el-table-column prop="num1" label="价格" align="center" />
     </el-table>
@@ -49,7 +50,8 @@ export default {
       },
       totalCount: 0, // 总条数
       tableData: [],
-      tableDataWhole: []
+      tableDataWhole: [],
+      listLoading: true // 加载动画
     }
   },
   created() {

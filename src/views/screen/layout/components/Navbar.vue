@@ -22,7 +22,7 @@
     </div>
     <div class="navbar-right">
       <span class="time">{{ time }}</span>
-      <img src="@/assets/img/screen/exit.png" alt @click="$router.push('/')" />
+      <img src="@/assets/img/screen/exit.png" alt @click="$router.push('/pc/home')" />
     </div>
   </div>
 </template>

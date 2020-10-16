@@ -118,7 +118,7 @@ export default {
       daterange6month: daterange6month(),
       gatePrice: [], // 管道天然气门站价格
       retailprice: [], // 管道天然气零售价格
-      retailpriceLoc: '河北-保定',
+      retailpriceLoc: '河北-石家庄',
       lngReceive: [],
       lngPlant: [
         ['时间', '华气霸州', '迁安翅冀', '任丘华港', '中翔', '怡蕙达'],
@@ -155,9 +155,9 @@ export default {
         ['09-22', 2650, 2850, 2480, 4567, 2134]
       ],
       lngRetail: [],
-      lngRetailLoc: '河北-保定',
+      lngRetailLoc: '河北-石家庄',
       cngPrice: [],
-      cngPriceLoc: '河北-保定',
+      cngPriceLoc: '河北-石家庄',
       areaOption: [
         { label: '石家庄地区', lng: 114.48, lat: 38.03, priceItemName: '河北-石家庄', type: 1, retailPrice_minyong: 0, retailPrice_gongye: 0, gatePrice: 0 },
         { label: '邯郸地区', lng: 114.47, lat: 36.62, priceItemName: '河北-邯郸', type: 1, retailPrice_minyong: 0, retailPrice_gongye: 0, gatePrice: 0 },

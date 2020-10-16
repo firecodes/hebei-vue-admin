@@ -49,7 +49,8 @@ export default {
       },
       totalCount: 0, // 总条数
       tableData: [],
-      tableDataWhole: []
+      tableDataWhole: [],
+      listLoading: true // 加载动画
     }
   },
   created() {

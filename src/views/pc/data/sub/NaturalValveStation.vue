@@ -17,7 +17,8 @@
     </el-row>
     <!-- <v-chart :options="lineOption"/> -->
     <!-- 表格数据 -->
-    <el-table :data="tableData" border stripe>
+    <el-table :data="tableData" <el-table :data="tableData" border stripe>
+      border stripe>
       <el-table-column prop="date" label="日期" align="center" />
       <el-table-column prop="num1" label="北京" align="center" title="单位：元/立方米" />
       <el-table-column prop="num2" label="天津" align="center" />
@@ -47,7 +48,8 @@ export default {
       //   source: []
       // },
       tableData: [],
-      tableDataWhole: []
+      tableDataWhole: [],
+      listLoading: true // 加载动画
     }
   },
   created() {

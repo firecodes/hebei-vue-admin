@@ -34,6 +34,10 @@ export default {
     clickFn: {
       type: Function,
       default: () => ''
+    },
+    center: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -67,8 +71,7 @@ export default {
       this.setOption()
     },
     setOption() {
-      console.log('setOption---')
-      this.chart.setOption({
+      const option = {
         tooltip: {
           trigger: 'item',
           formatter: this.tooltipFn
@@ -111,7 +114,12 @@ export default {
             data: this.chartData
           }
         ]
-      })
+      }
+      if (this.center.length) {
+        option.geo.center = this.center
+        option.geo.zoom = 3
+      }
+      this.chart.setOption(option)
 
       this.chart.on('mouseover', this.hoverFn)
       this.chart.on('click', this.clickFn)

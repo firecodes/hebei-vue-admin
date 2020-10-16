@@ -21,17 +21,17 @@
       <div class="card-panel-content">
         <div class="card-panel-num" v-text="cards.retail" />
         <div class="card-panel-description">
-          <div style="padding-top: 20px">终端用户：22（个）</div>
+          <div style="padding-top: 20px">终端用户：<span v-text="cards.retailCustomersCount"></span>（个）</div>
         </div>
       </div>
     </div>
     <div class="card-panel">
       <div class="card-panel-title">平均气温（℃）</div>
       <div class="card-panel-content">
-        <div class="card-panel-num">21</div>
+        <div class="card-panel-num" v-text="cards.weatherTodayMid"></div>
         <div class="card-panel-description">
-          <div>高温：36</div>
-          <div>低温：17</div>
+          <div>高温：<span v-text="cards.weatherTodayHigh"></span></div>
+          <div>低温：<span v-text="cards.weatherTodayLow"></span></div>
         </div>
       </div>
     </div>

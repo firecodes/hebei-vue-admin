@@ -25,7 +25,7 @@
     <el-col :span="8" class="card-panel-col">
       <div class="card-panel item3">
         <div class="card-panel-description">
-          <div><span class="card-panel-num">0</span>℃</div>
+          <div><span class="card-panel-num" v-text="cards.weatherTodayMid"></span>℃</div>
           <div class="card-panel-text">平均气温</div>
         </div>
       </div>

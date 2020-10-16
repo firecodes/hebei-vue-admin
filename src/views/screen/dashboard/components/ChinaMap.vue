@@ -1,5 +1,5 @@
 <template>
-  <div :class="className" :style="{ height: height, width: width }" />
+  <div :style="{ height: height, width: width }" />
 </template>
 
 <script>
@@ -11,23 +11,19 @@ import resize from '@/mixins/resize'
 export default {
   mixins: [resize],
   props: {
-    className: {
-      type: String,
-      default: 'chart'
-    },
     width: {
       type: String,
       default: '100%'
     },
     height: {
       type: String,
-      default: '300px'
+      default: '800px'
     },
     cards: {
       type: Object,
       default: () => {}
     },
-    cb: {
+    clickFn: {
       type: Function,
       require: false
     }
@@ -72,7 +68,7 @@ export default {
         气温：<br/>今日平均气温：<span class="num">${this.cards.weatherTodayMid}</span>(℃)；
         高温：<span class="num"> ${this.cards.weatherTodayHigh}</span>(℃)；
         低温：<span class="num"> ${this.cards.weatherTodayLow}</span>(℃)；<br/>
-        前日平均气温：<span class="num"> ${this.cards.weatherYesterMid}</span>(℃)；
+        昨天平均气温：<span class="num"> ${this.cards.weatherYesterMid}</span>(℃)；
         高温：<span class="num"> ${this.cards.weatherYesterHigh}</span>(℃)；
         低温：<span class="num"> ${this.cards.weatherYesterLow}</span>(℃)；`
             } else {
@@ -94,12 +90,7 @@ export default {
         ]
       })
 
-      this.chart.on('click', params => {
-        console.log(params.name)
-        if (params.name === '河北') {
-          this.cb()
-        }
-      })
+      this.chart.on('click', this.clickFn)
     }
   }
 }

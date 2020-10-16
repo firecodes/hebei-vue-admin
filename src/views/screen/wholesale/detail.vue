@@ -30,10 +30,11 @@
           <ul class="weather w-100">
             <li v-for="(item, index) in weatherData" :key="item.date" :class="index === 0 ? 'active' : ''">
               <div>
-                <strong v-text="item.ymd" /><br />
+                <strong>{{ item.ymd.split('-').slice(1).join('-') }}</strong
+                ><br />
                 <span v-text="item.week" /><br />
                 <span v-text="item.type" /><br />
-                <span v-text="item.fx" /><br />
+                <span v-text="item.fx" /><span v-text="item.fl" /><br />
               </div>
             </li>
           </ul>
@@ -186,28 +187,7 @@ export default {
       return arr
     }
   },
-  watch: {
-    // areaSorted: {
-    //   handler: function (val) {
-    //     const arr = []
-    //     val.forEach(item => {
-    //       const obj = this.areaOption.find(temp => temp.label === item.name)
-    //       const symbolSize = Math.round(item.quantity) / 50
-    //       arr.push({
-    //         name: item.name,
-    //         value: [obj.lng, obj.lat, symbolSize > 10 ? symbolSize : 10],
-    //         code: item.code,
-    //         quantity: Math.round(item.quantity),
-    //         huanBi: item.tongBi || 0,
-    //         tongBi: item.huanBi || 0,
-    //         dataDate: item.dataDate || ''
-    //       })
-    //     })
-    //     this.mapData = arr
-    //   },
-    //   deep: true
-    // }
-  },
+  watch: {},
   created() {},
   mounted() {
     // 天气数据
@@ -249,7 +229,7 @@ export default {
       console.log(this.area, this.areaCode[this.area], this.areaCode)
       const res = await getWeather(this.areaCode[this.area])
       if (res.status === 200) {
-        this.weatherData = res.data.forecast.slice(0, 5)
+        this.weatherData = res.data.forecast.slice(0, 7)
       }
     },
     // 根据地区得到管道气各户
@@ -356,14 +336,21 @@ export default {
     list-style: none;
     line-height: 20px;
     margin: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px;
     li {
-      width: 104px;
-      float: left;
       text-align: center;
       &.active {
         color: #07e5ff;
       }
     }
   }
+}
+
+.container.screen .map-wrapper .mapOp .mapOp-btn .skipBtn {
+  position: relative;
+  top: -20px;
+  right: -30px;
 }
 </style>
