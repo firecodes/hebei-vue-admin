@@ -6,7 +6,7 @@
         <el-date-picker v-model="daterange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" :clearable="false" class="mr-1" @change="handleFilter" />
       </div>
       <div style="line-height: 32px">
-        <el-button type="primary" icon="el-icon-download" class="mr-1">导出 Excel</el-button>
+        <el-button type="primary" icon="el-icon-download" class="mr-1" @click="handleDownload">导出 Excel</el-button>
         元/立方米
       </div>
     </div>
@@ -78,6 +78,13 @@ export default {
     handleFilter() {
       this.listQuery.pageNum = 1
       this.getList()
+    },
+    // 导出
+    handleDownload() {
+      const start = parseDate(this.daterange[0])
+      const end = parseDate(this.daterange[1])
+      const url = `${process.env.VUE_APP_BASE_API}/api/datacenter/price/forecast/export/lngReceive?start=${start}&end=${end}`
+      window.open(url)
     }
   }
 }

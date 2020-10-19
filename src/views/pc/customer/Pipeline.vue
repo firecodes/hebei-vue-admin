@@ -5,62 +5,19 @@
     <div class="filter-container mb-1">
       <div>
         <!-- 区域 -->
-        <el-select
-          v-model="listQuery.code"
-          placeholder="区域"
-          clearable
-          style="width: 140px"
-          class="mr-1"
-          @change="handleFilter"
-        >
-          <el-option
-            v-for="item in areaOption"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+        <el-select v-model="listQuery.code" placeholder="区域" clearable style="width: 140px" class="mr-1" @change="handleFilter">
+          <el-option v-for="item in areaOption" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
         <!-- 直供工业用户 -->
-        <el-select
-          v-model="listQuery.isDirectSupply"
-          placeholder="直供工业用户"
-          clearable
-          style="width: 140px"
-          class="mr-1"
-          @change="handleFilter"
-        >
-          <el-option
-            v-for="item in isDirectSupplyOption"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+        <el-select v-model="listQuery.isDirectSupply" placeholder="直供工业用户" clearable style="width: 140px" class="mr-1" @change="handleFilter">
+          <el-option v-for="item in isDirectSupplyOption" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
         <!-- 昆仑系 -->
-        <el-select
-          v-model="listQuery.isKunlun"
-          placeholder="昆仑系"
-          clearable
-          style="width: 120px"
-          class="mr-1"
-          @change="handleFilter"
-        >
-          <el-option
-            v-for="item in isKunlunOption"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+        <el-select v-model="listQuery.isKunlun" placeholder="昆仑系" clearable style="width: 120px" class="mr-1" @change="handleFilter">
+          <el-option v-for="item in isKunlunOption" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
         <!-- 请输入客户名称 -->
-        <el-input
-          v-model="listQuery.customerName"
-          placeholder="请输入客户名称"
-          clearable
-          style="width: 200px;"
-          @blur="handleFilter"
-          @clear="handleFilter"
-        />
+        <el-input v-model="listQuery.customerName" placeholder="请输入客户名称" clearable style="width: 200px" @blur="handleFilter" @clear="handleFilter" />
       </div>
       <div>
         <el-button type="primary" @click="handleCreate">添加</el-button>
@@ -74,57 +31,38 @@
       <el-table-column prop="mergeItems" label="客户合并项" align="center" />
       <el-table-column prop="pipeline" label="管线" align="center" />
       <el-table-column prop="area" label="所属区域" align="center">
-        <template slot-scope="{row}">{{ getCodeLabel(row.area) }}</template>
+        <template slot-scope="{ row }">{{ getCodeLabel(row.area) }}</template>
       </el-table-column>
       <el-table-column prop="directSupplier" label="直供工业用户" align="center">
-        <template slot-scope="{row}">
+        <template slot-scope="{ row }">
           <span v-for="item in isDirectSupplyOption" :key="'directSupplier' + item.value">
-            <el-tag
-              v-if="item.value == row.directSupplier"
-              :type="item.type"
-              disable-transitions
-            >{{ item.label }}</el-tag>
+            <el-tag v-if="item.value == row.directSupplier" :type="item.type" disable-transitions>{{ item.label }}</el-tag>
           </span>
         </template>
       </el-table-column>
       <el-table-column prop="belongKunlun" label="昆仑系" align="center">
-        <template slot-scope="{row}">
+        <template slot-scope="{ row }">
           <span v-for="item in isKunlunOption" :key="'belongKunlun' + item.value">
-            <el-tag
-              v-if="item.value == row.belongKunlun"
-              :type="item.type"
-              disable-transitions
-            >{{ item.label }}</el-tag>
+            <el-tag v-if="item.value == row.belongKunlun" :type="item.type" disable-transitions>{{ item.label }}</el-tag>
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="address" label="地址" align="center" />
+      <el-table-column prop="address" label="地址" align="center" width="250" />
       <el-table-column prop="creator" label="创建人" align="center" />
       <el-table-column prop="createTime" label="创建时间" align="center" />
       <el-table-column label="操作" width="140">
-        <template slot-scope="{row}">
+        <template slot-scope="{ row }">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(row)" />
           <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(row)" />
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <pagination
-      :total="totalCount"
-      :page.sync="listQuery.pageNum"
-      :limit.sync="listQuery.pageSize"
-      @pagination="getList"
-    />
+    <pagination :total="totalCount" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
 
     <!-- 编辑组织 -->
-    <el-dialog :title="isEdit? '编辑':'新增'" :visible.sync="dialogFormVisible" width="500px">
-      <el-form
-        ref="dataForm"
-        :rules="rules"
-        :model="temp"
-        label-position="right"
-        label-width="100px"
-      >
+    <el-dialog :title="isEdit ? '编辑' : '新增'" :visible.sync="dialogFormVisible" width="500px">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="right" label-width="100px">
         <el-form-item label="客户名称" prop="name">
           <el-input v-model.trim="temp.name" autocomplete="off" :disabled="isEdit" />
         </el-form-item>
@@ -136,29 +74,14 @@
         </el-form-item>
         <el-form-item label="所属区域" prop="area">
           <el-select v-model="temp.area">
-            <el-option
-              v-for="item in areaOption"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
+            <el-option v-for="item in areaOption" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item label="直供工业用户">
-          <el-switch
-            v-model="temp.directSupplier"
-            :active-value="1"
-            :inactive-value="2"
-            active-color="#13ce66"
-          />
+          <el-switch v-model="temp.directSupplier" :active-value="1" :inactive-value="2" active-color="#13ce66" />
         </el-form-item>
         <el-form-item label="昆仑系">
-          <el-switch
-            v-model="temp.belongKunlun"
-            :active-value="1"
-            :inactive-value="2"
-            active-color="#13ce66"
-          />
+          <el-switch v-model="temp.belongKunlun" :active-value="1" :inactive-value="2" active-color="#13ce66" />
         </el-form-item>
         <el-form-item label="地址" prop="address">
           <el-input v-model.trim="temp.address" autocomplete="off" />
@@ -175,7 +98,8 @@
 <script>
 import { fetchList, saveCustomer, deleteCustomer } from '@/api/customer/pipeline'
 import waves from '@/directive/waves' // waves directive
-import { parseTime, deleteNullParam } from '@/utils'
+import { parseTime, deleteNullParam, getPointByAddr } from '@/utils'
+import loadBMap from '@/utils/loadBMap.js'
 import { areaOption, isDirectSupplyOption, isKunlunOption } from '@/utils/options'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
@@ -227,6 +151,9 @@ export default {
   created() {
     this.getList()
   },
+  mounted() {
+    loadBMap()
+  },
   methods: {
     // 获取列表
     getList() {
@@ -240,23 +167,30 @@ export default {
     // 编辑
     saveData() {
       console.log('saveData')
-      this.$refs['dataForm'].validate(async valid => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           if (!this.isEdit) delete tempData.id
-          const res = await saveCustomer(tempData)
-          if (res.status === 0) {
-            this.dialogFormVisible = false
-            this.$message.success('编辑成功')
-            // 重新获取数据
-            if (this.isEdit) {
-              this.getList()
-            } else {
-              this.handleFilter()
+
+          getPointByAddr(tempData.address, async (flag, point) => {
+            if (flag) {
+              tempData.lat = point.lat
+              tempData.lon = point.lng
+              const res = await saveCustomer(tempData)
+              if (res.status === 0) {
+                this.dialogFormVisible = false
+                this.$message.success('编辑成功')
+                // 重新获取数据
+                if (this.isEdit) {
+                  this.getList()
+                } else {
+                  this.handleFilter()
+                }
+              } else {
+                this.$message.error('编辑失败')
+              }
             }
-          } else {
-            this.$message.error('编辑失败')
-          }
+          })
         }
       })
     },

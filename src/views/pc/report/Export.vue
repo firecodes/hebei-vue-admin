@@ -27,7 +27,7 @@ export default {
       listQuery: {
         date: new Date()
       },
-      fileList: [{ fileName: '日简报' }, { fileName: '河北分公司销售报表' }, { fileName: '昆仑批发' }, { fileName: '自有终端' }, { fileName: '周对比及分日' }, { fileName: '冀东LNG' }, { fileName: '实时年' }, { fileName: '月对比及分日' }],
+      fileList: [{ fileName: '日简报' }, { fileName: '河北分公司销售报表' }, { fileName: '昆仑批发' }, { fileName: '周对比及分日' }, { fileName: '冀东LNG' }, { fileName: '实时年' }, { fileName: '月对比及分日' }],
       pickerOptions: {
         disabledDate: time => {
           return time.getTime() > Date.now()
@@ -49,9 +49,9 @@ export default {
         case '昆仑批发':
           url += '/api/export/wholeSales'
           break
-        case '自有终端':
-          url += '/api/export/selfTerminal'
-          break
+        // case '自有终端':
+        //   url += '/api/export/selfTerminal'
+        //   break
         case '周对比及分日':
           url += '/api/export/week'
           break

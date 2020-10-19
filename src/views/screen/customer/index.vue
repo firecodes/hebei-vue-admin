@@ -34,16 +34,19 @@
               <th>客户名称</th>
               <th>销售量(万方)</th>
             </tr>
-            <tr v-for="(item, i) in customersTop" :key="i">
-              <template v-if="i < 5">
+
+            <template v-for="(item, i) in customersTop">
+              <tr v-if="i < 5" :key="i">
                 <td class="index" v-text="i + 1" />
                 <td class="name" v-text="item.name" />
                 <td v-cloak class="num">{{ Math.round(item.quantity) }}</td>
-                <td v-if="i < 5" class="index" v-text="i + 1 + 6" />
-                <td v-if="i < 5" class="name" v-text="customersTop[i + 5].name" />
-                <td v-cloak v-if="i < 5" class="num">{{ Math.round(customersTop[i + 5].quantity) }}</td>
-              </template>
-            </tr>
+                <template v-if="i < 5 && customersTop[i + 5]">
+                  <td class="index" v-text="i + 1 + 5" />
+                  <td class="name" v-text="customersTop[i + 5].name" />
+                  <td v-cloak class="num">{{ Math.round(customersTop[i + 5].quantity) }}</td>
+                </template>
+              </tr>
+            </template>
           </table>
           <pie-chart :chart-data="customersTopPortion" height="240px" width="600px" :show-label="true" />
         </div>
@@ -56,48 +59,18 @@
         </div>
 
         <table class="mb-1">
-          <tbody>
-            <tr>
-              <td class="index">1</td>
-              <td class="name">河北燃气</td>
-              <td class="num text-success">0.55</td>
-              <td class="index">6</td>
-              <td class="name">廊坊百川</td>
-              <td class="num text-success">0.10</td>
+          <template v-for="(item, i) in customersYearSalesTop">
+            <tr v-if="i < 5" :key="i">
+              <td class="index" v-text="i + 1" />
+              <td class="name" v-text="item.name" />
+              <td v-cloak class="num">{{ Math.round(item.quantity) }}</td>
+              <template v-if="i < 5 && customersYearSalesTop[i + 5]">
+                <td class="index" v-text="i + 1 + 5" />
+                <td class="name" v-text="customersYearSalesTop[i + 5].name" />
+                <td v-cloak class="num">{{ Math.round(customersYearSalesTop[i + 5].quantity) }}</td>
+              </template>
             </tr>
-            <tr>
-              <td class="index">2</td>
-              <td class="name">唐山华普</td>
-              <td class="num text-success">0.17</td>
-              <td class="index">7</td>
-              <td class="name">华气秦皇岛华润保运</td>
-              <td class="num text-success">0.09</td>
-            </tr>
-            <tr>
-              <td class="index">3</td>
-              <td class="name">唐山燃气</td>
-              <td class="num text-success">0.15</td>
-              <td class="index">8</td>
-              <td class="name">新奥能源（河北LNG）</td>
-              <td class="num text-success">0.08</td>
-            </tr>
-            <tr>
-              <td class="index">4</td>
-              <td class="name">河北昆利</td>
-              <td class="num text-success">0.14</td>
-              <td class="index">9</td>
-              <td class="name">河北华气</td>
-              <td class="num text-success">0.08</td>
-            </tr>
-            <tr style="border-bottom: none">
-              <td class="index">5</td>
-              <td class="name">河北华港</td>
-              <td class="num text-success">0.10</td>
-              <td class="index">10</td>
-              <td class="name">文安华油</td>
-              <td class="num text-success">0.07</td>
-            </tr>
-          </tbody>
+          </template>
         </table>
       </div>
       <!-- 合同量top10 -->
@@ -107,48 +80,18 @@
           <div class="op">单位：万方</div>
         </div>
         <table class="mb-1 text-center">
-          <tbody>
-            <tr>
-              <td class="index">1</td>
-              <td class="name">河北燃气</td>
-              <td class="num text-success">8680</td>
-              <td class="index">6</td>
-              <td class="name">廊坊百川</td>
-              <td class="num text-success">1844</td>
+          <template v-for="(item, i) in customersContractTop">
+            <tr v-if="i < 5" :key="i">
+              <td class="index" v-text="i + 1" />
+              <td class="name" v-text="item.name" />
+              <td v-cloak class="num">{{ Math.round(item.quantity) }}</td>
+              <template v-if="i < 5 && customersContractTop[i + 5]">
+                <td class="index" v-text="i + 1 + 5" />
+                <td class="name" v-text="customersContractTop[i + 5].name" />
+                <td v-cloak class="num">{{ Math.round(customersContractTop[i + 5].quantity) }}</td>
+              </template>
             </tr>
-            <tr>
-              <td class="index">2</td>
-              <td class="name">河北昆利</td>
-              <td class="num text-success">4040</td>
-              <td class="index">7</td>
-              <td class="name">永清昆仑</td>
-              <td class="num text-success">1600</td>
-            </tr>
-            <tr>
-              <td class="index">3</td>
-              <td class="name">霸州昆燃</td>
-              <td class="num text-success">3639</td>
-              <td class="index">8</td>
-              <td class="name">廊坊新奥</td>
-              <td class="num text-success">1595</td>
-            </tr>
-            <tr>
-              <td class="index">4</td>
-              <td class="name">唐山燃气</td>
-              <td class="num text-success">3240</td>
-              <td class="index">9</td>
-              <td class="name">秦皇岛华润</td>
-              <td class="num text-success">1400</td>
-            </tr>
-            <tr style="border-bottom: none">
-              <td class="index">5</td>
-              <td class="name">河北华港</td>
-              <td class="num text-success">2029</td>
-              <td class="index">10</td>
-              <td class="name">河北华气</td>
-              <td class="num text-success">1240</td>
-            </tr>
-          </tbody>
+          </template>
         </table>
       </div>
       <!-- 客户量统计 -->
@@ -169,7 +112,7 @@ import BasicChart from '@/components/Charts/BasicChart'
 import HebeiMap from '@/components/Charts/HebeiMap'
 
 import { areaOption } from '@/utils/options'
-import { getCustomersCard, getCustomersCount, getCustomersTop, getCustomersStats } from '@/api/screen/customer'
+import { getCustomersCard, getCustomersCount, getCustomersTop, getCustomersContractTop, getCustomersYearSalesTop, getCustomersStats } from '@/api/screen/customer'
 
 export default {
   name: 'Customer',
@@ -195,6 +138,8 @@ export default {
       // customersDecrease: [],
       // customersIncrease: [],
       customersTop: [],
+      customersYearSalesTop: [],
+      customersContractTop: [],
       // 客户量统计
       customersStats: [],
       // 地区销售排名
@@ -245,6 +190,9 @@ export default {
     // 客户量统计
     this.getCustomersStats()
 
+    this.getCustomersYearSalesTop()
+    this.getCustomersContractTop()
+
     // 地区销售排名
     // this.getSalesAreaSorted()
   },
@@ -282,6 +230,20 @@ export default {
         this.customersTop = res.data
       }
     },
+    // 合同量top10
+    async getCustomersContractTop() {
+      const res = await getCustomersContractTop()
+      if (res.status === 0) {
+        this.customersContractTop = res.data
+      }
+    },
+    // 客户年销售top10
+    async getCustomersYearSalesTop() {
+      const res = await getCustomersYearSalesTop()
+      if (res.status === 0) {
+        this.customersYearSalesTop = res.data
+      }
+    },
     // 客户量统计
     async getCustomersStats() {
       const res = await getCustomersStats()
@@ -310,7 +272,7 @@ export default {
   width: 780px;
   padding: 22px 44px;
   .map {
-    height: 800px;
+    height: 840px;
   }
 }
 .container-right {

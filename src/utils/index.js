@@ -302,3 +302,25 @@ export const getPriceSource = (arr, dateRange, key) => {
 
   return source
 }
+
+
+
+/** * 逆地址解析函数（根据坐标点获取详细地址） *
+ * @param {String} address 地址，必传
+ * @param {Function} cb  回调函数
+ * */
+export const getPointByAddr = (address, cb) => {
+
+  var myGeo = new BMap.Geocoder();
+  // 将地址解析结果显示在地图上,并调整地图视野
+  myGeo.getPoint(address, function (point) {
+    if (point) {
+      // map.centerAndZoom(point, 16);
+      // map.addOverlay(new BMap.Marker(point));
+      cb(true, point)
+    } else {
+      cb(false)
+    }
+  });
+
+}

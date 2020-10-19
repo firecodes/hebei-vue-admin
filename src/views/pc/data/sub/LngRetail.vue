@@ -7,7 +7,7 @@
         <el-cascader v-model="locationArr" :options="locationOption" :props="{ expandTrigger: 'hover' }" @change="handleFilter" />
       </div>
       <div style="line-height: 32px">
-        <el-button type="primary" icon="el-icon-download" class="mr-1">导出 Excel</el-button>
+        <el-button type="primary" icon="el-icon-download" class="mr-1" @click="handleDownload">导出 Excel</el-button>
         元/公升
       </div>
     </div>
@@ -80,6 +80,14 @@ export default {
     handleFilter() {
       this.listQuery.pageNum = 1
       this.getList()
+    },
+    // 导出
+    handleDownload() {
+      const start = parseDate(this.daterange[0])
+      const end = parseDate(this.daterange[1])
+      const location = this.locationArr[this.locationArr.length - 1]
+      const url = `${process.env.VUE_APP_BASE_API}/api/datacenter/price/forecast/export/lngRetail?start=${start}&end=${end}&location=${location}`
+      window.open(url)
     }
   }
 }

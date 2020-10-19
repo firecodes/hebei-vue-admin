@@ -55,10 +55,18 @@ export function getPurchaseGasPercent(customerId) {
   })
 }
 
-// 三级单位-购销气类型占比
+// 三级单位-购销气类型占比-购气占比
 export function getPurchaseGasPercentCustomer(customerId) {
   return request({
     url: `/api/screen/resales/purchaseGasPercent/${customerId}`,
+    method: 'get'
+  })
+}
+
+// 三级单位-购销气类型占比-销气占比
+export function getConsumeGasPercent(customerId) {
+  return request({
+    url: `/api/screen/resales/consumeGasPercent/${customerId}`,
     method: 'get'
   })
 }

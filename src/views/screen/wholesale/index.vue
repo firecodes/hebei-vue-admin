@@ -26,22 +26,22 @@
         </div>
         <div class="chart-container">
           <div class="w-33">
-            <plan-chart :height="'130px'" :chart-data="planCompletePercent[0].completePercent" :color="'#ffd52b'" />
+            <plan-chart height="130px" :chart-data="planCompletePercent[0].completePercent" color="#ffd52b" />
             <p><strong>销售量(含LNG)</strong></p>
             <p>计划日均：<span class="num" v-text="planCompletePercent[0].planQuantity" /></p>
             <p>日均计划超欠：<span class="num" v-text="planCompletePercent[0].diffQuantity" /></p>
           </div>
           <div class="w-33">
-            <plan-chart :height="'130px'" :chart-data="planCompletePercent[1].completePercent" :color="'#00ffff'" />
+            <plan-chart height="130px" :chart-data="planCompletePercent[1].completePercent" color="#00ffff" />
             <p><strong>管道气</strong></p>
             <p>计划日均：<span class="num" v-text="planCompletePercent[1].planQuantity" /></p>
             <p>日均计划超欠：<span class="num" v-text="planCompletePercent[1].diffQuantity" /></p>
           </div>
 
           <div class="w-33">
-            <plan-chart :height="'130px'" :chart-data="planCompletePercent[2].completePercent" :color="'#ff6a00'" />
+            <plan-chart height="130px" :chart-data="planCompletePercent[2].completePercent" color="#ff6a00" />
             <p><strong>冀东LNG</strong></p>
-            <p>日均计划超欠：<span class="num" v-text="planCompletePercent[2].planQuantity" /></p>
+            <p>计划日均：<span class="num" v-text="planCompletePercent[2].planQuantity" /></p>
             <p>日均计划超欠：<span class="num" v-text="planCompletePercent[2].diffQuantity" /></p>
           </div>
         </div>

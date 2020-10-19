@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 // 总销气量卡片
-export function getCustomersCard () {
+export function getCustomersCard() {
   return request({
     url: '/api/screen/customers/card',
     method: 'get'
@@ -9,14 +9,14 @@ export function getCustomersCard () {
 }
 
 // 客户量卡片
-export function getCustomersCount () {
+export function getCustomersCount() {
   return request({
     url: '/api/screen/customers/count',
     method: 'get'
   })
 }
 // 地区客户明细
-export function getCustomersAreaDetail () {
+export function getCustomersAreaDetail() {
   return request({
     url: '/api/screen/customers/sales/areaDetail',
     method: 'get'
@@ -38,15 +38,32 @@ export function getCustomersAreaDetail () {
 //   })
 // }
 // 客户销售TOP10
-export function getCustomersTop () {
+export function getCustomersTop() {
   return request({
     url: '/api/screen/customers/sales/top',
     method: 'get'
   })
 }
 
+// 合同量top10
+export function getCustomersContractTop() {
+  return request({
+    url: '/api/screen/customers/contract/top',
+    method: 'get'
+  })
+}
+
+// 客户年销售top10
+export function getCustomersYearSalesTop() {
+  return request({
+    url: '/api/screen/customers/sales/year/top',
+    method: 'get'
+  })
+}
+
+
 // 客户量统计
-export function getCustomersStats () {
+export function getCustomersStats() {
   return request({
     url: '/api/screen/customers/stats',
     method: 'get'

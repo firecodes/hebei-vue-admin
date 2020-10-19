@@ -87,7 +87,7 @@ import HebeiMap from '@/components/Charts/HebeiMap'
 
 import { daterange1month, parseDate, getSalesChartSource } from '@/utils'
 import { areaOption } from '@/utils/options'
-import { getPlanCompletePercentCustomer, getSaleStatsCustomer, getSalesCustomerItems, getPurchaseStatsCustomer, getPlanAndRealGasCompareCustomer, getPurchaseGasPercentCustomer, getCustomers, getCustomerDetail } from '@/api/screen/retail'
+import { getPlanCompletePercentCustomer, getSaleStatsCustomer, getSalesCustomerItems, getPurchaseStatsCustomer, getPlanAndRealGasCompareCustomer, getPurchaseGasPercentCustomer, getCustomers, getCustomerDetail, getConsumeGasPercent } from '@/api/screen/retail'
 
 export default {
   name: 'RetailDetail',
@@ -176,8 +176,10 @@ export default {
 
     // 三级单位-总销气量统计
     this.getSaleStatsCustomer()
-    // 三级单位-总购气量统计
+    // 三级单位-总购气量统计-购气
     this.getPurchaseStatsCustomer()
+    // 三级单位-购销气类型占比-销气
+    this.getConsumeGasPercent()
 
     // 三级单位-计划量与实际购气量对比
     this.getPlanAndRealGasCompareCustomer()
@@ -197,7 +199,19 @@ export default {
         })
       }
     },
-    // 三级单位-购销气类型占比
+    // 三级单位-购销气类型占比-销气
+    async getConsumeGasPercent() {
+      const res = await getConsumeGasPercent(this.code)
+      console.log(res)
+      if (res.status === 0) {
+        this.salesPortion = [
+          // { name: '管道气', value: parseFloat(res.data[0].quantity) + parseFloat(res.data[3].quantity) },
+          // { name: 'LNG', value: parseFloat(res.data[1].quantity) + parseFloat(res.data[2].quantity) },
+          // { name: 'CNG', value: res.data[4].quantity }
+        ]
+      }
+    },
+    // 三级单位-购销气类型占比-购气
     async getPurchaseGasPercent() {
       const res = await getPurchaseGasPercentCustomer(this.code)
       if (res.status === 0) {
