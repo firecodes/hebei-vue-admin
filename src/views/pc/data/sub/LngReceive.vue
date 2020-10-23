@@ -54,7 +54,21 @@ export default {
       const res = []
       days.forEach(day => {
         const arr = this.resData[day]
-        res.push({ date: day, zshts: arr[0].priceSingle, zhytj: arr[1].priceSingle, zshtj: arr[2].priceSingle })
+        const temp = { date: day }
+        arr.forEach(item => {
+          switch (item.priceItemName) {
+            case '中石油曹妃甸':
+              temp.zshts = item.priceSingle
+              break
+            case '中海油天津':
+              temp.zhytj = item.priceSingle
+              break
+            case '中石化天津':
+              temp.zshtj = item.priceSingle
+              break
+          }
+        })
+        res.push(temp)
       })
 
       return res

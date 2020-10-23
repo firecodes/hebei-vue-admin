@@ -3,34 +3,22 @@
     <!-- 顶部搜索区域 -->
     <div class="mb-1">
       <el-select v-model="listQuery.reportType" class="mr-1">
-        <el-option
-          v-for="item in reportTypeOption"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
+        <el-option v-for="item in reportTypeOption" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
-      <el-date-picker
-        v-model="listQuery.date"
-        type="month"
-        :picker-options="pickerOptions"
-        @change="getUploadRecords"
-      />
+      <el-date-picker v-model="listQuery.date" type="month" :picker-options="pickerOptions" @change="getUploadRecords" />
     </div>
     <!-- 内容区域 -->
     <div class="container">
-      <div v-show="dateType=='day'" class="calendar-container">
+      <div v-show="dateType == 'day'" class="calendar-container">
         <el-calendar v-model="listQuery.date">
-          <template slot="dateCell" slot-scope="{data}">
-            <span
-              :class="{ 'is-selected' :data.isSelected, 'is-submited':isSubmited(data)}"
-            >{{ data.day.split('-').slice(2).join('-') }}</span>
+          <template slot="dateCell" slot-scope="{ data }">
+            <span :class="{ 'is-selected': data.isSelected, 'is-submited': isSubmited(data) }">{{ data.day.split('-').slice(2).join('-') }}</span>
           </template>
         </el-calendar>
       </div>
       <div class="content-container">
         <div v-if="recordDetail">
-          <el-button @click="dialogVisible=true">重新上传文件</el-button>
+          <el-button @click="dialogVisible = true">重新上传文件</el-button>
           <el-form label-position="left" inline class="demo-table-expand" label-width="100px">
             <el-form-item label="时间">
               <span>{{ time }}</span>
@@ -53,27 +41,16 @@
           </el-form>
         </div>
         <div v-else>
-          <el-button @click="dialogVisible=true">上传文件</el-button>
+          <el-button @click="dialogVisible = true">上传文件</el-button>
           <div>当前日期还未上传数据，请上传</div>
         </div>
       </div>
     </div>
 
     <!-- 上传文件 -->
-    <el-dialog
-      :title="recordDetail ? '重新上传文件': '上传文件'"
-      :visible.sync="dialogVisible"
-      @close="dialogClosed"
-    >
-      <el-upload
-        ref="upload"
-        action="/sales-api/api/upload"
-        :data="uploadData"
-        :on-success="handleSuccess"
-        :on-error="handleError"
-        :before-upload="handleBeforeUpload"
-      >
-        <el-button type="primary" style="margin-right:10px">点击上传</el-button>
+    <el-dialog :title="recordDetail ? '重新上传文件' : '上传文件'" :visible.sync="dialogVisible" @close="dialogClosed">
+      <el-upload ref="upload" action="/sales-api/api/upload" :data="uploadData" :on-success="handleSuccess" :on-error="handleError" :before-upload="handleBeforeUpload">
+        <el-button type="primary" style="margin-right: 10px">点击上传</el-button>
         <span slot="tip" class="el-upload__tip">请上传 excel 文件，文件扩展名为 .xls 或 .xlsx!</span>
       </el-upload>
     </el-dialog>

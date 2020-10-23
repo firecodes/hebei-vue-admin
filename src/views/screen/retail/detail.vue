@@ -205,9 +205,9 @@ export default {
       console.log(res)
       if (res.status === 0) {
         this.salesPortion = [
-          // { name: '管道气', value: parseFloat(res.data[0].quantity) + parseFloat(res.data[3].quantity) },
-          // { name: 'LNG', value: parseFloat(res.data[1].quantity) + parseFloat(res.data[2].quantity) },
-          // { name: 'CNG', value: res.data[4].quantity }
+          { name: '管道气', value: res.data[0].quantity },
+          { name: 'LNG', value: res.data[1].quantity },
+          { name: 'CNG', value: res.data[2].quantity }
         ]
       }
     },

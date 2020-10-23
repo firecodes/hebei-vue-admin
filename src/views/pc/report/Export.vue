@@ -31,7 +31,8 @@ export default {
       pickerOptions: {
         disabledDate: time => {
           return time.getTime() > Date.now()
-        }
+        },
+        firstDayOfWeek: 6
       }
     }
   },

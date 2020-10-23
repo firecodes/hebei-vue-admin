@@ -73,9 +73,10 @@ export const pickerOptions = {
   disabledDate: time => {
     return time.getTime() > Date.now()
   },
+  firstDayOfWeek: 6,
   shortcuts: [{
     text: '最近一周',
-    onClick (picker) {
+    onClick(picker) {
       const end = new Date()
       const start = new Date()
       start.setTime(start.getTime() - 3600 * 1000 * 24 * 6)
@@ -83,7 +84,7 @@ export const pickerOptions = {
     }
   }, {
     text: '最近一个月',
-    onClick (picker) {
+    onClick(picker) {
       const end = new Date()
       const start = new Date()
       start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
@@ -91,7 +92,7 @@ export const pickerOptions = {
     }
   }, {
     text: '最近三个月',
-    onClick (picker) {
+    onClick(picker) {
       const end = new Date()
       const start = new Date()
       start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)

@@ -66,12 +66,12 @@
       </el-table-column>
       <el-table-column label="年销量" align="center">
         <el-table-column prop="yearAccumulate" label="年累计" align="center" />
-        <el-table-column prop="yearAccumulate" label="日均" align="center" />
-        <el-table-column prop="lastYearAccumulate" label="去年同期累计" align="center" width="100px" />
-        <el-table-column prop="yearAccumulate" label="去年同期日均" align="center" width="100px" />
+        <el-table-column prop="dayMean" label="日均" align="center" />
+        <el-table-column prop="lastYearDayValue" label="去年同期累计" align="center" width="100px" />
+        <el-table-column prop="lastYearDayMean" label="去年同期日均" align="center" width="100px" />
         <el-table-column prop="yearTongbi" label="同比" align="center" />
-        <el-table-column prop="yearAccumulate" label="日均同比" align="center" />
-        <el-table-column prop="yearAccumulate" label="同比增幅" align="center" />
+        <el-table-column prop="dayMeanTongbi" label="日均同比" align="center" />
+        <el-table-column prop="" label="同比增幅" align="center" />
       </el-table-column>
     </el-table>
     <!-- 分页 -->

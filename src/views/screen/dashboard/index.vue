@@ -28,10 +28,10 @@
       </div>
     </div>
     <div class="container-right">
-      <!-- 批发业务销售统计 -->
+      <!-- 销售统计 -->
       <div class="chart-wrapper mb-1">
         <div class="chart-wrapper-title">
-          <h4>批发业务销售统计</h4>
+          <h4>销售统计</h4>
           <div class="op">
             <span :class="{ active: salesType === 'wholesales' }" @click="salesType = 'wholesales'">批发业务</span> |
             <span :class="{ active: salesType === 'resales' }" @click="salesType = 'resales'">零售业务</span>
@@ -46,10 +46,10 @@
         </div>
         <proportion-chart :chart-data="cards" :rich="true" />
       </div>
-      <!-- 管道天然气门站价格 -->
+      <!-- 管道天然气价格 -->
       <div class="chart-wrapper">
         <div class="chart-wrapper-title">
-          <h4>管道天然气门站价格</h4>
+          <h4>管道天然气价格</h4>
           <div class="op">
             <span :class="{ active: priceType === 'gate' }" @click="priceType = 'gate'">门站</span> |
             <span :class="{ active: priceType === 'retail' }" @click="priceType = 'retail'">零售</span>

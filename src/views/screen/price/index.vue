@@ -55,7 +55,7 @@
           <h4>LNG 工厂销售价格</h4>
         </div>
         <div class="chart-container">
-          <basic-chart :chart-data="lngPlant" unit="元/吨" />
+          <basic-chart :chart-data="lngPlantData" unit="元/吨" />
         </div>
       </div>
       <!-- LNG 加气站零售价格 -->
@@ -102,7 +102,8 @@ import HebeiMap from '@/components/Charts/HebeiMap'
 
 import { daterange6month, parseDate, getPriceSource } from '@/utils'
 import { locationOption, locationOptionSmall } from '@/utils/options'
-import { getAreaPrice, getGatePrice, getRetailPrice, getLngReceive, getLngPlant, getLngRetail, getCngPrice } from '@/api/screen/price'
+import { getAreaPrice, getGatePrice, getRetailPrice, getLngReceive, getLngRetail, getCngPrice } from '@/api/screen/price'
+import { getLngPlant } from '@/api/data'
 
 export default {
   name: 'Price',
@@ -121,38 +122,8 @@ export default {
       retailpriceLoc: '河北-石家庄',
       lngReceive: [],
       lngPlant: [
-        ['时间', '华气霸州', '迁安翅冀', '沧州中翔', '迁安怡蕙达'],
-        ['08-23', 2650, 2850, 2480, 4567],
-        ['08-24', 2650, 2850, 2480, 4567],
-        ['08-25', 2650, 2850, 2480, 4567],
-        ['08-26', 2650, 2850, 2480, 4567],
-        ['08-27', 2650, 2850, 2480, 4567],
-        ['08-28', 2650, 2850, 2480, 4567],
-        ['08-29', 2650, 2850, 2480, 4567],
-        ['08-30', 2650, 2850, 2480, 4567],
-        ['08-31', 2650, 2850, 2480, 4567],
-        ['09-01', 2650, 2850, 2480, 4567],
-        ['09-02', 2650, 2850, 2480, 4567],
-        ['09-03', 2650, 2850, 2480, 4567],
-        ['09-04', 2650, 2850, 2480, 4567],
-        ['09-05', 2650, 2850, 2480, 4567],
-        ['09-06', 2650, 2850, 2480, 4567],
-        ['09-07', 2650, 2850, 2480, 4567],
-        ['09-08', 2650, 2850, 2480, 4567],
-        ['09-09', 2650, 2850, 2480, 4567],
-        ['09-10', 2650, 2850, 2480, 4567],
-        ['09-11', 2650, 2850, 2480, 4567],
-        ['09-12', 2650, 2850, 2480, 4567],
-        ['09-13', 2650, 2850, 2480, 4567],
-        ['09-14', 2650, 2850, 2480, 4567],
-        ['09-15', 2650, 2850, 2480, 4567],
-        ['09-16', 2650, 2850, 2480, 4567],
-        ['09-17', 2650, 2850, 2480, 4567],
-        ['09-18', 2650, 2850, 2480, 4567],
-        ['09-19', 2650, 2850, 2480, 4567],
-        ['09-20', 2650, 2850, 2480, 4567],
-        ['09-21', 2650, 2850, 2480, 4567],
-        ['09-22', 2650, 2850, 2480, 4567]
+        // ['时间', '华气霸州', '迁安翅冀', '沧州中翔', '迁安怡蕙达'],
+        // ['08-23', 2650, 2850, 2480, 4567],
       ],
       lngRetail: [],
       lngRetailLoc: '河北-石家庄',
@@ -177,7 +148,45 @@ export default {
       mapData: []
     }
   },
-  computed: {},
+  computed: {
+    // LNG 工厂销售价格
+    lngPlantData() {
+      const res = [['时间', '华气霸州', '迁安翅冀', '沧州中翔', '迁安怡蕙达']]
+      const [start, end] = this.daterange6month
+      const dataObj = this.lngPlant
+
+      for (let i = start.getTime(); i <= end.getTime(); ) {
+        const date = parseDate(new Date(i))
+        console.log(date)
+        const temp = [date, '-', '-', '-', '-']
+
+        if (dataObj[date]) {
+          dataObj[date].forEach(item => {
+            switch (item.priceItemName) {
+              case '华气霸州':
+                temp[1] = item.priceSingle
+                break
+              case '迁安翅冀':
+                temp[2] = item.priceSingle
+                break
+              case '沧州中翔':
+                temp[3] = item.priceSingle
+                break
+              case '迁安怡蕙达':
+                temp[4] = item.priceSingle
+                break
+            }
+          })
+        }
+
+        res.push(temp)
+
+        i += 3600 * 1000 * 24
+      }
+
+      return res
+    }
+  },
   watch: {
     retailpriceLoc(val) {
       this.getRetailPrice(val)
@@ -221,7 +230,7 @@ export default {
     // LNG 接收站销售价格
     this.getLngReceive()
     // LNG 工厂销售价格
-    // this.getLngPlant()
+    this.getLngPlant()
     // LNG 加气站零售价格
     this.getLngRetail(this.lngRetailLoc)
     // CNG 车用价格
@@ -280,7 +289,8 @@ export default {
     // LNG 工厂销售价格--接口错误了
     async getLngPlant(location) {
       const res = await getLngPlant({
-        offerDay: '2020-10-09',
+        start: parseDate(this.daterange6month[0]),
+        end: parseDate(this.daterange6month[1]),
         pageNum: 1,
         pageSize: 10000
       })

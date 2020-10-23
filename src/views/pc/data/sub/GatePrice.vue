@@ -53,9 +53,28 @@ export default {
       let days = Object.keys(this.resData)
       days = days.sort((a, b) => new Date(b) - new Date(a))
       const res = []
+      // days.forEach(day => {
+      //   const arr = this.resData[day]
+      //   res.push({ date: day, beijing: arr[0].priceSingle, tianjin: arr[1].priceSingle, hebei: arr[2].priceSingle })
+      // })
+
       days.forEach(day => {
         const arr = this.resData[day]
-        res.push({ date: day, beijing: arr[0].priceSingle, tianjin: arr[1].priceSingle, hebei: arr[2].priceSingle })
+        const temp = { date: day }
+        arr.forEach(item => {
+          switch (item.priceItemName) {
+            case '北京':
+              temp.beijing = item.priceSingle
+              break
+            case '天津':
+              temp.tianjin = item.priceSingle
+              break
+            case '河北':
+              temp.hebei = item.priceSingle
+              break
+          }
+        })
+        res.push(temp)
       })
 
       return res

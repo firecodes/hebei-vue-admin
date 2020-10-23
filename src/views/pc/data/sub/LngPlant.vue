@@ -55,7 +55,24 @@ export default {
       const res = []
       days.forEach(day => {
         const arr = this.resData[day]
-        res.push({ date: day, huaqi: arr[0].priceSingle, qianan: arr[1].priceSingle, zhongxiang: arr[1].priceSingle, yihuida: arr[1].priceSingle })
+        const temp = { date: day }
+        arr.forEach(item => {
+          switch (item.priceItemName) {
+            case '沧州中翔':
+              temp.zhongxiang = item.priceSingle
+              break
+            case '华气霸州':
+              temp.huaqi = item.priceSingle
+              break
+            case '迁安翅冀':
+              temp.qianan = item.priceSingle
+              break
+            case '迁安怡蕙达':
+              temp.yihuida = item.priceSingle
+              break
+          }
+        })
+        res.push(temp)
       })
 
       return res
