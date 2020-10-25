@@ -10,7 +10,7 @@
         </div>
         <div class="chart-wrapper">
           <h4>零售业务销售统计</h4>
-          <sales-chart :chart-data="resalesStat" :color="['#5d62b5', '#29c3be']" height="350px" main-color="#333" />
+          <basic-chart :chart-data="resalesStat" type="bar" :color="['#5d62b5']" height="350px" main-color="#333" />
         </div>
       </el-col>
       <el-col :span="8">

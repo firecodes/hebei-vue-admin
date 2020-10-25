@@ -32,7 +32,7 @@
     <!-- 编辑组织 -->
     <el-dialog :title="isEdit ? '编辑' : '新增'" :visible.sync="dialogFormVisible" width="500px">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="right" label-width="80px">
-        <el-form-item label="组织名称" prop="name">
+        <el-form-item label="客户名称" prop="name">
           <el-input v-model.trim="temp.name" :disabled="isEdit" />
         </el-form-item>
         <el-form-item label="地址" prop="address">

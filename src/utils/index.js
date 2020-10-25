@@ -249,14 +249,16 @@ export const getSalesChartSource = (arr, dateRange, title = ['时间', '日销�
 
   for (let i = start.getTime(); i <= end.getTime();) {
     const date = parseDate(new Date(i))
-    const quantity = (dataObj[date] && dataObj[date].quantity) || '-'
-    const tongBi = (dataObj[date] && dataObj[date].tongBi) || '-'
+    const quantity = (dataObj[date] && dataObj[date].quantity && Math.round(dataObj[date].quantity)) || '-'
+    const tongBi = (dataObj[date] && dataObj[date].tongBi && Math.round(dataObj[date].tongBi)) || '-'
+    // const tongBi = (dataObj[date] && dataObj[date].tongBi) || '-'
 
-    const temp = [date.split('-').slice(1).join('-'), Math.round(quantity)]
+    const temp = [date.split('-').slice(1).join('-'), quantity]
 
     if (!single) {
-      temp.push(Math.round(tongBi))
+      temp.push(tongBi)
     }
+
 
     source.push(temp)
 

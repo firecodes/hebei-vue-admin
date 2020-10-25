@@ -125,7 +125,7 @@ export default {
         end: parseDate(this.daterange1month[1])
       })
       if (res.status === 0) {
-        this.resalesStat = getSalesChartSource(res.data, this.daterange1month)
+        this.resalesStat = getSalesChartSource(res.data, this.daterange1month, ['时间', '日销量'], true)
       }
     },
     // 得到批发卡片数据

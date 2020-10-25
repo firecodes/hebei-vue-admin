@@ -162,7 +162,7 @@ export default {
       console.log(quantity, sum)
       return [
         { name: this.area, value: quantity },
-        { name: '其他地区', value: sum }
+        { name: '其他地区', value: sum.toFixed(2) }
       ]
     },
     // 客户销售占比

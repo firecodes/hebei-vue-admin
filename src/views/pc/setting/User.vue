@@ -5,29 +5,10 @@
     <div class="filter-container mb-1">
       <div>
         <!-- 请输入客户名称 -->
-        <el-select
-          v-model="listQuery.status"
-          clearable
-          placeholder="状态"
-          style="width: 140px"
-          class="mr-1"
-          @change="handleFilter"
-        >
-          <el-option
-            v-for="item in userStatusOption"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+        <el-select v-model="listQuery.status" clearable placeholder="状态" style="width: 140px" class="mr-1" @change="handleFilter">
+          <el-option v-for="item in userStatusOption" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
-        <el-input
-          v-model.trim="listQuery.keyword"
-          placeholder="请输入登录账号/姓名"
-          clearable
-          style="width: 220px;"
-          @clear="handleFilter"
-          @change="handleFilter"
-        />
+        <el-input v-model.trim="listQuery.keyword" placeholder="请输入登录账号/姓名" clearable style="width: 220px" @clear="handleFilter" @change="handleFilter" />
       </div>
       <div>
         <el-button type="primary" @click="handleCreate">添加</el-button>
@@ -40,13 +21,9 @@
       <el-table-column prop="mobile" label="登录账号" align="center" />
       <el-table-column prop="realName" label="姓名" align="center" />
       <el-table-column label="状态" align="center">
-        <template slot-scope="{row}">
+        <template slot-scope="{ row }">
           <span v-for="item in userStatusOption" :key="'status' + item.value">
-            <el-tag
-              v-if="item.value == row.status"
-              :type="item.type"
-              disable-transitions
-            >{{ item.label }}</el-tag>
+            <el-tag v-if="item.value == row.status" :type="item.type" disable-transitions>{{ item.label }}</el-tag>
           </span>
         </template>
       </el-table-column>
@@ -55,7 +32,7 @@
       <el-table-column prop="createTime" label="创建时间" align="center" />
 
       <el-table-column label="操作">
-        <template slot-scope="{row}">
+        <template slot-scope="{ row }">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(row)" />
           <!-- 重置密码 -->
           <el-tooltip effect="dark" content="重置密码" placement="top" :enterable="false">
@@ -66,22 +43,11 @@
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <pagination
-      :total="totalCount"
-      :page.sync="listQuery.pageNum"
-      :limit.sync="listQuery.pageSize"
-      @pagination="getList"
-    />
+    <pagination :total="totalCount" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
 
     <!-- 编辑组织 -->
-    <el-dialog :title="isEdit? '编辑':'新增'" :visible.sync="dialogFormVisible" width="500px">
-      <el-form
-        ref="dataForm"
-        :rules="rules"
-        :model="temp"
-        label-position="right"
-        label-width="80px"
-      >
+    <el-dialog :title="isEdit ? '编辑' : '新增'" :visible.sync="dialogFormVisible" width="500px">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="right" label-width="80px">
         <!-- <el-form-item label="用户名" prop="username">
           <el-input
             ref="usernameRef"
@@ -91,24 +57,14 @@
           />
         </el-form-item>-->
         <el-form-item label="登录账号" prop="mobile">
-          <el-input
-            v-model.trim="temp.mobile"
-            autocomplete="off"
-            :disabled="isEdit"
-            placeholder="请输入手机号"
-          />
+          <el-input v-model.trim="temp.mobile" autocomplete="off" :disabled="isEdit" placeholder="请输入手机号" />
         </el-form-item>
         <el-form-item label="姓名" prop="realName">
           <el-input v-model.trim="temp.realName" autocomplete="off" />
         </el-form-item>
 
         <el-form-item label="状态" prop="status">
-          <el-switch
-            v-model="temp.status"
-            :active-value="0"
-            :inactive-value="1"
-            active-color="#13ce66"
-          />
+          <el-switch v-model="temp.status" :active-value="0" :inactive-value="1" active-color="#13ce66" />
         </el-form-item>
       </el-form>
       <div slot="footer">
@@ -207,7 +163,7 @@ export default {
     },
     // 删除组织
     handleDelete(row) {
-      this.$confirm(`你确定要删除【${row.username}】吗?`, '提示', {
+      this.$confirm(`你确定要删除【${row.mobile}】吗?`, '提示', {
         type: 'warning'
       })
         .then(async () => {
@@ -227,7 +183,7 @@ export default {
 
     // 重置密码
     handleResetPassd(row) {
-      this.$confirm(`你确定要重置【${row.username}】的密码吗?`, '提示', {
+      this.$confirm(`你确定要重置【${row.mobile}】的密码吗?`, '提示', {
         type: 'warning'
       })
         .then(async () => {

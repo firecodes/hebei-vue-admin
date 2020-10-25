@@ -37,7 +37,8 @@
             <span :class="{ active: salesType === 'resales' }" @click="salesType = 'resales'">零售业务</span>
           </div>
         </div>
-        <sales-chart :chart-data="salesType === 'wholesales' ? wholesalesStat : resalesStat" :height="'260px'" :color="['#d9b03c', '#29c2bf']" />
+        <sales-chart v-if="salesType === 'wholesales'" :chart-data="wholesalesStat" :color="['#d9b03c', '#29c2bf']" />
+        <basic-chart v-else type="bar" :chart-data="resalesStat" :color="['#d9b03c']" width="100%" />
       </div>
       <!-- 销售占比 -->
       <div class="chart-wrapper mb-1">

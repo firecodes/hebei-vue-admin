@@ -12,7 +12,7 @@
         </el-cascader>
       </div>
       <div style="line-height: 32px">
-        <el-button type="primary" icon="el-icon-download" class="mr-1">导出 Excel</el-button>
+        <!-- <el-button type="primary" icon="el-icon-download" class="mr-1">导出 Excel</el-button> -->
         单位：万方
       </div>
     </div>
@@ -71,7 +71,7 @@
         <el-table-column prop="lastYearDayMean" label="去年同期日均" align="center" width="100px" />
         <el-table-column prop="yearTongbi" label="同比" align="center" />
         <el-table-column prop="dayMeanTongbi" label="日均同比" align="center" />
-        <el-table-column prop="" label="同比增幅" align="center" />
+        <el-table-column prop="yearIncreaseRate" label="同比增幅" align="center" />
       </el-table-column>
     </el-table>
     <!-- 分页 -->
