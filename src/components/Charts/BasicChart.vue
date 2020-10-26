@@ -41,6 +41,10 @@ export default {
     rotate: {
       type: Number,
       default: 0
+    },
+    connectNulls: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -95,7 +99,7 @@ export default {
       }
       if (source.length) {
         for (let i = 0; i < source[0].length - 1; i++) {
-          option.series.push({ type: this.type, smooth: true })
+          option.series.push({ type: this.type, smooth: true, connectNulls: this.connectNulls })
         }
       }
       this.chart.setOption(option, true)

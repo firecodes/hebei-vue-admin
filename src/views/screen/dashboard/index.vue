@@ -56,7 +56,7 @@
             <span :class="{ active: priceType === 'retail' }" @click="priceType = 'retail'">零售</span>
           </div>
         </div>
-        <basic-chart :chart-data="priceType === 'gate' ? gatePrice : retailprice" :height="'267px'" :color="['#29c3be', '#5d62b5', '#fdc931']" unit="元/立方米" />
+        <basic-chart :chart-data="priceType === 'gate' ? gatePrice : retailprice" :height="'267px'" :color="['#29c3be', '#5d62b5', '#fdc931']" unit="元/立方米" :connectNulls="true"/>
       </div>
     </div>
   </div>

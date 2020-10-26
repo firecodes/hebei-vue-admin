@@ -20,11 +20,11 @@
         </div>
         <div class="chart-wrapper">
           <h4>管道天然气门站价格</h4>
-          <basic-chart :chart-data="gatePrice" unit="元/立方米" main-color="#333" />
+          <basic-chart :chart-data="gatePrice" unit="元/立方米" main-color="#333" :connectNulls="true"/>
         </div>
         <div class="chart-wrapper">
           <h4>管道天然气零售价格</h4>
-          <basic-chart :chart-data="retailprice" unit="元/立方米" main-color="#333" />
+          <basic-chart :chart-data="retailprice" unit="元/立方米" main-color="#333" :connectNulls="true"/>
         </div>
       </el-col>
     </el-row>
