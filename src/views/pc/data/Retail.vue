@@ -149,7 +149,7 @@ export default {
       this.getList()
     },
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-      if (columnIndex === 0 || columnIndex === 1) {
+      if (columnIndex === 0) {
         if (rowIndex % 7 === 0) {
           return {
             rowspan: 7,

@@ -151,7 +151,7 @@ export default {
   computed: {
     // LNG 工厂销售价格
     lngPlantData() {
-      const res = [['时间', '华气霸州', '迁安翅冀', '沧州中翔', '迁安怡蕙达']]
+      const res = [['时间', '河北华气', '迁安翅冀', '中翔', '怡蕙达']]
       const [start, end] = this.daterange6month
       const dataObj = this.lngPlant
 

@@ -1,6 +1,7 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
+const TerserPlugin = require('terser-webpack-plugin')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -117,6 +118,11 @@ module.exports = {
             })
           // https:// webpack.js.org/configuration/optimization/#optimizationruntimechunk
           config.optimization.runtimeChunk('single')
+          // 生产环境去掉console.log打印输出
+          config.optimization.minimizer('terser').tap((args) => {
+            args[0].terserOptions.compress.drop_console = true
+            return args
+          })
         }
       )
   }

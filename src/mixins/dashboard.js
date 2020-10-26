@@ -94,7 +94,6 @@ export default {
     async getWeather(code) {
       const res = await getWeather(101090101)
       if (res.status === 200) {
-        console.log(res.data)
         const reg = /(\d)+/
         const today = res.data.forecast[0]
         const yesterday = res.data.yesterday
@@ -116,7 +115,6 @@ export default {
       if (res.status === 0) {
         this.wholesalesStat = getSalesChartSource(res.data, this.daterange1month)
       }
-      console.log(this.wholesalesStat)
     },
     // 零售业务销售统计
     async getResalesStat() {

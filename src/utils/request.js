@@ -2,11 +2,16 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import Vue from 'vue'
+
+import apiUrl from '@/components/Global/index.vue'
+Vue.prototype.apiUrl = apiUrl.apiUrl
+console.log(apiUrl.apiUrl)
 
 // create an axios instance
 axios.defaults.withCredentials = true
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: Vue.prototype.apiUrl, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 10000 // request timeout
 })
