@@ -41,3 +41,28 @@ npm run lint
 # code format check and auto fix
 npm run lint -- --fix
 ```
+
+# 47 环境与客户环境不不同之处
+
+```javascript
+// components/Global/index.vue
+//线上接口地址
+let apiUrl = 'http://47.104.26.21/sales-api'
+if (process.env.NODE_ENV === 'production') {
+  apiUrl = location.protocol + '//' + location.host
+}
+
+//47
+let apiUrl = 'http://47.104.26.21/sales-api'
+// if (process.env.NODE_ENV === 'production') {
+//   apiUrl = location.protocol + '//' + location.host
+// }
+
+// vue.config.js
+publicPath: '/',
+publicPath: '/hb-ui', // 47
+
+// pc/report/Import.vue
+action="/api/upload"
+action="/sales-api/api/upload"  // 47
+```

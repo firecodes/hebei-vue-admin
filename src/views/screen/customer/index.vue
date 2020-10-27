@@ -25,30 +25,32 @@
           <div class="op">单位：万方</div>
         </div>
         <div class="chart-container">
-          <table class="text-center">
-            <tr style="border-bottom: 2px solid rgb(57, 117, 184) !important; color: #fff">
-              <th>排名</th>
-              <th>客户名称</th>
-              <th>销售量(万方)</th>
-              <th>排名</th>
-              <th>客户名称</th>
-              <th>销售量(万方)</th>
-            </tr>
-
-            <template v-for="(item, i) in customersTop">
-              <tr v-if="i < 5" :key="i">
-                <td class="index" v-text="i + 1" />
-                <td class="name" v-text="item.name" />
-                <td v-cloak class="num">{{ Math.round(item.quantity) }}</td>
-                <template v-if="i < 5 && customersTop[i + 5]">
-                  <td class="index" v-text="i + 1 + 5" />
-                  <td class="name" v-text="customersTop[i + 5].name" />
-                  <td v-cloak class="num">{{ Math.round(customersTop[i + 5].quantity) }}</td>
-                </template>
+          <div style="width: 65%">
+            <table class="text-center">
+              <tr style="border-bottom: 2px solid rgb(57, 117, 184) !important; color: #fff">
+                <th>排名</th>
+                <th>客户名称</th>
+                <th>销售量(万方)</th>
+                <th>排名</th>
+                <th>客户名称</th>
+                <th>销售量(万方)</th>
               </tr>
-            </template>
-          </table>
-          <pie-chart :chart-data="customersTopPortion" height="240px" width="600px" :show-label="true" />
+
+              <template v-for="(item, i) in customersTop">
+                <tr v-if="i < 5" :key="i">
+                  <td class="index" v-text="i + 1" />
+                  <td class="name" v-text="item.name" />
+                  <td v-cloak class="num">{{ Math.round(item.quantity) }}</td>
+                  <template v-if="i < 5 && customersTop[i + 5]">
+                    <td class="index" v-text="i + 1 + 5" />
+                    <td class="name" v-text="customersTop[i + 5].name" />
+                    <td v-cloak class="num">{{ Math.round(customersTop[i + 5].quantity) }}</td>
+                  </template>
+                </tr>
+              </template>
+            </table>
+          </div>
+          <div style="width: 35%"><pie-chart :chart-data="customersTopPortion" height="240px" :show-label="true" /></div>
         </div>
       </div>
       <!-- 客户年销售top10 -->
