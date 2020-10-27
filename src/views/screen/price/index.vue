@@ -23,7 +23,7 @@
           <h4>管道天然气门站价格</h4>
         </div>
 
-        <basic-chart :chart-data="gatePrice" unit="元/立方米" />
+        <basic-chart :chart-data="gatePrice" unit="元/立方米" :connectNulls="true"/>
       </div>
       <!-- 管道天然气零售价格 -->
       <div class="chart-wrapper mb-1 w-49">
@@ -40,14 +40,14 @@
             <span :class="{ active: retailpriceLoc === '天津' }" @click="retailpriceLoc = '天津'">天津</span>
           </div>
         </div>
-        <basic-chart :chart-data="retailprice" unit="元/立方米" />
+        <basic-chart :chart-data="retailprice" unit="元/立方米" :connectNulls="true" />
       </div>
       <!-- LNG 接收站销售价格 -->
       <div class="chart-wrapper mb-1 w-49">
         <div class="chart-wrapper-title">
           <h4>LNG 接收站销售价格</h4>
         </div>
-        <basic-chart :chart-data="lngReceive" unit="元/立方米" />
+        <basic-chart :chart-data="lngReceive" unit="元/立方米" :connectNulls="true"/>
       </div>
       <!-- LNG 工厂销售价格 -->
       <div class="chart-wrapper mb-1 w-49">
@@ -55,7 +55,7 @@
           <h4>LNG 工厂销售价格</h4>
         </div>
         <div class="chart-container">
-          <basic-chart :chart-data="lngPlantData" unit="元/吨" />
+          <basic-chart :chart-data="lngPlantData" unit="元/吨" :connectNulls="true"/>
         </div>
       </div>
       <!-- LNG 加气站零售价格 -->
@@ -73,7 +73,7 @@
             <span :class="{ active: lngRetailLoc === '天津' }" @click="lngRetailLoc = '天津'">天津</span>
           </div>
         </div>
-        <basic-chart :chart-data="lngRetail" unit="元/公升" />
+        <basic-chart :chart-data="lngRetail" unit="元/公升" :connectNulls="true"/>
       </div>
       <!-- CNG 车用价格 -->
       <div class="chart-wrapper w-49">
@@ -90,7 +90,7 @@
             <span :class="{ active: cngPriceLoc === '天津' }" @click="cngPriceLoc = '天津'">天津</span>
           </div>
         </div>
-        <basic-chart :chart-data="cngPrice" unit="元/立方米" height="267px" />
+        <basic-chart :chart-data="cngPrice" unit="元/立方米" height="267px" :connectNulls="true"/>
       </div>
     </div>
   </div>
