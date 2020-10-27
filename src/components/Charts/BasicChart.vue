@@ -24,7 +24,7 @@ export default {
     },
     color: {
       type: Array,
-      default: () => ['#2ec7c9', '#b6a2de', '#5ab1ef']
+      default: () => ['#2ec7c9', '#b6a2de', '#5ab1ef', '#ffb980', '#d87a80', '#8d98b3']
     },
     mainColor: {
       type: String,
