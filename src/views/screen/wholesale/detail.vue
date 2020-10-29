@@ -8,7 +8,7 @@
             <span class="skipBtn" @click="$router.go(-1)">返回河北省视图</span>
           </div>
           <!-- 显示地图 -->
-          <hebei-city-map :chart-data="mapData" :city="area" :tooltip-fn="mapTooltip" :hover-fn="handleHover" height="900px" />
+          <hebei-city-map :chart-data="mapData" :city="area === '雄安地区' ? '保定地区' : area" :tooltip-fn="mapTooltip" :hover-fn="handleHover" height="900px" />
         </div>
       </div>
 

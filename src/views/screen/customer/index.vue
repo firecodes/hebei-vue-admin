@@ -57,7 +57,7 @@
       <div class="chart-wrapper mb-1 w-49">
         <div class="chart-wrapper-title">
           <h4>客户年销售top10</h4>
-          <div class="op">单位：亿方</div>
+          <div class="op">单位：万方</div>
         </div>
 
         <table class="mb-1">

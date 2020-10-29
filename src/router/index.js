@@ -53,7 +53,9 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'el-icon-data-line' }
     },
     { path: '/pc/data/wholesale', component: () => import(/* webpackChunkName: 'pc-data-wholesale' */ '@/views/pc/data/Wholesale.vue') },
+    // { path: '/pc/data/wholesaleTotal', component: () => import(/* webpackChunkName: 'pc-data-wholesale' */ '@/views/pc/data/wholesaleTotal.vue') },
     { path: '/pc/data/retail', component: () => import(/* webpackChunkName: 'pc-data-retail' */ '@/views/pc/data/Retail.vue') },
+    { path: '/pc/data/retailMonth', component: () => import(/* webpackChunkName: 'pc-data-retail' */ '@/views/pc/data/RetailMonth.vue') },
     { path: '/pc/data/price', component: () => import(/* webpackChunkName: 'pc-data-price' */ '@/views/pc/data/Price.vue') },
     { path: '/pc/customer/lng', component: () => import(/* webpackChunkName: 'pc-customer-lng' */ '@/views/pc/customer/Lng.vue') },
     { path: '/pc/customer/pipeline', component: () => import(/* webpackChunkName: 'pc-customer-pipeline' */ '@/views/pc/customer/Pipeline.vue') },

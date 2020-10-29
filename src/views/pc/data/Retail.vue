@@ -61,10 +61,9 @@
   </div>
 </template>
 <script>
-import { pickerOptions, areaOption } from '@/utils/options'
+import { pickerOptions } from '@/utils/options'
 import { daterange1month, array2Object, parseDate } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { fetchList as getPipelineCustomers } from '@/api/customer/pipeline'
 import { fetchList } from '@/api/customer/retail'
 import { getResaleDataByCustomer } from '@/api/data/index'
 
@@ -73,15 +72,12 @@ export default {
   components: { Pagination },
   data() {
     return {
-      areaOption,
-      cascaderOptions: [],
-      cascaderValue: [],
       pickerOptions,
       customerOption: [],
       daterange: daterange1month(),
       listQuery: {
         pageNum: 1,
-        pageSize: 3,
+        pageSize: 2,
         start: '',
         end: '',
         customerId: ''
@@ -135,13 +131,6 @@ export default {
       this.getList()
     },
 
-    handleQuery() {},
-    handleCurrentChange(page) {
-      this.listQuery.pageNum = page
-    },
-    handleSizeChange(size) {
-      this.listQuery.pageSize = size
-    },
     // 搜索
     handleFilter() {
       console.log('handleFilter', arguments)

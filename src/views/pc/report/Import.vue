@@ -49,7 +49,7 @@
 
     <!-- 上传文件 -->
     <el-dialog :title="recordDetail ? '重新上传文件' : '上传文件'" :visible.sync="dialogVisible" @close="dialogClosed">
-      <el-upload ref="upload" action="/api/upload" :data="uploadData" :on-success="handleSuccess" :on-error="handleError" :before-upload="handleBeforeUpload">
+      <el-upload ref="upload" action="/sales-api/api/upload" :data="uploadData" :on-success="handleSuccess" :on-error="handleError" :before-upload="handleBeforeUpload">
         <el-button type="primary" style="margin-right: 10px">点击上传</el-button>
         <span slot="tip" class="el-upload__tip">请上传 excel 文件，文件扩展名为 .xls 或 .xlsx!</span>
       </el-upload>

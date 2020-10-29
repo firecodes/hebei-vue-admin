@@ -1,18 +1,8 @@
 <template>
-  <div :class="{'has-logo':showLogo}">
+  <div :class="{ 'has-logo': showLogo }">
     <logo v-if="showLogo" :collapse="isCollapse" />
     <!-- <el-scrollbar wrap-class="scrollbar-wrapper"> -->
-    <el-menu
-      :default-active="this.$route.path"
-      :collapse="isCollapse"
-      :background-color="variables.menuBg"
-      :text-color="variables.menuText"
-      :unique-opened="false"
-      :active-text-color="variables.menuActiveText"
-      :collapse-transition="false"
-      mode="vertical"
-      router
-    >
+    <el-menu :default-active="this.$route.path" :collapse="isCollapse" :background-color="variables.menuBg" :text-color="variables.menuText" :unique-opened="false" :active-text-color="variables.menuActiveText" :collapse-transition="false" mode="vertical" router>
       <template v-for="menu in menuList">
         <!-- 一级菜单 -->
         <el-submenu v-if="menu.children" :key="menu.path" :index="menu.path">
@@ -22,11 +12,7 @@
             <span>{{ menu.name }}</span>
           </template>
           <!-- 二级菜单 -->
-          <el-menu-item
-            v-for="child in menu.children"
-            :key="child.path"
-            :index="child.path"
-          >{{ child.name }}</el-menu-item>
+          <el-menu-item v-for="child in menu.children" :key="child.path" :index="child.path">{{ child.name }}</el-menu-item>
         </el-submenu>
         <el-menu-item v-else :key="menu.path" :index="menu.path">
           <i :class="menu.icon" />
@@ -61,7 +47,9 @@ export default {
           icon: 'el-icon-data-line',
           children: [
             { name: '批发业务', path: '/pc/data/wholesale' },
+            // { name: '批发业务（new）', path: '/pc/data/wholesaleTotal' },
             { name: '零售业务', path: '/pc/data/retail' },
+            { name: '零售业务(月报) ', path: '/pc/data/retailMonth' },
             { name: '价格分析', path: '/pc/data/price' }
           ]
         },
