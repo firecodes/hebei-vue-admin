@@ -61,7 +61,7 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
-import { passwordUpdate } from '@/api/user'
+import { passwordUpdate } from '@/api/system/user'
 
 export default {
   components: {
