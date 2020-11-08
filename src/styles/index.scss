@@ -261,7 +261,12 @@ $screenBorderColor: #0f9eed;
       }
       .guanxiantu-img {
         text-align: center;
-        padding: 30px 0px 0px 100px;
+        // padding: 30px 0px 0px 100px;
+        img {
+            width: 52%;
+            position: relative;
+            // top: -80px;
+          }
       }
     }
   }

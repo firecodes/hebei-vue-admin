@@ -4,11 +4,11 @@
       <!-- 显示管线 -->
       <div class="mapOp">
         <div class="mapOp-btn">
-          <span class="skipBtn" @click="dialogVisible = true">主要分布情况</span>
+          <span class="skipBtn" @click="$router.push('/screen')">返回首页</span>
           <span class="skipBtn" @click="reset">最初大小</span>
         </div>
-        <h1>河北分公司管线图</h1>
-        <canvas ref="guanxiantuRef" width="1870" height="927" />
+        <h1>河北省天然气长输管道走向示意图</h1>
+        <canvas ref="guanxiantuRef" width="736" height="981" />
 
         <div ref="tooltipRef" class="tooltip">
           <div class="tooltip-inner">
@@ -71,7 +71,7 @@ export default {
       img: null,
       imgX: 0,
       imgY: 0,
-      imgScale: 0.25,
+      imgScale: 0.2,
       posSize: 40,
       tooltip: {
         title: 'jiji',
@@ -104,7 +104,7 @@ export default {
     reset() {
       this.imgX = 0
       this.imgY = 0
-      this.imgScale = 0.25
+      this.imgScale = 0.2
       this.clear()
       this.drawImage()
     },
@@ -137,7 +137,7 @@ export default {
           this.imgY = this.imgY * 2 - pos.y
           this.refresh() // 重新绘制图片
         } else {
-          if (this.imgScale >= 0.5) {
+          if (this.imgScale >= 0.4) {
             this.imgScale /= 2
             this.imgX = this.imgX * 0.5 + pos.x * 0.5
             this.imgY = this.imgY * 0.5 + pos.y * 0.5
@@ -147,46 +147,46 @@ export default {
       }
 
       // 点击事件
-      this.canvas.addEventListener(
-        'click',
-        e => {
-          const p = this.getEventPosition(e)
-          console.log(p)
+      // this.canvas.addEventListener(
+      //   'click',
+      //   e => {
+      //     const p = this.getEventPosition(e)
+      //     console.log(p)
 
-          const x = (p.x - this.imgX) / this.imgScale
-          const y = (p.y - this.imgY) / this.imgScale
-          let isOnStation = false
-          // 判断点击了那个矩形
-          for (let i = 0; i < this.stationInfo.length; i++) {
-            const item = {
-              x_min: this.stationInfo[i].x - this.posSize,
-              y_min: this.stationInfo[i].y - this.posSize,
-              x_max: this.stationInfo[i].x + this.posSize,
-              y_max: this.stationInfo[i].y + this.posSize,
-              name: this.stationInfo[i].name,
-              guanxian: this.stationInfo[i].guanxian,
-              customer: this.stationInfo[i].customer
-            }
+      //     const x = (p.x - this.imgX) / this.imgScale
+      //     const y = (p.y - this.imgY) / this.imgScale
+      //     let isOnStation = false
+      //     // 判断点击了那个矩形
+      //     for (let i = 0; i < this.stationInfo.length; i++) {
+      //       const item = {
+      //         x_min: this.stationInfo[i].x - this.posSize,
+      //         y_min: this.stationInfo[i].y - this.posSize,
+      //         x_max: this.stationInfo[i].x + this.posSize,
+      //         y_max: this.stationInfo[i].y + this.posSize,
+      //         name: this.stationInfo[i].name,
+      //         guanxian: this.stationInfo[i].guanxian,
+      //         customer: this.stationInfo[i].customer
+      //       }
 
-            if (item.y_min <= y && y <= item.y_max) {
-              if (item.x_min <= x && x <= item.x_max) {
-                isOnStation = true
-                this.tooltip.title = `${item.name}(${item.guanxian})`
-                this.tooltip.customer = item.customer
-                this.$refs['tooltipRef'].style.opacity = 1
-                this.$refs['tooltipRef'].style.left = e.screenX + 'px'
-                this.$refs['tooltipRef'].style.top = e.screenY + 'px'
-                break
-              }
-            }
-          }
+      //       if (item.y_min <= y && y <= item.y_max) {
+      //         if (item.x_min <= x && x <= item.x_max) {
+      //           isOnStation = true
+      //           this.tooltip.title = `${item.name}(${item.guanxian})`
+      //           this.tooltip.customer = item.customer
+      //           this.$refs['tooltipRef'].style.opacity = 1
+      //           this.$refs['tooltipRef'].style.left = e.screenX + 'px'
+      //           this.$refs['tooltipRef'].style.top = e.screenY + 'px'
+      //           break
+      //         }
+      //       }
+      //     }
 
-          if (!isOnStation) {
-            this.$refs['tooltipRef'].style.opacity = 0
-          }
-        },
-        false
-      )
+      //     if (!isOnStation) {
+      //       this.$refs['tooltipRef'].style.opacity = 0
+      //     }
+      //   },
+      //   false
+      // )
     },
     /* 坐标转换*/
     windowToCanvas(x, y) {
@@ -196,26 +196,26 @@ export default {
         y: y - box.top - (box.height - this.canvas.height) / 2
       }
     },
-    getEventPosition(ev) {
-      var x, y
-      if (ev.layerX || ev.layerX == 0) {
-        x = ev.layerX
-        y = ev.layerY
-      } else if (ev.offsetX || ev.offsetX == 0) {
-        // Opera
-        x = ev.offsetX
-        y = ev.offsetY
-      }
-      return {
-        x: x,
-        y: y
-      }
-    }
+    // getEventPosition(ev) {
+    //   var x, y
+    //   if (ev.layerX || ev.layerX == 0) {
+    //     x = ev.layerX
+    //     y = ev.layerY
+    //   } else if (ev.offsetX || ev.offsetX == 0) {
+    //     // Opera
+    //     x = ev.offsetX
+    //     y = ev.offsetY
+    //   }
+    //   return {
+    //     x: x,
+    //     y: y
+    //   }
+    // }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .el-dialog {
   background: #044e8e;
 }
@@ -274,13 +274,13 @@ table thead tr {
         text-shadow: 0 0 5px #ffffff;
         margin: 0;
         font-weight: 400;
-        top: 40px;
+        top: 0;
         left: 50%;
-        margin-left: -160px;
+        margin-left: -300px;
       }
 
       canvas {
-        margin-top: 60px;
+        margin-top: 15px;
         // background-color: pink;
         margin-bottom: 5px;
       }

@@ -10,50 +10,152 @@
         </el-select>
       </div>
       <div style="line-height: 32px">
-        <el-button type="primary" icon="el-icon-download" class="mr-1">导出 Excel</el-button>
+        <el-button type="primary" icon="el-icon-download" class="mr-1" @click="handleDownload">导出 Excel</el-button>
         单位：万方
       </div>
     </div>
     <!-- 表格数据-->
     <el-table :data="tableData" v-loading="listLoading" :span-method="objectSpanMethod">
-      <el-table-column prop="dataTime" label="日期" align="center" width="85px" fixed />
+      <el-table-column prop="yearMonth" label="日期" align="center" width="85px" fixed />
       <el-table-column prop="source" label="气源" align="center" width="95px" fixed />
-      <el-table-column prop="num" label="期初库存" align="center" />
-      <!-- <el-table-column prop="monthPlan" label="月度计划" align="center" /> -->
-      <el-table-column label="购气量" align="center">
-        <el-table-column prop="num" label="月累" align="center" />
-        <el-table-column prop="num" label="去年同期" align="center" />
-        <el-table-column prop="num" label="同比" align="center" />
-        <el-table-column prop="num" label="同比变化" align="center" />
+      <el-table-column prop="num" label="期初库存" align="center" width="95px">
+        <template slot-scope="{row}">
+          {{row.initStorage | roFixed4}}
+        </template>
       </el-table-column>
-      <el-table-column label="总销气量" align="center">
-        <el-table-column prop="num" label="居民" align="center" />
-        <el-table-column prop="num" label="工业" align="center" />
-        <el-table-column prop="num" label="公服" align="center" />
-        <el-table-column prop="num" label="分销" align="center" />
-        <el-table-column prop="num" label="CNG车用" align="center" />
-        <el-table-column prop="num" label="CNG非车用" align="center" width="95px" />
-        <el-table-column prop="num" label="管输" align="center" />
-        <el-table-column prop="num" label="LNG" align="center" />
-        <el-table-column prop="num" label="月累" align="center" />
-        <el-table-column prop="num" label="去年同期" align="center" />
-        <el-table-column prop="num" label="同比" align="center" />
-        <el-table-column prop="num" label="同比变化" align="center" />
+      <el-table-column label="购气量" align="center">
+        <el-table-column label="月累" align="center" width="95px" >
+         <template slot-scope="{row}">
+          {{row.monthAccumulationForPurchase | roFixed4}}
+        </template>
+        </el-table-column>
+        <el-table-column prop="num" label="去年同期" align="center" width="95px" > 
+          <template slot-scope="{row}">
+          {{row.lastYearForPurchase | roFixed4}}
+        </template>
+        </el-table-column>
+        <el-table-column prop="num" label="同比" align="center" width="95px" > 
+          <template slot-scope="{row}">
+          {{row.tongbiForPurchase | roFixed4}}
+        </template>
+        </el-table-column>
+        <el-table-column prop="num" label="同比变化" align="center" width="95px" >
+           <template slot-scope="{row}">
+          {{row.tongbiIncreaseForConsume | roFixed4}}
+        </template>
+        </el-table-column>
+      </el-table-column>
+      <el-table-column label="总销气量" align="center">        
+        <el-table-column prop="num" label="居民" align="center" width="95px" > 
+          <template slot-scope="{row}">
+          {{row.residentValue | roFixed4}}
+        </template>
+        </el-table-column>
+        <el-table-column prop="num" label="工业" align="center" width="95px" > 
+          <template slot-scope="{row}">
+          {{row.industryValue | roFixed4}}
+        </template>
+        </el-table-column>
+        <el-table-column prop="num" label="公服" align="center" width="95px" > 
+          <template slot-scope="{row}">
+          {{row.publicServiceValue | roFixed4}}
+        </template>
+        </el-table-column>
+        <el-table-column prop="num" label="分销" align="center" width="95px" > 
+          <template slot-scope="{row}">
+          {{row.distributionValue | roFixed4}}
+        </template></el-table-column>
+        <el-table-column prop="num" label="CNG车用" align="center" width="95px" > 
+          <template slot-scope="{row}">
+           {{row.cngForCarValue | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="CNG非车用" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.cngForOtherValue | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="管输" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.pogValue | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="LNG" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.lngValue | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="月累" align="center" width="95px">
+           <template slot-scope="{row}">
+           {{row.monthAccumulationForConsume | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="去年同期" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.lastYearForConsume | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="同比" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.tongbiForConsume | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="同比变化" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.tongbiIncreaseForPurchase | roFixed4}}
+         </template>
+        </el-table-column>
       </el-table-column>
 
       <el-table-column label="自用气" align="center">
-        <el-table-column prop="num" label="生产" align="center" />
-        <el-table-column prop="num" label="生活" align="center" />
-        <el-table-column prop="num" label="月累" align="center" />
-        <el-table-column prop="num" label="去年同期" align="center" />
-        <el-table-column prop="num" label="同比" align="center" />
-        <el-table-column prop="num" label="同比变化" align="center" />
+           <el-table-column prop="num" label="生产" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.produceForSelf | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="生活" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.liveForSelf | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="月累" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.monthAccumulationForSelf | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="去年同期" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.lastYearForSelf | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="同比" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.tongbiForSelf | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="同比变化" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.tongbiIncreaseForSelf | roFixed4}}
+         </template>
+        </el-table-column>
       </el-table-column>
       <el-table-column label="月购销差" align="center">
-        <el-table-column prop="num" label="差量" align="center" />
-        <el-table-column prop="num" label="差率%" align="center" />
+        <el-table-column prop="num" label="差量" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.diffForPurchase | roFixed4}}
+         </template>
+        </el-table-column>
+        <el-table-column prop="num" label="差率%" align="center" width="95px" >
+           <template slot-scope="{row}">
+           {{row.diffRateForPurchase | roFixed4}}
+         </template>
+        </el-table-column>
       </el-table-column>
-      <el-table-column prop="num" label="期末库存" align="center" />
+      <el-table-column prop="num" label="期末库存" align="center" width="95px" >
+         <template slot-scope="{row}">
+           {{row.currentStorage | roFixed4}}
+         </template>
+        </el-table-column>
     </el-table>
 
     <!-- 分页 -->
@@ -65,7 +167,7 @@ import { pickerOptions } from '@/utils/options'
 import { array2Object, parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { fetchList } from '@/api/customer/retail'
-import { getResaleDataByCustomer } from '@/api/data/index'
+import { getResaleMonthStyle } from '@/api/data/index'
 
 export default {
   name: 'WholeSale',
@@ -83,29 +185,25 @@ export default {
         customerId: '0'
       },
       totalCount: 0, // 总条数
-      tableData: [
-        { dataTime: '2020-10', source: '管道气', num: 100 },
-        { dataTime: '2020-10', source: 'LNG（内购）', num: 100 },
-        { dataTime: '2020-10', source: 'LNG（外购）', num: 100 },
-        { dataTime: '2020-10', source: 'LNG小计', num: 100 },
-        { dataTime: '2020-10', source: '管输气', num: 100 },
-        { dataTime: '2020-10', source: 'CNG', num: 100 },
-        { dataTime: '2020-10', source: '小计', num: 100 },
-        { dataTime: '2020-09', source: '管道气', num: 300 },
-        { dataTime: '2020-09', source: 'LNG（内购）', num: 300 },
-        { dataTime: '2020-09', source: 'LNG（外购）', num: 300 },
-        { dataTime: '2020-09', source: 'LNG小计', num: 300 },
-        { dataTime: '2020-09', source: '管输气', num: 300 },
-        { dataTime: '2020-09', source: 'CNG', num: 300 },
-        { dataTime: '2020-09', source: '小计', num: 300 }
-      ],
+      tableData: [],
       listLoading: false // 加载动画
+    }
+  },
+  filters:{
+    roFixed4(value) {
+      if(value === null) return '-'
+      const index = (value +'').indexOf('.')
+      if(index !== -1 && typeof value === 'number') {
+          return value.toFixed(2)
+      } else {
+        return value
+      }
     }
   },
   created() {
     this.getDaterange()
     this.getCustomers()
-    // this.getList()
+    this.getList()
   },
   methods: {
     getDaterange() {
@@ -115,10 +213,10 @@ export default {
     // 获取列表
     async getList() {
       this.listLoading = true
-
+  
       this.listQuery.start = parseTime(this.daterange[0], '{y}-{m}')
       this.listQuery.end = parseTime(this.daterange[1], '{y}-{m}')
-      const res = await getResaleDataByCustomer(this.listQuery)
+      const res = await getResaleMonthStyle(this.listQuery)
       if (res.status === 0) {
         const days = Object.keys(res.data).sort((a, b) => a - b)
         this.tableData = []
@@ -167,6 +265,14 @@ export default {
           }
         }
       }
+    },
+     // 导出
+    handleDownload() {
+      const start = parseTime(this.daterange[0], '{y}-{m}')
+      const end = parseTime(this.daterange[1], '{y}-{m}')
+      const customerId = this.listQuery.customerId
+      const url = `${process.env.VUE_APP_BASE_API}/api/datacenter/resale/month/export?start=${start}&end=${end}&customerId=${customerId}`
+      window.open(url)
     }
   }
 }

@@ -9,6 +9,14 @@ export function getResaleDataByCustomer(query) {
   })
 }
 
+export function getResaleMonthStyle(query){
+  return request({
+    url: '/api/datacenter/resale/month',
+    method: 'get',
+    params: query
+  })
+}
+
 // 数据中心-批发业务
 export function getWholeSalesDataByCustomer(query) {
   return request({

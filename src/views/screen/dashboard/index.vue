@@ -95,7 +95,7 @@ export default {
       const routeUrl = this.$router.resolve({
         path: '/guanxian'
       })
-      window.open(routeUrl.href, '_blank')
+      window.open(routeUrl.href, '_self')
     }
   }
 }
