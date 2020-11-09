@@ -8,7 +8,7 @@
           <span class="skipBtn" @click="reset">最初大小</span>
         </div>
         <h1>河北省天然气长输管道走向示意图</h1>
-        <canvas ref="guanxiantuRef" width="736" height="981" />
+        <canvas ref="guanxiantuRef" width="1888" height="981" />
 
         <div ref="tooltipRef" class="tooltip">
           <div class="tooltip-inner">
@@ -71,7 +71,7 @@ export default {
       img: null,
       imgX: 0,
       imgY: 0,
-      imgScale: 0.2,
+      imgScale: 0.3,
       posSize: 40,
       tooltip: {
         title: 'jiji',
@@ -104,7 +104,7 @@ export default {
     reset() {
       this.imgX = 0
       this.imgY = 0
-      this.imgScale = 0.2
+      this.imgScale = 0.3
       this.clear()
       this.drawImage()
     },
@@ -137,7 +137,7 @@ export default {
           this.imgY = this.imgY * 2 - pos.y
           this.refresh() // 重新绘制图片
         } else {
-          if (this.imgScale >= 0.4) {
+          if (this.imgScale >= 0.6) {
             this.imgScale /= 2
             this.imgX = this.imgX * 0.5 + pos.x * 0.5
             this.imgY = this.imgY * 0.5 + pos.y * 0.5
@@ -195,7 +195,7 @@ export default {
         x: x - box.left - (box.width - this.canvas.width) / 2,
         y: y - box.top - (box.height - this.canvas.height) / 2
       }
-    },
+    }
     // getEventPosition(ev) {
     //   var x, y
     //   if (ev.layerX || ev.layerX == 0) {
@@ -280,7 +280,7 @@ table thead tr {
       }
 
       canvas {
-        margin-top: 15px;
+        margin-top: 10px;
         // background-color: pink;
         margin-bottom: 5px;
       }
