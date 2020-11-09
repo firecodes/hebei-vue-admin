@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     handleDownload(fileName) {
-      let url = process.env.VUE_APP_BASE_API
+      let url = this.apiUrl
       console.log('fileName=', typeof fileName)
       switch (fileName) {
         case '日简报':

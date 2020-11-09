@@ -101,7 +101,7 @@ export default {
     handleDownload() {
       const start = parseDate(this.daterange[0])
       const end = parseDate(this.daterange[1])
-      const url = `${process.env.VUE_APP_BASE_API}/api/datacenter/price/forecast/export/lngPlant?start=${start}&end=${end}`
+      const url = `${this.apiUrl}/api/datacenter/price/forecast/export/lngPlant?start=${start}&end=${end}`
       window.open(url)
     }
   }
